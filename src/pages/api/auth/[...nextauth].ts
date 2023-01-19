@@ -24,6 +24,9 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
   },
+  pages: {
+    signIn: '/login',
+  },
   providers: authenticationProviders,
   adapter: PrismaAdapter(prismaClient),
 };
