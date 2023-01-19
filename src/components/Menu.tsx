@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { signOut } from 'next-auth/react'
 
 const navLinks = [
   {
@@ -41,7 +42,7 @@ const Logout = () => {
       <span className='mb-4 text-center'>
         Financial solution for Deals blah balh
       </span>
-      <button className='px-5 py-3 text-white rounded-full font-primary bg-dark-500'>
+      <button className='px-5 py-3 text-white rounded-full font-primary bg-dark-500' onClick={() => signOut({ callbackUrl: "/login", redirect: true })}>
         Log out
       </button>
     </div>
