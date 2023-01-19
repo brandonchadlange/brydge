@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -52,4 +49,30 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Syndicate {
+  id     String  @id @default(cuid())
+  name   String
+  entity String? @db.VarChar
+}
+
+model PendingDeal {
+  id             String @id @default(cuid())
+  syndicateId    String
+  name           String
+  fundAmount     Int
+  expectedReturn Int
+  expectedTenure Int
+}
+
+model OpenDeal {
+  id               String   @id @default(cuid())
+  syndicateId      String
+  name             String
+  fundAmount       Int
+  expectedReturn   Int
+  expectedTenure   Int
+  approvedDateTime DateTime
+  approvedByUserId String
 }

@@ -1,24 +1,22 @@
-import LeftPanel from '@/components/LeftPanel'
-import Login from '@/components/Login'
-import withAuthenticationLayout from '@/components/withAuthenticationLayout'
-import Head from 'next/head'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
+import Login from "@/components/Login";
+import withAuthenticationLayout from "@/components/withAuthenticationLayout";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 const LoginPage = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <>
-    <Head>
+      <Head>
         <title>Login — Brydge</title>
-        <meta name='description' content='Signup with Brydge.com' />
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <link rel='icon' href='/favicon.ico' />
+        <meta name="description" content="Signup with Brydge.com" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-          <Login />
+      <Login />
     </>
-  )
-}
+  );
+};
 
-export default withAuthenticationLayout(LoginPage) 
+export default withAuthenticationLayout(LoginPage);

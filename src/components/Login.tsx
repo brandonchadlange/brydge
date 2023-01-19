@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import authService, { Provider } from "@/frontend/services/auth";
 import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
+import Input from "./input/index";
 
 const Login = () => {
   const [providerList, setProviderList] = useState<Provider[]>([]);
@@ -24,16 +25,8 @@ const Login = () => {
           Fill in your log in details to proceed
         </span>
         <form>
-          <input
-            type="text"
-            className="w-full px-5 py-2 my-3 border-2 rounded-lg focus:outline-none focus:border-dark-300 focus:ring-1 focus:ring-dark-300"
-            placeholder="Enter your email"
-          />
-          <input
-            type="password"
-            className="w-full px-5 py-2 my-3 border-2 rounded-lg focus:outline-none focus:border-dark-300 focus:ring-1 focus:ring-dark-300"
-            placeholder="Enter your password"
-          />
+          <Input.Email placeholder="Enter your email" />
+          <Input.Password placeholder="Enter your password" />
           <Button type="submit" full>
             Login
           </Button>

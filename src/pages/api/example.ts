@@ -1,3 +1,4 @@
+import prismaClient from "@/backend/prisma";
 import HttpException from "@/backend/utility/http-exception";
 import { RouteHandler } from "@/backend/utility/route-handler";
 
