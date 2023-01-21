@@ -4,6 +4,8 @@ const endpoints = {
       return "/api/auth/providers";
     },
   },
+  business: {},
+  syndicate: {},
 };
 
 export default endpoints;

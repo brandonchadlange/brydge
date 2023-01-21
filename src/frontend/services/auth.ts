@@ -1,4 +1,4 @@
-import endpoints from "@/config/api-endpoints";
+import endpoints from "@/frontend/config/api-endpoints";
 import fetchDataAs from "../utility/fetch-data-as";
 
 export type Provider = {

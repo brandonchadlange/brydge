@@ -1,8 +1,8 @@
-import Link from "next/link";
 import Button from "@/components/Button";
 import authService, { Provider } from "@/frontend/services/auth";
-import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import Input from "./input/index";
 
 const Login = () => {

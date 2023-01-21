@@ -51,10 +51,15 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Syndicate {
-  id     String  @id @default(cuid())
-  name   String
-  entity String? @db.VarChar
+model StructuredSyndicate {
+  id                     String @id @default(cuid())
+  registeredName         String
+  registrationNumber     String
+  syndicateHeadName      String
+  bankVerificationNumber String
+  operationalAddress     String
+  state                  String
+  utilityBillUrl         String
 }
 
 model PendingDeal {
