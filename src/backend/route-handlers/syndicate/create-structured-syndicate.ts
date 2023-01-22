@@ -1,11 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import SyndicateService from "@/backend/services/syndicate";
 import { CreateStructuredSyndicateDTO } from "@/backend/dto/syndicate/create-structured-syndicate";
+import getSession from "@/backend/utility/get-session";
 
-const createStructuredSyndicate = async (
+const createStructuredSyndicateRouteHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
+  const session = await getSession(req, res);
   const createStructuredSyndicateDTO = req.body as CreateStructuredSyndicateDTO;
 
   const structuredSyndicate = await SyndicateService.createStructuredSyndicate(
@@ -15,4 +17,4 @@ const createStructuredSyndicate = async (
   res.status(201).send(structuredSyndicate);
 };
 
-export default createStructuredSyndicate;
+export default createStructuredSyndicateRouteHandler;

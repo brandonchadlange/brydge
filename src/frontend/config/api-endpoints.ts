@@ -5,7 +5,14 @@ const endpoints = {
     },
   },
   business: {},
-  syndicate: {},
+  syndicate: {
+    getSynidicates() {
+      return "/api/syndicate";
+    },
+    createStructuredSyndicate() {
+      return "/api/syndicate/structured";
+    },
+  },
 };
 
 export default endpoints;

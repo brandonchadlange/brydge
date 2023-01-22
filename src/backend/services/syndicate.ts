@@ -1,10 +1,10 @@
 import { CreateStructuredSyndicateDTO } from "../dto/syndicate/create-structured-syndicate";
-import SyndicateProvider from "../repositories/syndicate";
+import SyndicateRepository from "../repositories/syndicate";
 
 const createStructuredSyndicate = async (
   createStructuredSyndicateDTO: CreateStructuredSyndicateDTO
 ) => {
-  return SyndicateProvider.createStructuredSyndicate(
+  return SyndicateRepository.createStructuredSyndicate(
     createStructuredSyndicateDTO
   );
 };

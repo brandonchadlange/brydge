@@ -19,9 +19,9 @@ const createStructuredSyndicate = async (
 
 const createUnstructuredSyndicate = async () => {};
 
-const SyndicateProvider = {
+const SyndicateRepository = {
   createStructuredSyndicate,
   createUnstructuredSyndicate,
 };
 
-export default SyndicateProvider;
+export default SyndicateRepository;

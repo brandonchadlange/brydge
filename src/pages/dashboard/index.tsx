@@ -5,10 +5,15 @@ import Progress from "@/components/progress";
 import Slideout from "@/components/slide-out";
 import AppTable, { AppTableColumn } from "@/components/table";
 import withDashboardLayout from "@/components/withDashboardLayout";
-import { useState } from "react";
+import syndicateService from "@/frontend/services/syndicate";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
+
+  useEffect(() => {
+    syndicateService.getSyndicates();
+  }, []);
 
   const showSlideOut = () => {
     setShowOverlay(true);
@@ -39,7 +44,7 @@ const Dashboard = () => {
             </div>
             <div className="flex gap-10 align-bottom">
               <div className="w-40">
-                <Progress value={24} />
+                <Progress value={50} />
               </div>
               <div>
                 <h1 className="text-2xl font-bold font-primary">$ 12,000.00</h1>
@@ -111,8 +116,8 @@ const TableTest = () => {
     {
       name: "lp",
       heading: "LP",
-      component(e) {
-        return <>{e.lp}</>;
+      component(data) {
+        return <p className="font-bold">{data.lp}</p>;
       },
     },
     {
