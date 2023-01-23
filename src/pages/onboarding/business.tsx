@@ -20,7 +20,7 @@ const onSubmit = values => {
 
 const getBusinessForm = () => {
   return {
-    syndicateName: '',
+    businessName: '',
     rcNumber: '',
     syndicateHead: '',
     bvn: '',
@@ -103,7 +103,6 @@ const Business = () => {
                       ))}
                   </Input.Select>
                 </FormField>
-
                 <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
                   <label htmlFor="utilityBill">
                     <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
@@ -132,7 +131,6 @@ const Business = () => {
                     By clicking continue, I agree to brydge Terms and Conditions, Privacy Policy and Pricing
                   </p>
                 </Input.Checkbox>
-
                 <Button type="submit" full>
                   Submit
                 </Button>
