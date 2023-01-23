@@ -6,6 +6,7 @@ import TextInput from './text';
 import TextAreaInput from './text-area';
 import SelectInput from './select';
 import FileInput from './file';
+import CheckboxInput from './checkbox';
 
 const Input = {
   Date: DateInput,
@@ -15,7 +16,8 @@ const Input = {
   FormField: FormField,
   TextArea: TextAreaInput,
   Select: SelectInput,
-  FileInput,
+  File: FileInput,
+  Checkbox: CheckboxInput,
 };
 
 export default Input;

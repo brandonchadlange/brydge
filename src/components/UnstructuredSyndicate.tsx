@@ -21,10 +21,13 @@ const UnstructuredSyndicate = () => {
   const getSyndicateForm = () => {
     return {
       syndicateName: '',
+      rcNumber: '',
+      syndicateHead: '',
       bvn: '',
       address: '',
       state: '',
       utilityBill: null,
+      acceptedTerms: false,
     };
   };
   const getSyndicateFormValidation = () => {
@@ -35,8 +38,9 @@ const UnstructuredSyndicate = () => {
       state: Yup.string().required('State is required').oneOf(states, 'Select state'),
       utilityBill: Yup.mixed()
         .required('Please upload your utility bill')
-        .test('fileSize', 'File is too large', value => value.size <= FILE_SIZE)
-        .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value.type)),
+        .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
+        .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
+      acceptedTerms: Yup.boolean().required().oneOf([true], 'Accept the terms and conditions.'),
     });
   };
 
@@ -88,8 +92,14 @@ const UnstructuredSyndicate = () => {
           </div>
           {errors.utilityBill && <span className="text-red-500">{errors.utilityBill}</span>}
 
+          <Input.Checkbox name="acceptedTerms">
+            <p className="font-secondary text-[12px]">
+              By clicking continue, I agree to brydge Terms and Conditions, Privacy Policy and Pricing
+            </p>
+          </Input.Checkbox>
+
           <Button type="submit" full>
-            Submit
+            Continue
           </Button>
         </Form>
       )}

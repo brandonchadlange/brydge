@@ -18,13 +18,17 @@ const onSubmit = values => {
   }, 500);
 };
 
-const businessFormInitialValues = {
-  businessName: '',
-  rcNumber: '',
-  bvn: '',
-  address: '',
-  state: '',
-  utilityBill: null,
+const getBusinessForm = () => {
+  return {
+    syndicateName: '',
+    rcNumber: '',
+    syndicateHead: '',
+    bvn: '',
+    address: '',
+    state: '',
+    utilityBill: null,
+    acceptedTerms: false,
+  };
 };
 
 const getBusinessFormValidation = () => {
@@ -36,8 +40,9 @@ const getBusinessFormValidation = () => {
     state: Yup.string().required('State is required').oneOf(states, 'Select state'),
     utilityBill: Yup.mixed()
       .required('Please upload your utility bill')
-      .test('fileSize', 'File is too large', value => value.size <= FILE_SIZE)
-      .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value.type)),
+      .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
+      .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
+    acceptedTerms: Yup.boolean().required().oneOf([true], 'Accept the terms and conditions.'),
   });
 };
 
@@ -73,11 +78,7 @@ const Business = () => {
           </p>
         </section>
         <section className="col-span-1 px-2 overflow-x-hidden overflow-y-auto">
-          <Formik
-            initialValues={businessFormInitialValues}
-            validationSchema={getBusinessFormValidation()}
-            onSubmit={onSubmit}
-          >
+          <Formik initialValues={getBusinessForm()} validationSchema={getBusinessFormValidation()} onSubmit={onSubmit}>
             {({ errors, values, setFieldValue, setFieldTouched }) => (
               <Form>
                 <FormField label="Business Name">
@@ -125,6 +126,12 @@ const Business = () => {
                   </div>
                 </div>
                 {errors.utilityBill && <span className="text-red-500">{errors.utilityBill}</span>}
+
+                <Input.Checkbox name="acceptedTerms">
+                  <p className="font-secondary text-[12px]">
+                    By clicking continue, I agree to brydge Terms and Conditions, Privacy Policy and Pricing
+                  </p>
+                </Input.Checkbox>
 
                 <Button type="submit" full>
                   Submit

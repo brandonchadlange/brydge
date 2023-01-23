@@ -12,7 +12,7 @@ type Props = {
 const Button = ({ loading, className, children, full, ...rest }: Props) => {
   return (
     <button
-      className={`flex justify-center px-5 py-2 text-center text-white transition ease-in-out rounded-full bg-dark hover:bg-dark-400 ${
+      className={`flex justify-center mt-4 px-5 py-2 text-center text-white transition ease-in-out rounded-full bg-dark hover:bg-dark-400 ${
         full && 'w-full'
       } ${className}`}
       {...rest}

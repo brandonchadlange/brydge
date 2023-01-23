@@ -2,7 +2,7 @@
 import { useField } from 'formik';
 import { ChangeEvent } from 'react';
 import { HiOutlineDocumentArrowUp } from 'react-icons/hi2';
-type CustomTextInputProps = {
+type CustomFileInputProps = {
   placeholder?: string;
   name: string;
   id: string;
@@ -10,9 +10,9 @@ type CustomTextInputProps = {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-type TextInputProps = CustomTextInputProps;
+type FileInputProps = CustomFileInputProps;
 
-const FileInput = (props: TextInputProps) => {
+const FileInput = (props: FileInputProps) => {
   const [field, meta] = useField(props);
 
   return (
