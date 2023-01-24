@@ -1,3 +1,6 @@
+import { ChangeEvent, useEffect, useState } from "react";
+import Image from 'next/image'
+
 import Card from "@/components/card";
 import Input from "@/components/input/index";
 import Layout from "@/components/layout";
@@ -6,10 +9,12 @@ import Slideout from "@/components/slide-out";
 import AppTable, { AppTableColumn } from "@/components/table";
 import withDashboardLayout from "@/components/withDashboardLayout";
 import syndicateService from "@/frontend/services/syndicate";
-import { useEffect, useState } from "react";
+import { useFileUpload } from "@/frontend/services/useUploadFile";
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [file, setFile] = useState<File>();
+  const [uploadedImgageUrl, setUploadedImgageUrl] = useState();
 
   useEffect(() => {
     syndicateService.getSyndicates();
@@ -18,6 +23,18 @@ const Dashboard = () => {
   const showSlideOut = () => {
     setShowOverlay(true);
   };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  }
+
+  const handleUpload = async () => {
+    if (!file) return alert('Select a file')
+    const url = await useFileUpload(file)
+    setUploadedImgageUrl(url)
+  }
 
   return (
     <>
@@ -29,6 +46,13 @@ const Dashboard = () => {
             <Input.Text placeholder="Legal name" />
           </Layout.Grid>
         </Card>
+        <div className="p-4">
+          <input type="file" onChange={handleChange}/>
+          <button className="rounded-md bg-black text-white px-6 text-sm" onClick={handleUpload}>
+            Upload File
+          </button>
+          { uploadedImgageUrl && <Image src={uploadedImgageUrl} alt="uploaded-image" width={200} height={200}/>}
+        </div>
         <div className="bg-white rounded-md mt-12 shadow-sm">
           <div className="flex justify-between p-4">
             <div className="flex gap-2">
