@@ -14,7 +14,7 @@ import { useFileUpload } from "@/frontend/services/useUploadFile";
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [file, setFile] = useState<File>();
-  const [uploadedImgageUrl, setUploadedImgageUrl] = useState();
+  const [uploadedImageUrl, setUploadedImageUrl] = useState();
 
   useEffect(() => {
     syndicateService.getSyndicates();
@@ -33,7 +33,7 @@ const Dashboard = () => {
   const handleUpload = async () => {
     if (!file) return alert('Select a file')
     const url = await useFileUpload(file)
-    setUploadedImgageUrl(url)
+    setUploadedImageUrl(url)
   }
 
   return (
@@ -51,7 +51,7 @@ const Dashboard = () => {
           <button className="rounded-md bg-black text-white px-6 text-sm" onClick={handleUpload}>
             Upload File
           </button>
-          { uploadedImgageUrl && <Image src={uploadedImgageUrl} alt="uploaded-image" width={200} height={200}/>}
+          { uploadedImageUrl && <Image src={uploadedImageUrl} alt="uploaded-image" width={200} height={200}/>}
         </div>
         <div className="bg-white rounded-md mt-12 shadow-sm">
           <div className="flex justify-between p-4">
