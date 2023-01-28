@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import toast from 'react-hot-toast'
+
 import Card from "@/components/card";
 import Input from "@/components/input/index";
 import Layout from "@/components/layout";
@@ -6,13 +9,16 @@ import Slideout from "@/components/slide-out";
 import AppTable, { AppTableColumn } from "@/components/table";
 import withDashboardLayout from "@/components/withDashboardLayout";
 import syndicateService from "@/frontend/services/syndicate";
-import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     syndicateService.getSyndicates();
+    toast.success("Welcome to brydge 😉", {
+      position: "top-right",
+      duration: 3000
+    })
   }, []);
 
   const showSlideOut = () => {
