@@ -1,14 +1,15 @@
+import Card from '@/components/card';
+import Input from '@/components/input/';
+import Layout from '@/components/layout';
+import Progress from '@/components/progress';
+import Slideout from '@/components/slide-out';
+import AppTable, { AppTableColumn } from '@/components/table';
+import withDashboardLayout from '@/components/withDashboardLayout';
+import syndicateService from '@/frontend/services/syndicate';
+import { useEffect, useState } from 'react';
+import { Form, Formik } from 'formik';
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast'
-
-import Card from "@/components/card";
-import Input from "@/components/input/index";
-import Layout from "@/components/layout";
-import Progress from "@/components/progress";
-import Slideout from "@/components/slide-out";
-import AppTable, { AppTableColumn } from "@/components/table";
-import withDashboardLayout from "@/components/withDashboardLayout";
-import syndicateService from "@/frontend/services/syndicate";
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -25,14 +26,23 @@ const Dashboard = () => {
     setShowOverlay(true);
   };
 
+  const initialValues = {
+    legalName: '',
+    rcNumber: '',
+  };
+
   return (
     <>
       <div className="container p-8">
         <Card>
           <h1 className="text-lg font-bold font-primary">Company Details</h1>
           <Layout.Grid columns={2}>
-            <Input.Text placeholder="Legal name" />
-            <Input.Text placeholder="Legal name" />
+            <Formik initialValues={initialValues} onSubmit={() => {}}>
+              <Form>
+                <Input.Text placeholder="Legal name" name="firstName" />
+                <Input.Text placeholder="Legal name" name="lastName" />
+              </Form>
+            </Formik>
           </Layout.Grid>
         </Card>
         <div className="bg-white rounded-md mt-12 shadow-sm">
@@ -40,17 +50,13 @@ const Dashboard = () => {
             <div className="flex gap-2">
               <div className="h-12 w-12 bg-gray-700 rounded-md"></div>
               <div>
-                <h1 className="text-lg font-bold font-primary">
-                  The Pryde Lab
-                </h1>
-                <p className="text-xs">
-                  Importation of fibre from eastern europe
-                </p>
+                <h1 className="text-lg font-bold font-primary">The Pryde Lab</h1>
+                <p className="text-xs">Importation of fibre from eastern europe</p>
               </div>
             </div>
             <div className="flex gap-10 align-bottom">
               <div className="w-40">
-                <Progress value={50} />
+                <Progress value={70} />
               </div>
               <div>
                 <h1 className="text-2xl font-bold font-primary">$ 12,000.00</h1>
@@ -78,9 +84,7 @@ const Dashboard = () => {
                 <p className="text-xs">Status</p>
               </div>
             </div>
-            <button className="rounded-md bg-red-200 text-red-400 px-6 text-sm">
-              Deactivate
-            </button>
+            <button className="rounded-md bg-red-200 text-red-400 px-6 text-sm">Deactivate</button>
           </div>
         </div>
         <div className="mt-12">
@@ -95,13 +99,10 @@ const Dashboard = () => {
         <Slideout show={showOverlay} setShow={setShowOverlay}>
           <div className="p-4">
             <h1 className="text-lg font-bold font-primary">Create Deal</h1>
-            <Input.FormField
-              label="Investor"
-              description="do some amazing shizzz"
-            >
-              <Input.Text placeholder="Investor" />
+            <Input.FormField label="Investor" description="do some amazing shizzz">
+              <Input.Text placeholder="Investor" name="investor" />
             </Input.FormField>
-            <Input.Text placeholder="Amount" />
+            <Input.Text placeholder="Amount" name="amount" />
           </div>
         </Slideout>
       </div>
@@ -120,29 +121,29 @@ type Member = {
 const TableTest = () => {
   const columns: AppTableColumn<Member>[] = [
     {
-      name: "lp",
-      heading: "LP",
+      name: 'lp',
+      heading: 'LP',
       component(data) {
         return <p className="font-bold">{data.lp}</p>;
       },
     },
     {
-      name: "deal",
-      heading: "Deal",
+      name: 'deal',
+      heading: 'Deal',
       component(e) {
         return <>{e.deal}</>;
       },
     },
     {
-      name: "carryPercent",
-      heading: "Carry %",
+      name: 'carryPercent',
+      heading: 'Carry %',
       component(e) {
         return <>{e.carryPercent}</>;
       },
     },
     {
-      name: "status",
-      heading: "Status",
+      name: 'status',
+      heading: 'Status',
       component(e) {
         return <>{e.status}</>;
       },
@@ -151,18 +152,18 @@ const TableTest = () => {
 
   const data: Member[] = [
     {
-      id: "1",
-      lp: "Peter Graham",
-      deal: "Fibre Importation",
-      carryPercent: "10%",
-      status: "Pending",
+      id: '1',
+      lp: 'Peter Graham',
+      deal: 'Fibre Importation',
+      carryPercent: '10%',
+      status: 'Pending',
     },
     {
-      id: "1",
-      lp: "Gracie Montez",
-      deal: "Fibre Importation",
-      carryPercent: "10%",
-      status: "Pending",
+      id: '1',
+      lp: 'Gracie Montez',
+      deal: 'Fibre Importation',
+      carryPercent: '10%',
+      status: 'Pending',
     },
   ];
 

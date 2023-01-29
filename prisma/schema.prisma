@@ -34,13 +34,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id                      String                    @id @default(cuid())
+  name                    String?
+  email                   String?                   @unique
+  emailVerified           DateTime?
+  image                   String?
+  accounts                Account[]
+  sessions                Session[]
+  StructuredSyndicateUser StructuredSyndicateUser[]
 }
 
 model VerificationToken {
@@ -52,14 +53,15 @@ model VerificationToken {
 }
 
 model StructuredSyndicate {
-  id                     String @id @default(cuid())
-  registeredName         String
-  registrationNumber     String
-  syndicateHeadName      String
-  bankVerificationNumber String
-  operationalAddress     String
-  state                  String
-  utilityBillUrl         String
+  id                      String                    @id @default(cuid())
+  registeredName          String
+  registrationNumber      String
+  syndicateHeadName       String
+  bankVerificationNumber  String
+  operationalAddress      String
+  state                   String
+  utilityBillUrl          String
+  StructuredSyndicateUser StructuredSyndicateUser[]
 }
 
 model PendingDeal {
@@ -80,4 +82,12 @@ model OpenDeal {
   expectedTenure   Int
   approvedDateTime DateTime
   approvedByUserId String
+}
+
+model StructuredSyndicateUser {
+  id                    String              @id
+  structuredSyndicateId String
+  userId                String
+  StructuredSyndicate   StructuredSyndicate @relation(fields: [structuredSyndicateId], references: [id], onDelete: Cascade)
+  User                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
