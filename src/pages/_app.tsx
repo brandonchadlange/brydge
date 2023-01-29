@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Montserrat, Syne } from '@next/font/google'
+import { Toaster } from 'react-hot-toast'
 
 const syne = Syne({
   subsets: ['latin'],
@@ -16,6 +17,7 @@ const montserrat = Montserrat({
 export default function App({ Component, pageProps }: AppProps) {
   return(
     <main className={`${syne.variable} ${montserrat.variable}`}>
+      <Toaster />
       <Component {...pageProps} />
     </main>
   ) 
