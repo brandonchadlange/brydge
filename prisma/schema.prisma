@@ -64,6 +64,14 @@ model StructuredSyndicate {
   StructuredSyndicateUser StructuredSyndicateUser[]
 }
 
+model StructuredSyndicateUser {
+  id                    String              @id @default(cuid())
+  structuredSyndicateId String
+  userId                String
+  structuredSyndicate   StructuredSyndicate @relation(fields: [structuredSyndicateId], references: [id], onDelete: Cascade)
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model PendingDeal {
   id             String @id @default(cuid())
   syndicateId    String
@@ -82,12 +90,4 @@ model OpenDeal {
   expectedTenure   Int
   approvedDateTime DateTime
   approvedByUserId String
-}
-
-model StructuredSyndicateUser {
-  id                    String              @id
-  structuredSyndicateId String
-  userId                String
-  StructuredSyndicate   StructuredSyndicate @relation(fields: [structuredSyndicateId], references: [id], onDelete: Cascade)
-  User                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
