@@ -1,10 +1,34 @@
-import { CreateStructuredSyndicateDTO } from "../dto/syndicate/create-structured-syndicate";
-import { CreateStructuredSyndicateUserDTO } from "../dto/syndicate/create-structured-syndicate-user";
-import prismaClient from "../prisma";
+import { CreateStructuredSyndicateDTO } from '../dto/syndicate/create-structured-syndicate';
+import { CreateStructuredSyndicateUserDTO } from '../dto/syndicate/create-structured-syndicate-user';
+import prismaClient from '../prisma';
 
-const createStructuredSyndicate = async (
-  data: CreateStructuredSyndicateDTO
-) => {
+const getUserStructuredSyndicates = async (userId: string) => {
+  const syndicates = await prismaClient.structuredSyndicateUser.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      structuredSyndicate: true,
+    },
+  });
+
+  return syndicates.map(e => e.structuredSyndicate);
+};
+
+const getUserUnstructuredSyndicates = async (userId: string) => {
+  const syndicates = await prismaClient.unstructuredSyndicateUser.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      structuredSyndicate: true,
+    },
+  });
+
+  return syndicates.map(e => e.structuredSyndicate);
+};
+
+const createStructuredSyndicate = async (data: CreateStructuredSyndicateDTO) => {
   return prismaClient.structuredSyndicate.create({
     data: {
       registeredName: data.registeredName,
@@ -18,9 +42,7 @@ const createStructuredSyndicate = async (
   });
 };
 
-const createStructuredSyndicateUser = async (
-  data: CreateStructuredSyndicateUserDTO
-) => {
+const createStructuredSyndicateUser = async (data: CreateStructuredSyndicateUserDTO) => {
   return prismaClient.structuredSyndicateUser.create({
     data: {
       structuredSyndicateId: data.structuredSyndicateId,
@@ -32,6 +54,8 @@ const createStructuredSyndicateUser = async (
 const createUnstructuredSyndicate = async () => {};
 
 const SyndicateRepository = {
+  getUserStructuredSyndicates,
+  getUserUnstructuredSyndicates,
   createStructuredSyndicate,
   createStructuredSyndicateUser,
   createUnstructuredSyndicate,

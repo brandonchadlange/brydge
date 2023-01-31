@@ -6,20 +6,20 @@ import Slideout from '@/components/slide-out';
 import AppTable, { AppTableColumn } from '@/components/table';
 import withDashboardLayout from '@/components/withDashboardLayout';
 import syndicateService from '@/frontend/services/syndicate';
+import userService from '@/frontend/services/user';
 import { useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
-import { useEffect, useState } from "react";
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast';
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     syndicateService.getSyndicates();
-    toast.success("Welcome to brydge 😉", {
-      position: "top-right",
-      duration: 3000
-    })
+    toast.success('Welcome to brydge 😉', {
+      position: 'top-right',
+      duration: 3000,
+    });
   }, []);
 
   const showSlideOut = () => {
