@@ -2,28 +2,19 @@ import UserService from '@/backend/services/user';
 import BusinessService from '@/backend/services/business';
 import SyndicateService from '@/backend/services/syndicate';
 import getSession from '@/backend/utility/get-session';
-import { Business, StructuredSyndicate, UnstructuredSyndicate } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-
-interface IGetUserResponse {
-  username: string;
-  isOnboarded: boolean;
-  isBusiness: boolean;
-  isSyndicate: boolean;
-  businesses: Business[];
-  syndicates: (StructuredSyndicate | UnstructuredSyndicate)[];
-}
+import { IGetUserResponse } from './user.types';
 
 const getUserRouteHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession(req, res);
 
-  if (session === undefined || session === null) {
+  if (!session) {
     return res.status(401).send('Unauthorized');
   }
 
   const user = await UserService.getUserById(session.uid);
 
-  if (user === undefined || user === null) {
+  if (!user) {
     return res.status(404).send('Failed to find user');
   }
 
@@ -37,10 +28,10 @@ const getUserRouteHandler = async (req: NextApiRequest, res: NextApiResponse) =>
   const isOnboarded = isBusiness || isSyndicate;
 
   const response: IGetUserResponse = {
-    username: user.name!,
-    isOnboarded: isOnboarded,
-    isBusiness: isBusiness,
-    isSyndicate: isSyndicate,
+    username: user.legalName,
+    isOnboarded,
+    isBusiness,
+    isSyndicate,
     businesses: [...userBusinesses],
     syndicates: [...userStructuredSyndicates, ...userUnstructuredSyndicates],
   };

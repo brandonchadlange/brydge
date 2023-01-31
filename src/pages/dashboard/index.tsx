@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
+import Image from 'next/image'
 
 import Card from '@/components/card';
-import Input from '@/components/input/';
+import Input from '@/components/input';
 import Layout from '@/components/layout';
 import Progress from '@/components/progress';
 import Slideout from '@/components/slide-out';
@@ -11,27 +12,36 @@ import withDashboardLayout from '@/components/withDashboardLayout';
 import syndicateService from '@/frontend/services/syndicate';
 import { UserContext } from '@/context';
 import showToast from '@/frontend/utility/show-toast';
+import userService from '@/frontend/services/user';
+import { SyndicateForm } from '@/components/Form';
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [file, setFile] = useState<File>();
   const [uploadedImageUrl, setUploadedImageUrl] = useState();
 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    syndicateService.getSyndicates();
-    const message = user.isSyndicateUser ? 'Hello syndicate user 😉' : 'Hello Normal user 😉';
-    showToast(message);
+    const getSyndicates = async () => {
+     const syndicates = await syndicateService.getSyndicates();
+     console.log({ syndicates });
+    }
+
+    const getUserState = async () => {
+      const userState  = await userService.getUserState();
+      setUser!({ ...user, ...userState});
+
+      const message = userState.isSyndicate ? 'Hello syndicate user 😉' : `Hello ${userState.username} 😉`;
+      showToast(message);
+    }
+
+    getSyndicates();
+    getUserState();
   }, []);
 
   const showSlideOut = () => {
     setShowOverlay(true);
-  };
-
-  const initialValues = {
-    legalName: '',
-    rcNumber: '',
   };
 
   return (
@@ -40,12 +50,7 @@ const Dashboard = () => {
         <Card>
           <h1 className="text-lg font-bold font-primary">Company Details</h1>
           <Layout.Grid columns={2}>
-            <Formik initialValues={initialValues} onSubmit={() => {}}>
-              <Form>
-                <Input.Text placeholder="Legal name" name="firstName" />
-                <Input.Text placeholder="Legal name" name="lastName" />
-              </Form>
-            </Formik>
+            <SyndicateForm />
           </Layout.Grid>
         </Card>
         <div className="p-4">

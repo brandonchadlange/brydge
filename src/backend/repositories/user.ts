@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import prismaClient from '../prisma';
 
 const getUserById = async (userId: string) => {
@@ -8,8 +9,18 @@ const getUserById = async (userId: string) => {
   });
 };
 
+const updateUserById = async (userId: string, data: Partial<User>) => {
+  return prismaClient.user.update({
+    where: {
+      id: userId,
+    },
+    data
+  })
+}
+
 const UserRepository = {
   getUserById,
+  updateUserById,
 };
 
 export default UserRepository;

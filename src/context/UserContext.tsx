@@ -1,22 +1,20 @@
 import React, { createContext, ReactNode, useMemo, useState } from 'react';
-
-interface User {
-  firstName: string;
-  lastName: string;
-  isSyndicateUser: boolean;
-}
+import { IGetUserResponse } from '@/backend/route-handlers/user/user.types';
 
 interface UserContextType {
-  user: User;
-  setUser?: (user: User) => void;
+  user: IGetUserResponse;
+  setUser?: (user: IGetUserResponse) => void;
   resetUser?: () => void;
 }
 
 const initialState = (): UserContextType => ({
   user: {
-    firstName: '',
-    lastName: '',
-    isSyndicateUser: false
+    username: '',
+    isBusiness: false,
+    isOnboarded: false,
+    isSyndicate: true,
+    syndicates: [],
+    businesses: []
   }
 });
 

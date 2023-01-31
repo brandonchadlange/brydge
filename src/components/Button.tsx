@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import { CgSpinner } from 'react-icons/cg';
 
-type Props = {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
   children: any;
   loading?: boolean;
+  disabled?: boolean;
   full?: boolean;
 };
 

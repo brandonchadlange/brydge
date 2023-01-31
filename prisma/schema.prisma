@@ -35,13 +35,14 @@ model Session {
 
 model User {
   id                        String                      @id @default(cuid())
-  name                      String?
+  legalName                 String
   email                     String?                     @unique
   emailVerified             DateTime?
+  rcNumber                  String       
   image                     String?
   accounts                  Account[]
-  sessions                  Session[]
   BusinessUser              BusinessUser[]
+  sessions                  Session[]
   StructuredSyndicateUser   StructuredSyndicateUser[]
   UnstructuredSyndicateUser UnstructuredSyndicateUser[]
 }
@@ -89,9 +90,9 @@ model StructuredSyndicateUser {
 
 model UnstructuredSyndicate {
   id                     String                      @id @default(cuid())
+  utilityBillUrl         String
   name                   String
   bankVerificationNumber Int
-  utilityBillUrl         String
   users                  UnstructuredSyndicateUser[]
 }
 
