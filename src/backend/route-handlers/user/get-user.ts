@@ -7,6 +7,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 interface IGetUserResponse {
   username: string;
+  isOnboarded: boolean;
   isBusiness: boolean;
   isSyndicate: boolean;
   businesses: Business[];
@@ -33,8 +34,11 @@ const getUserRouteHandler = async (req: NextApiRequest, res: NextApiResponse) =>
   const isBusiness = userBusinesses.length > 0;
   const isSyndicate = userStructuredSyndicates.length > 0 || userUnstructuredSyndicates.length > 0;
 
+  const isOnboarded = isBusiness || isSyndicate;
+
   const response: IGetUserResponse = {
     username: user.name!,
+    isOnboarded: isOnboarded,
     isBusiness: isBusiness,
     isSyndicate: isSyndicate,
     businesses: [...userBusinesses],
