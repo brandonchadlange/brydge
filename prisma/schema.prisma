@@ -89,12 +89,8 @@ model StructuredSyndicateUser {
 
 model UnstructuredSyndicate {
   id                     String                      @id @default(cuid())
-  registeredName         String
-  registrationNumber     String
-  syndicateHeadName      String
-  bankVerificationNumber String
-  operationalAddress     String
-  state                  String
+  name                   String
+  bankVerificationNumber Int
   utilityBillUrl         String
   users                  UnstructuredSyndicateUser[]
 }
@@ -103,7 +99,7 @@ model UnstructuredSyndicateUser {
   id                      String                @id @default(cuid())
   unstructuredSyndicateId String
   userId                  String
-  structuredSyndicate     UnstructuredSyndicate @relation(fields: [unstructuredSyndicateId], references: [id], onDelete: Cascade)
+  unstructuredSyndicate   UnstructuredSyndicate @relation(fields: [unstructuredSyndicateId], references: [id], onDelete: Cascade)
   user                    User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 

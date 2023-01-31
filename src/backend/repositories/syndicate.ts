@@ -21,11 +21,11 @@ const getUserUnstructuredSyndicates = async (userId: string) => {
       userId: userId,
     },
     select: {
-      structuredSyndicate: true,
+      unstructuredSyndicate: true,
     },
   });
 
-  return syndicates.map(e => e.structuredSyndicate);
+  return syndicates.map(e => e.unstructuredSyndicate);
 };
 
 const createStructuredSyndicate = async (data: CreateStructuredSyndicateDTO) => {
