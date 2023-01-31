@@ -12,11 +12,11 @@ import * as Yup from 'yup';
 const FILE_SIZE = 10000 * 1024;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'application/pdf'];
 
-const onSubmit = values => {
-  setTimeout(() => {
-    alert(JSON.stringify(values, null, 2));
-  }, 500);
-};
+// const onSubmit = values => {
+//   setTimeout(() => {
+//     alert(JSON.stringify(values, null, 2));
+//   }, 500);
+// };
 
 const getBusinessForm = () => {
   return {
@@ -47,11 +47,11 @@ const getBusinessFormValidation = () => {
 };
 
 const Business = () => {
-  const onSubmit = values => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-    }, 500);
-  };
+  // const onSubmit = values => {
+  //   setTimeout(() => {
+  //     alert(JSON.stringify(values, null, 2));
+  //   }, 500);
+  // };
 
   return (
     <>
@@ -78,7 +78,7 @@ const Business = () => {
           </p>
         </section>
         <section className="col-span-1 px-2 overflow-x-hidden overflow-y-auto">
-          <Formik initialValues={getBusinessForm()} validationSchema={getBusinessFormValidation()} onSubmit={onSubmit}>
+          <Formik initialValues={getBusinessForm()} validationSchema={getBusinessFormValidation()} onSubmit={() => {}}>
             {({ errors, values, setFieldValue, setFieldTouched }) => (
               <Form>
                 <FormField label="Business Name">

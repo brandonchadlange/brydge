@@ -6,7 +6,7 @@ import TextInput from './text';
 import TextAreaInput from './text-area';
 import SelectInput from './select';
 import FileInput from './file';
-import CheckboxInput from './checkbox';
+// import CheckboxInput from './checkbox';
 
 const Input = {
   Date: DateInput,
@@ -17,7 +17,7 @@ const Input = {
   TextArea: TextAreaInput,
   Select: SelectInput,
   File: FileInput,
-  Checkbox: CheckboxInput,
+  // Checkbox: CheckboxInput,
 };
 
 export default Input;
