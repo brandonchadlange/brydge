@@ -3,7 +3,7 @@ import React from 'react';
 import Button from './Button';
 import { HiOutlineDocumentArrowUp } from 'react-icons/hi2';
 import Input from './input/';
-import FormField from './input/form-field';
+import FormField from './input/FormField';
 import { Formik, Form, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import states from '@/frontend/utility/nigerian-states';

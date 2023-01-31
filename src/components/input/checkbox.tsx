@@ -8,7 +8,7 @@ type CustomCheckboxInputProps = {
 
 type CheckboxInputProps = CustomCheckboxInputProps;
 
-const MyCheckbox = ({ children, ...props }: { children: ReactNode; props: CheckboxInputProps }) => {
+const CheckboxInput = ({ children, ...props }: { children: ReactNode; props: CheckboxInputProps }) => {
   const [field, meta] = useField({ ...props, type: 'checkbox' });
   return (
     <>
@@ -21,4 +21,4 @@ const MyCheckbox = ({ children, ...props }: { children: ReactNode; props: Checkb
   );
 };
 
-export default MyCheckbox;
+export default CheckboxInput;
