@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast';
 
 import Card from '@/components/card';
 import Input from '@/components/input/';
@@ -11,7 +11,7 @@ import AppTable, { AppTableColumn } from '@/components/table';
 import withDashboardLayout from '@/components/withDashboardLayout';
 import syndicateService from '@/frontend/services/syndicate';
 import { UserContext } from '@/context';
-
+import DealForm from '../deals/deal-creation-form';
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -20,11 +20,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     syndicateService.getSyndicates();
-    toast.success(user.isSyndicateUser ?  "Hello syndicate user 😉" : "Hello Normal user 😉", {
-      position: "top-right",
-      duration: 3000
-    })
-  }, []);
+    toast.success(user.isSyndicateUser ? 'Hello syndicate user 😉' : 'Hello Normal user 😉', {
+      position: 'top-right',
+      duration: 3000,
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const showSlideOut = () => {
     setShowOverlay(true);
@@ -102,11 +102,8 @@ const Dashboard = () => {
         <button onClick={() => showSlideOut()}>Show slideout</button>
         <Slideout show={showOverlay} setShow={setShowOverlay}>
           <div className="p-4">
-            <h1 className="text-lg font-bold font-primary">Create Deal</h1>
-            <Input.FormField label="Investor" description="do some amazing shizzz">
-              <Input.Text placeholder="Investor" name="investor" />
-            </Input.FormField>
-            <Input.Text placeholder="Amount" name="amount" />
+            <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
+            <DealForm />
           </div>
         </Slideout>
       </div>

@@ -9,11 +9,13 @@ export type FormFieldProps = {
 const FormField = (props: FormFieldProps) => {
   return (
     <>
-      <label>
-        <span>{props.label}</span>
-        {props.children}
-      </label>
-      <span className="text-xs">{props.description}</span>
+      <div className="mb-2 ">
+        <label>
+          <span>{props.label}</span>
+          {props.children}
+        </label>
+        <span className="text-xs text-dark-50 tracking-tight">{props.description}</span>
+      </div>
     </>
   );
 };
