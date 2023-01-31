@@ -18,6 +18,9 @@ const endpoints = {
       return '/api/syndicate/structured';
     },
   },
+  uploadFile() {
+    return "/api/s3/upload-file"
+  }
 };
 
 export default endpoints;

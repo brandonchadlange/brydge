@@ -14,6 +14,8 @@ import showToast from '@/frontend/utility/show-toast';
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [file, setFile] = useState<File>();
+  const [uploadedImageUrl, setUploadedImageUrl] = useState();
 
   const { user } = useContext(UserContext);
 
@@ -46,6 +48,13 @@ const Dashboard = () => {
             </Formik>
           </Layout.Grid>
         </Card>
+        <div className="p-4">
+          <input type="file" />
+          <button className="rounded-md bg-black text-white px-6 text-sm">
+            Upload File
+          </button>
+          { uploadedImageUrl && <Image src={uploadedImageUrl} alt="uploaded-image" width={200} height={200}/>}
+        </div>
         <div className="bg-white rounded-md mt-12 shadow-sm">
           <div className="flex justify-between p-4">
             <div className="flex gap-2">
