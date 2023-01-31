@@ -12,7 +12,6 @@ import syndicateService from '@/frontend/services/syndicate';
 import { UserContext } from '@/context';
 import showToast from '@/frontend/utility/show-toast';
 
-
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
 
@@ -20,7 +19,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     syndicateService.getSyndicates();
-    const message = user.isSyndicateUser ?  "Hello syndicate user 😉" : "Hello Normal user 😉";
+    const message = user.isSyndicateUser ? 'Hello syndicate user 😉' : 'Hello Normal user 😉';
     showToast(message);
   }, []);
 
