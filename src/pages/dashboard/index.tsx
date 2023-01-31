@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
-import toast from 'react-hot-toast'
 
 import Card from '@/components/card';
 import Input from '@/components/input/';
@@ -11,6 +10,7 @@ import AppTable, { AppTableColumn } from '@/components/table';
 import withDashboardLayout from '@/components/withDashboardLayout';
 import syndicateService from '@/frontend/services/syndicate';
 import { UserContext } from '@/context';
+import showToast from '@/frontend/utility/show-toast';
 
 
 const Dashboard = () => {
@@ -20,10 +20,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     syndicateService.getSyndicates();
-    toast.success(user.isSyndicateUser ?  "Hello syndicate user 😉" : "Hello Normal user 😉", {
-      position: "top-right",
-      duration: 3000
-    })
+    const message = user.isSyndicateUser ?  "Hello syndicate user 😉" : "Hello Normal user 😉";
+    showToast(message);
   }, []);
 
   const showSlideOut = () => {
