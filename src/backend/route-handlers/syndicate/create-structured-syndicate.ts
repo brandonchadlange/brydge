@@ -11,7 +11,8 @@ const createStructuredSyndicateRouteHandler = async (
   const createStructuredSyndicateDTO = req.body as CreateStructuredSyndicateDTO;
 
   const structuredSyndicate = await SyndicateService.createStructuredSyndicate(
-    createStructuredSyndicateDTO
+    createStructuredSyndicateDTO,
+    session.uid
   );
 
   res.status(201).send(structuredSyndicate);

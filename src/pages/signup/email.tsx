@@ -1,17 +1,13 @@
 import * as React from 'react'
 import { useRouter } from 'next/router'
-import LeftPanel from '@/components/LeftPanel'
 import Head from 'next/head'
 import Link from 'next/link'
-import PhoneInputWithCountry from 'react-phone-number-input/react-hook-form'
 import 'react-phone-number-input/style.css'
 import Button from '@/components/Button'
-import { useForm } from 'react-hook-form'
 import withAuthenticationLayout from '@/components/withAuthenticationLayout'
 
 const PhoneSignup = () => {
   const router = useRouter()
-  const { register, control, handleSubmit } = useForm()
 
 
   return (
@@ -61,14 +57,6 @@ const PhoneSignup = () => {
                     id='phone-input'
                     className='w-full px-5 py-2 my-3 border-2 rounded-lg focus:outline-none'
                   >
-                    <PhoneInputWithCountry
-                      international
-                      countryCallingCodeEditable={false}
-                      placeholder='Enter Phone Number'
-                      defaultCountry='NG'
-                      name='phone_number'
-                      control={control}
-                    />
                   </div>
                 </div>
                 <input
