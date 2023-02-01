@@ -4,7 +4,7 @@ import { Header } from '@/components/Header';
 import Input from '@/components/input/';
 import Link from 'next/link';
 import { HiOutlineDocumentArrowUp } from 'react-icons/hi2';
-import FormField from '@/components/input/form-field';
+import FormField from '@/components/input/FormField';
 import states from '@/frontend/utility/nigerian-states';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';

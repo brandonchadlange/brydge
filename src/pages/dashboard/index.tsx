@@ -50,10 +50,8 @@ const Dashboard = () => {
         </Card>
         <div className="p-4">
           <input type="file" />
-          <button className="rounded-md bg-black text-white px-6 text-sm">
-            Upload File
-          </button>
-          { uploadedImageUrl && <Image src={uploadedImageUrl} alt="uploaded-image" width={200} height={200}/>}
+          <button className="rounded-md bg-black text-white px-6 text-sm">Upload File</button>
+          {uploadedImageUrl && <Image src={uploadedImageUrl} alt="uploaded-image" width={200} height={200} />}
         </div>
         <div className="bg-white rounded-md mt-12 shadow-sm">
           <div className="flex justify-between p-4">
@@ -108,11 +106,8 @@ const Dashboard = () => {
         <button onClick={() => showSlideOut()}>Show slideout</button>
         <Slideout show={showOverlay} setShow={setShowOverlay}>
           <div className="p-4">
-            <h1 className="text-lg font-bold font-primary">Create Deal</h1>
-            <Input.FormField label="Investor" description="do some amazing shizzz">
-              <Input.Text placeholder="Investor" name="investor" />
-            </Input.FormField>
-            <Input.Text placeholder="Amount" name="amount" />
+            <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
+            <DealForm />
           </div>
         </Slideout>
       </div>
