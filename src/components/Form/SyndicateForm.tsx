@@ -12,7 +12,7 @@ export function SyndicateForm() {
   const { handleSubmit, isValid, isSubmitting } = useFormik<Partial<User>>({
     initialValues: {
       legalName: '',
-       rcNumber: ''
+      email: ''
     },
     async onSubmit(values) {
       const newState = await userService.updateUserState(values);
@@ -22,7 +22,7 @@ export function SyndicateForm() {
   return (
     <form onSubmit={handleSubmit}>
       <Input.Text placeholder="Legal name" name="legalName" />
-      <Input.Text placeholder="RC Number" name="rcNumber" />
+      <Input.Text placeholder="Email" name="email" />
       <Button type="submit" disabled={!isValid || isSubmitting}>Submit</Button>
     </form>
   )
