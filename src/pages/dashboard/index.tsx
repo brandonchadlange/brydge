@@ -15,9 +15,10 @@ import showToast from '@/frontend/utility/show-toast';
 import userService from '@/frontend/services/user';
 import { SyndicateForm } from '@/components/Form';
 import DealForm from '../deals/deal-creation-form'
+import Modal from '@/components/modal';
 
 const Dashboard = () => {
-  const [showOverlay, setShowOverlay] = useState(false);
+  const [showDealCreation, setShowDealCreation] = useState(false);
   const [file, setFile] = useState<File>();
   const [uploadedImageUrl, setUploadedImageUrl] = useState();
 
@@ -41,8 +42,8 @@ const Dashboard = () => {
     getUserState();
   }, []);
 
-  const showSlideOut = () => {
-    setShowOverlay(true);
+  const toggleSlideOut = () => {
+    setShowDealCreation(!showDealCreation);
   };
 
   return (
@@ -50,9 +51,6 @@ const Dashboard = () => {
       <div className="container p-8">
         <Card>
           <h1 className="text-lg font-bold font-primary">Company Details</h1>
-          <Layout.Grid columns={2}>
-            <SyndicateForm />
-          </Layout.Grid>
         </Card>
         <div className="p-4">
           <input type="file" />
@@ -109,12 +107,16 @@ const Dashboard = () => {
         <div className="mt-12">
           <Input.Date />
         </div>
-        <button onClick={() => showSlideOut()}>Show slideout</button>
-        <Slideout show={showOverlay} setShow={setShowOverlay}>
-          <div className="p-4">
-            <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
-            <DealForm />
-          </div>
+        <button onClick={toggleSlideOut}>Show slideout</button>
+        <Slideout show={showDealCreation} setShow={toggleSlideOut}>
+          {
+            Math.random() - 0.5 > 0 ? (
+              <div className="p-4">
+                <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
+                <DealForm />
+              </div>
+            ) : <SyndicateForm toggleSlideOut={toggleSlideOut}/>
+          }
         </Slideout>
       </div>
     </>

@@ -19,31 +19,35 @@ const getDealFormValidation = () => Yup.object().shape({
   email: Yup.string().email().required('Email is required'),
 });
 
-export function SyndicateForm() {
+export function SyndicateForm({ toggleSlideOut }: { toggleSlideOut: () => void}) {
   const { user, setUser } = useContext(UserContext);
 
   const onSubmit = async (values: Partial<User>) => {
     const newState = await userService.updateUserState(values);
     setUser!({...user, ...newState });
+    toggleSlideOut();
 
     showToast('Successfully updated details');
   }
   return (
-    <Formik initialValues={getSyndicatesForm()} validationSchema={getDealFormValidation()} onSubmit={onSubmit}>
-    {({}) => (
-      <Form>
-        <Input.FormField label="Name">
-          <Input.Text placeholder="Name" name="name" />
-        </Input.FormField>
-        <Input.FormField label="Email">
-          <Input.Text type="email" placeholder="Email" name="email" />
-        </Input.FormField>
+    <div className="max-h-screen overflow-y-hidden p-4">
+       <h1 className="text-lg font-bold font-primary mb-4">Update user details</h1>
+      <Formik initialValues={getSyndicatesForm()} validationSchema={getDealFormValidation()} onSubmit={onSubmit}>
+        {({}) => (
+          <Form>
+            <Input.FormField label="Name">
+              <Input.Text placeholder="Name" name="name" />
+            </Input.FormField>
+            <Input.FormField label="Email">
+              <Input.Text type="email" placeholder="Email" name="email" />
+            </Input.FormField>
 
-        <Button type="submit" full>
-          Save and Continue
-        </Button>
-      </Form>
-    )}
-  </Formik>
+            <Button type="submit" full>
+              Save and Continue
+            </Button>
+          </Form>
+        )}
+      </Formik>
+    </div>
   )
 }
