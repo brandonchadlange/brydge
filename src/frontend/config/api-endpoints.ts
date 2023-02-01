@@ -9,7 +9,7 @@ const endpoints = {
       return '/api/user';
     },
     updateUser() {
-      return '/api/user/update';
+      return '/api/user';
     },
   },
   business: {},
