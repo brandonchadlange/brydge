@@ -14,6 +14,7 @@ import { UserContext } from '@/context';
 import showToast from '@/frontend/utility/show-toast';
 import userService from '@/frontend/services/user';
 import { SyndicateForm } from '@/components/Form';
+import DealForm from '../deals/deal-creation-form'
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -32,7 +33,7 @@ const Dashboard = () => {
       const userState  = await userService.getUserState();
       setUser!({ ...user, ...userState});
 
-      const message = userState.isSyndicate ? 'Hello syndicate user 😉' : `Hello ${userState.username} 😉`;
+      const message = userState.isSyndicate ? 'Hello syndicate user 😉' : `Hello ${userState.name} 😉`;
       showToast(message);
     }
 

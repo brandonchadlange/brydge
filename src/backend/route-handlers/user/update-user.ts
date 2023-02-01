@@ -17,7 +17,9 @@ const updateUserRouteHandler = async (req: NextApiRequest, res: NextApiResponse)
 
   await UserService.updateUserById(session.uid, req.body)
 
-  res.status(200).send( await UserService.getUserById(session.uid));
+  const updatedUser = await UserService.getUserById(session.uid)
+
+  res.status(200).json(updatedUser);
 };
 
 export default updateUserRouteHandler;

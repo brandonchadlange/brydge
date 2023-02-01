@@ -1,7 +1,7 @@
 import { Business, StructuredSyndicate, UnstructuredSyndicate } from '@prisma/client';
 
 export interface IGetUserResponse {
-  username: string;
+  name: string;
   isOnboarded: boolean;
   isBusiness: boolean;
   isSyndicate: boolean;

@@ -28,7 +28,7 @@ const getUserRouteHandler = async (req: NextApiRequest, res: NextApiResponse) =>
   const isOnboarded = isBusiness || isSyndicate;
 
   const response: IGetUserResponse = {
-    username: user.legalName,
+    name: user.name,
     isOnboarded,
     isBusiness,
     isSyndicate,

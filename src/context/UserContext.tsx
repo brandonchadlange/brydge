@@ -9,7 +9,7 @@ interface UserContextType {
 
 const initialState = (): UserContextType => ({
   user: {
-    username: '',
+    name: '',
     isBusiness: false,
     isOnboarded: false,
     isSyndicate: true,
