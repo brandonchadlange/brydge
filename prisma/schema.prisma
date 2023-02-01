@@ -34,14 +34,16 @@ model Session {
 }
 
 model User {
-  id                      String                    @id @default(cuid())
-  name                    String?
-  email                   String?                   @unique
-  emailVerified           DateTime?
-  image                   String?
-  accounts                Account[]
-  sessions                Session[]
-  StructuredSyndicateUser StructuredSyndicateUser[]
+  id                        String                      @id @default(cuid())
+  name                      String?
+  email                     String?                     @unique
+  emailVerified             DateTime?
+  image                     String?
+  accounts                  Account[]
+  sessions                  Session[]
+  BusinessUser              BusinessUser[]
+  StructuredSyndicateUser   StructuredSyndicateUser[]
+  UnstructuredSyndicateUser UnstructuredSyndicateUser[]
 }
 
 model VerificationToken {
@@ -52,16 +54,29 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Business {
+  id    String         @id @default(cuid())
+  users BusinessUser[]
+}
+
+model BusinessUser {
+  id         String   @id @default(cuid())
+  businessId String
+  userId     String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model StructuredSyndicate {
-  id                      String                    @id @default(cuid())
-  registeredName          String
-  registrationNumber      String
-  syndicateHeadName       String
-  bankVerificationNumber  String
-  operationalAddress      String
-  state                   String
-  utilityBillUrl          String
-  StructuredSyndicateUser StructuredSyndicateUser[]
+  id                     String                    @id @default(cuid())
+  registeredName         String
+  registrationNumber     String
+  syndicateHeadName      String
+  bankVerificationNumber String
+  operationalAddress     String
+  state                  String
+  utilityBillUrl         String
+  users                  StructuredSyndicateUser[]
 }
 
 model StructuredSyndicateUser {
@@ -70,6 +85,22 @@ model StructuredSyndicateUser {
   userId                String
   structuredSyndicate   StructuredSyndicate @relation(fields: [structuredSyndicateId], references: [id], onDelete: Cascade)
   user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UnstructuredSyndicate {
+  id                     String                      @id @default(cuid())
+  name                   String
+  bankVerificationNumber Int
+  utilityBillUrl         String
+  users                  UnstructuredSyndicateUser[]
+}
+
+model UnstructuredSyndicateUser {
+  id                      String                @id @default(cuid())
+  unstructuredSyndicateId String
+  userId                  String
+  unstructuredSyndicate   UnstructuredSyndicate @relation(fields: [unstructuredSyndicateId], references: [id], onDelete: Cascade)
+  user                    User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model PendingDeal {

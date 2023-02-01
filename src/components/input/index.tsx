@@ -1,12 +1,12 @@
-import DateInput from './date';
+import DateInput from './Date';
 import EmailInput from './Email';
 import FormField from './FormField';
 import PasswordInput from './Password';
-import TextInput from './Text';
+import TextInput from './text';
 import TextAreaInput from './TextArea';
 import SelectInput from './Select';
 import FileInput from './File';
-import CheckboxInput from './checkbox';
+// import CheckboxInput from './checkbox';
 
 const Input = {
   Date: DateInput,
@@ -17,7 +17,7 @@ const Input = {
   TextArea: TextAreaInput,
   Select: SelectInput,
   File: FileInput,
-  Checkbox: CheckboxInput,
+  // Checkbox: CheckboxInput,
 };
 
 export default Input;

@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
-import toast from 'react-hot-toast';
 
 import Card from '@/components/card';
 import Input from '@/components/input/';
@@ -11,20 +10,20 @@ import AppTable, { AppTableColumn } from '@/components/table';
 import withDashboardLayout from '@/components/withDashboardLayout';
 import syndicateService from '@/frontend/services/syndicate';
 import { UserContext } from '@/context';
-import DealForm from '../deals/deal-creation-form';
+import showToast from '@/frontend/utility/show-toast';
 
 const Dashboard = () => {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [file, setFile] = useState<File>();
+  const [uploadedImageUrl, setUploadedImageUrl] = useState();
 
   const { user } = useContext(UserContext);
 
   useEffect(() => {
     syndicateService.getSyndicates();
-    toast.success(user.isSyndicateUser ? 'Hello syndicate user 😉' : 'Hello Normal user 😉', {
-      position: 'top-right',
-      duration: 3000,
-    });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const message = user.isSyndicateUser ? 'Hello syndicate user 😉' : 'Hello Normal user 😉';
+    showToast(message);
+  }, []);
 
   const showSlideOut = () => {
     setShowOverlay(true);
@@ -49,6 +48,11 @@ const Dashboard = () => {
             </Formik>
           </Layout.Grid>
         </Card>
+        <div className="p-4">
+          <input type="file" />
+          <button className="rounded-md bg-black text-white px-6 text-sm">Upload File</button>
+          {uploadedImageUrl && <Image src={uploadedImageUrl} alt="uploaded-image" width={200} height={200} />}
+        </div>
         <div className="bg-white rounded-md mt-12 shadow-sm">
           <div className="flex justify-between p-4">
             <div className="flex gap-2">

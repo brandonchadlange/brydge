@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getProviders, signIn, LiteralUnion, ClientSafeProvider, SignInResponse } from "next-auth/react"
 import { BuiltInProviderType } from 'next-auth/providers'
 
-const Signup = ({providers}: {providers: Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider>}) => {
+const Signup = () => {
   
   return (
     <div className='flex items-center justify-center h-screen font-primary w-100'>
@@ -23,9 +23,11 @@ const Signup = ({providers}: {providers: Record<LiteralUnion<BuiltInProviderType
           </Link>
         </span>
         {
-          Object.values(providers).map((provider => (
-            <AuthButton text={`Sign in with ${provider.name}`} image={`/${provider.name.toLowerCase()}.svg`} onClick={signIn(provider.id)} key={provider.name}/>
-          )))
+          // Object.values(providers).map((provider => (
+          //   <AuthButton text={`Sign in with ${provider.name}`} image={`/${provider.name.toLowerCase()}.svg`} onClick={signIn(provider.id)} key={provider.name}/>
+          // )))
+
+          <AuthButton text={`Sign in with google`} image={`/google.svg`} onClick={signIn('google')} />
         }
         <Divider />
         <Link
@@ -62,13 +64,6 @@ const Divider = () => {
       </div>
     </>
   )
-}
-
-export async function getServerSideProps(context: any) {
-  const providers = await getProviders()
-  return {
-    props: { providers },
-  }
 }
 
 export default Signup

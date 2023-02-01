@@ -78,25 +78,25 @@ const UnstructuredSyndicate = () => {
               name="utilityBill"
               type="file"
               onBlur={() => setFieldTouched('utilityBill')}
-              onChange={event => {
-                setFieldValue('utilityBill', event.currentTarget.files[0]);
-              }}
+              // onChange={event => {
+              //   setFieldValue('utilityBill', event.currentTarget.files[0]);
+              // }}
               className={'invisible hidden'}
             />
             <div className="flex flex-col ml-3 border-red-500 borde">
               <p className="font-bold text-md">
-                {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'}
+                {/* {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'} */}
               </p>
               <p className="text-sm text-blue">Max 10MB</p>
             </div>
           </div>
           {errors.utilityBill && <span className="text-red-500">{errors.utilityBill}</span>}
 
-          <Input.Checkbox name="acceptedTerms">
+          {/* <Input.Checkbox name="acceptedTerms">
             <p className="font-secondary text-[12px]">
               By clicking continue, I agree to brydge Terms and Conditions, Privacy Policy and Pricing
             </p>
-          </Input.Checkbox>
+          </Input.Checkbox> */}
 
           <Button type="submit" full>
             Continue

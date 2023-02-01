@@ -12,11 +12,11 @@ import * as Yup from 'yup';
 const FILE_SIZE = 10000 * 1024;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'application/pdf'];
 
-const onSubmit = values => {
-  setTimeout(() => {
-    alert(JSON.stringify(values, null, 2));
-  }, 500);
-};
+// const onSubmit = values => {
+//   setTimeout(() => {
+//     alert(JSON.stringify(values, null, 2));
+//   }, 500);
+// };
 
 const getBusinessForm = () => {
   return {
@@ -47,11 +47,11 @@ const getBusinessFormValidation = () => {
 };
 
 const Business = () => {
-  const onSubmit = values => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-    }, 500);
-  };
+  // const onSubmit = values => {
+  //   setTimeout(() => {
+  //     alert(JSON.stringify(values, null, 2));
+  //   }, 500);
+  // };
 
   return (
     <>
@@ -78,7 +78,7 @@ const Business = () => {
           </p>
         </section>
         <section className="col-span-1 px-2 overflow-x-hidden overflow-y-auto">
-          <Formik initialValues={getBusinessForm()} validationSchema={getBusinessFormValidation()} onSubmit={onSubmit}>
+          <Formik initialValues={getBusinessForm()} validationSchema={getBusinessFormValidation()} onSubmit={() => {}}>
             {({ errors, values, setFieldValue, setFieldTouched }) => (
               <Form>
                 <FormField label="Business Name">
@@ -112,25 +112,25 @@ const Business = () => {
                     name="utilityBill"
                     type="file"
                     onBlur={() => setFieldTouched('utilityBill')}
-                    onChange={event => {
-                      setFieldValue('utilityBill', event.currentTarget.files[0]);
-                    }}
+                    // onChange={event => {
+                    //   setFieldValue('utilityBill', event.currentTarget.files[0]);
+                    // }}
                     className={'invisible hidden'}
                   />
                   <div className="flex flex-col ml-3 border-red-500 borde">
                     <p className="font-bold text-md">
-                      {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'}
+                      {/* {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'} */}
                     </p>
                     <p className="text-sm text-blue">Max 10MB</p>
                   </div>
                 </div>
                 {errors.utilityBill && <span className="text-red-500">{errors.utilityBill}</span>}
 
-                <Input.Checkbox name="acceptedTerms">
+                {/* <Input.Checkbox name="acceptedTerms">
                   <p className="font-secondary text-[12px]">
                     By clicking continue, I agree to brydge Terms and Conditions, Privacy Policy and Pricing
                   </p>
-                </Input.Checkbox>
+                </Input.Checkbox> */}
                 <Button type="submit" full>
                   Submit
                 </Button>
