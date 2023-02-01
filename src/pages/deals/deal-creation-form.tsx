@@ -5,33 +5,33 @@ import * as Yup from 'yup';
 import states from '@/frontend/utility/nigerian-states';
 import Progress from '@/components/progress';
 
+const getDealForm = () => {
+  return {
+    companyName: '',
+    transactionType: '',
+    dealSize: '',
+    allocation: '',
+    spvTerms: '',
+    goalClosingDate: '',
+  };
+};
+
+const getDealFormValidation = () => {
+  return Yup.object().shape({
+    companyName: Yup.string().required('Company name is required'),
+    transactionType: Yup.string().required('Please select transaction type'),
+    dealSize: Yup.string().required('Deal size is required'),
+    allocation: Yup.string().required('Syndicate head is required'),
+    spvTerms: Yup.string().required('Required'),
+    goalClosingDate: Yup.date().required('Please add a goal closing date'),
+  });
+};
+
 const DealForm = () => {
   const onSubmit = (values: any) => {
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
     }, 500);
-  };
-
-  const getDealForm = () => {
-    return {
-      companyName: '',
-      transactionType: '',
-      dealSize: '',
-      allocation: '',
-      spvTerms: '',
-      goalClosingDate: '',
-    };
-  };
-
-  const getDealFormValidation = () => {
-    return Yup.object().shape({
-      companyName: Yup.string().required('Company name is required'),
-      transactionType: Yup.string().required('Please select transaction type'),
-      dealSize: Yup.string().required('Deal size is required'),
-      allocation: Yup.string().required('Syndicate head is required'),
-      spvTerms: Yup.string().required('Required'),
-      goalClosingDate: Yup.date().required('Please add a goal closing date'),
-    });
   };
 
   return (
