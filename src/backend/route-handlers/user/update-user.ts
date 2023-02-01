@@ -1,6 +1,4 @@
 import UserService from '@/backend/services/user';
-import BusinessService from '@/backend/services/business';
-import SyndicateService from '@/backend/services/syndicate';
 import getSession from '@/backend/utility/get-session';
 import { NextApiRequest, NextApiResponse } from 'next';
 
