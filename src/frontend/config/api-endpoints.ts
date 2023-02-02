@@ -8,6 +8,9 @@ const endpoints = {
     getUser() {
       return '/api/user';
     },
+    updateUser() {
+      return '/api/user';
+    },
   },
   business: {},
   syndicate: {

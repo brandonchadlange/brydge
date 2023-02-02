@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { Form, Formik } from 'formik';
+import Image from 'next/image'
 
 import Card from '@/components/card';
-import Input from '@/components/input/';
+import Input from '@/components/input';
 import Layout from '@/components/layout';
 import Progress from '@/components/progress';
 import Slideout from '@/components/slide-out';
@@ -11,27 +12,38 @@ import withDashboardLayout from '@/components/withDashboardLayout';
 import syndicateService from '@/frontend/services/syndicate';
 import { UserContext } from '@/context';
 import showToast from '@/frontend/utility/show-toast';
+import userService from '@/frontend/services/user';
+import { SyndicateForm } from '@/components/Form';
+import DealForm from '../deals/deal-creation-form'
+import Modal from '@/components/modal';
 
 const Dashboard = () => {
-  const [showOverlay, setShowOverlay] = useState(false);
+  const [showDealCreation, setShowDealCreation] = useState(false);
   const [file, setFile] = useState<File>();
   const [uploadedImageUrl, setUploadedImageUrl] = useState();
 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    syndicateService.getSyndicates();
-    const message = user.isSyndicateUser ? 'Hello syndicate user 😉' : 'Hello Normal user 😉';
-    showToast(message);
+    const getSyndicates = async () => {
+     const syndicates = await syndicateService.getSyndicates();
+     console.log({ syndicates });
+    }
+
+    const getUserState = async () => {
+      const userState  = await userService.getUserState();
+      setUser!({ ...user, ...userState});
+
+      const message = userState.isSyndicate ? 'Hello syndicate user 😉' : `Hello ${userState.name} 😉`;
+      showToast(message);
+    }
+
+    getSyndicates();
+    getUserState();
   }, []);
 
-  const showSlideOut = () => {
-    setShowOverlay(true);
-  };
-
-  const initialValues = {
-    legalName: '',
-    rcNumber: '',
+  const toggleSlideOut = () => {
+    setShowDealCreation(!showDealCreation);
   };
 
   return (
@@ -39,14 +51,6 @@ const Dashboard = () => {
       <div className="container p-8">
         <Card>
           <h1 className="text-lg font-bold font-primary">Company Details</h1>
-          <Layout.Grid columns={2}>
-            <Formik initialValues={initialValues} onSubmit={() => {}}>
-              <Form>
-                <Input.Text placeholder="Legal name" name="firstName" />
-                <Input.Text placeholder="Legal name" name="lastName" />
-              </Form>
-            </Formik>
-          </Layout.Grid>
         </Card>
         <div className="p-4">
           <input type="file" />
@@ -103,12 +107,16 @@ const Dashboard = () => {
         <div className="mt-12">
           <Input.Date />
         </div>
-        <button onClick={() => showSlideOut()}>Show slideout</button>
-        <Slideout show={showOverlay} setShow={setShowOverlay}>
-          <div className="p-4">
-            <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
-            <DealForm />
-          </div>
+        <button onClick={toggleSlideOut}>Show slideout</button>
+        <Slideout show={showDealCreation} setShow={toggleSlideOut}>
+          {
+            Math.random() - 0.5 > 0 ? (
+              <div className="p-4">
+                <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
+                <DealForm />
+              </div>
+            ) : <SyndicateForm toggleSlideOut={toggleSlideOut}/>
+          }
         </Slideout>
       </div>
     </>

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
+import { useContext } from "react";
+import { UserContext } from "@/context";
 
 const navLinks = [
   {
@@ -37,10 +39,12 @@ const navLinks = [
 ];
 
 const Logout = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <div className="bg-[url('/mask.jpg')] absolute bottom-6 h-36 w-70 px-6 flex flex-col justify-center rounded-lg">
       <span className="mb-4 text-center">
-        Financial solution for Deals blah balh
+        Financial solution for Deals {user.name}
       </span>
       <button
         className="px-5 py-3 text-white rounded-full font-primary bg-dark-500"

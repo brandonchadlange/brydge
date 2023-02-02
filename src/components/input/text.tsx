@@ -1,11 +1,10 @@
-// import { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import React, { InputHTMLAttributes } from 'react';
 import { useField } from 'formik';
-type CustomTextInputProps = {
+
+interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   name: string;
 };
-
-type TextInputProps = CustomTextInputProps;
 
 const TextInput = (props: TextInputProps) => {
   const [field, meta] = useField(props);
