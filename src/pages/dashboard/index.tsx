@@ -1,10 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import { Form, Formik } from 'formik';
 import Image from 'next/image'
 
 import Card from '@/components/card';
 import Input from '@/components/input';
-import Layout from '@/components/layout';
 import Progress from '@/components/progress';
 import Slideout from '@/components/slide-out';
 import AppTable, { AppTableColumn } from '@/components/table';
@@ -15,12 +13,12 @@ import showToast from '@/frontend/utility/show-toast';
 import userService from '@/frontend/services/user';
 import { SyndicateForm } from '@/components/Form';
 import DealForm from '../deals/deal-creation-form'
-import Modal from '@/components/modal';
+import WelcomeCard from '@/components/WelcomeCard';
+import ViewDealsCard from '@/components/ViewDealsCard';
+import CreatedDealsCard from '@/components/CreatedDealsTable';
 
 const Dashboard = () => {
   const [showDealCreation, setShowDealCreation] = useState(false);
-  const [file, setFile] = useState<File>();
-  const [uploadedImageUrl, setUploadedImageUrl] = useState();
 
   const { user, setUser } = useContext(UserContext);
 
@@ -49,14 +47,11 @@ const Dashboard = () => {
   return (
     <>
       <div className="container p-8">
-        <Card>
-          <h1 className="text-lg font-bold font-primary">Company Details</h1>
-        </Card>
-        <div className="p-4">
-          <input type="file" />
-          <button className="rounded-md bg-black text-white px-6 text-sm">Upload File</button>
-          {uploadedImageUrl && <Image src={uploadedImageUrl} alt="uploaded-image" width={200} height={200} />}
+        <div className="flex h-48 mb-6 w-2/3 justify-between gap-8">
+          <WelcomeCard className="!bg-dark-500 w-2/3"/>
+          <ViewDealsCard className="w-1/3"/>
         </div>
+        <CreatedDealsCard className="w-2/3" />
         <div className="bg-white rounded-md mt-12 shadow-sm">
           <div className="flex justify-between p-4">
             <div className="flex gap-2">
