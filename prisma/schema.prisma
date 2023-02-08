@@ -35,9 +35,9 @@ model Session {
 
 model User {
   id                        String                      @id @default(cuid())
-  name                      String
+  name                      String?
   email                     String?                     @unique
-  emailVerified             DateTime?   
+  emailVerified             DateTime?
   image                     String?
   accounts                  Account[]
   BusinessUser              BusinessUser[]
@@ -56,10 +56,10 @@ model VerificationToken {
 
 model Business {
   id                     String         @id @default(cuid())
-  registeredName         String
-  registrationNumber     String
   bankVerificationNumber String
   operationalAddress     String
+  registeredName         String
+  registrationNumber     String
   state                  String
   utilityBillUrl         String
   users                  BusinessUser[]
