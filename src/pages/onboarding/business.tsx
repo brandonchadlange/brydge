@@ -14,30 +14,40 @@ import * as Yup from 'yup';
 
 const FILE_SIZE = 10000 * 1024;
 
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'application/pdf'];
+const SUPPORTED_FORMATS = ['application/pdf'];
 
 const getBusinessForm = () => {
   return {
-    businessName: '',
-    rcNumber: '',
-    bvn: '',
-    address: '',
-    state: '',
-    utilityBill: null,
+  registeredName: "",
+  registrationNumber: "",
+  bankVerificationNumber: "",
+  operationalAddress:  "",
+  state:  "",
+  utilityBillUrl: "",
+  meansOfIdUrl: "",
+  bankStatementUrl:"",
   };
 };
 
 const getBusinessFormValidation = () => {
   return Yup.object().shape({
-    businessName: Yup.string().required('Business name is required'),
-    rcNumber: Yup.string().required('Registration number is required'),
-    bvn: Yup.string()
+    registeredName: Yup.string().required('Business name is required'),
+    registrationNumber: Yup.string().required('Registration number is required'),
+    bankVerificationNumber: Yup.string()
       .required('BVN is required')
       .matches(/^[0-9]+$/, 'Must be only digits')
       .test('bvn', 'Must be exactly 10 characters', val => val?.length === 10),
-    address: Yup.string().required('State is required'),
+    operationalAddress: Yup.string().required('Address is required'),
     state: Yup.string().required('State is required').oneOf(states, 'Select state'),
     utilityBill: Yup.mixed()
+      .required('Please upload your utility bill')
+      .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
+      .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
+    meansOfId: Yup.mixed()
+      .required('Please upload your utility bill')
+      .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
+      .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
+    bankStatement: Yup.mixed()
       .required('Please upload your utility bill')
       .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
       .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
@@ -46,31 +56,54 @@ const getBusinessFormValidation = () => {
 
 const Business = () => {
   const [utilityBill, setUtilityBill] = useState<File | null>(null);
+  const [meansOfId, setMeansOfId] = useState<File | null>(null);
+  const [bankStatement, setBankStatement] = useState<File | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploading, setUploading] = useState(false);
+  const [uploadingUtilityBill, setUploadingUtilityBill] = useState(false);
+  const [uploadingMeansOfId, setUploadingMeansOfId] = useState(false);
+  const [uploadingBankStatement, setUploadingBankStatement] = useState(false);
 
   const onUtilityBillSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     setUtilityBill(file);
-    setUploading(true);
+    setUploadingUtilityBill(true);
     const doc = await documentService.uploadDocument(file, setUploadProgress);
-    setUploading(false);
+    setUploadingUtilityBill(false);
+  };
+  const onMeansOfIdSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    setMeansOfId(file);
+    setUploadingMeansOfId(true);
+    const doc = await documentService.uploadDocument(file, setUploadProgress);
+    setUploadingMeansOfId(false);
+  };
+  const onBankStatementSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+    setBankStatement(file);
+    setUploadingBankStatement(true);
+    const doc = await documentService.uploadDocument(file, setUploadProgress);
+    setUploadingBankStatement(false);
   };
 
   const onSubmit = async (values: any) => {
     // Upload file to get utilityBillUrl
-    const document = await documentService.uploadDocument(utilityBill!);
+    const utilityBillDocument = await documentService.uploadDocument(utilityBill!);
+    const meansOfIdDocument = await documentService.uploadDocument(meansOfId!);
+    const bankStatementDocument = await documentService.uploadDocument(bankStatement!);
+
+    console.log({utilityBillDocument, meansOfIdDocument, bankStatementDocument})
+
 
     const data = await businessService.createBusiness({
-      registeredName: values.businessName,
-      registrationNumber: values.rcNumber,
-      bankVerificationNumber: values.bvn,
-      operationalAddress: values.address,
+      registeredName: values.registeredName,
+      registrationNumber: values.registrationNumber,
+      bankVerificationNumber: values.bankVerificationNumber,
+      operationalAddress: values.operationalAddress,
       state: values.state,
-      utilityBillUrl: document.publicUrl || '',
+      utilityBillUrl: utilityBillDocument.publicUrl || '',
+      meansOfIdUrl: meansOfIdDocument.publicUrl || '',
+      bankStatementUrl: bankStatementDocument.publicUrl || '',
     });
-
-    console.log(data);
   };
 
   return (
@@ -102,16 +135,16 @@ const Business = () => {
             {({ errors, setFieldValue, values, setFieldTouched }) => (
               <Form>
                 <FormField label="Business Name">
-                  <Input.Text placeholder="Name of Business" name="businessName" />
+                  <Input.Text placeholder="Name of Business" name="registeredName" />
                 </FormField>
                 <FormField label="Registration Number">
-                  <Input.Text placeholder="Enter RC Number" name="rcNumber" />
+                  <Input.Text placeholder="Enter RC Number" name="registrationNumber" />
                 </FormField>
                 <FormField label="BVN">
-                  <Input.Text placeholder="Enter BVN" name="bvn" />
+                  <Input.Text placeholder="Enter BVN" name="bankVerificationNumber" />
                 </FormField>
                 <FormField label="Address">
-                  <Input.TextArea placeholder="Enter street name and number" name="address"></Input.TextArea>
+                  <Input.TextArea placeholder="Enter street name and number" name="operationalAddress"></Input.TextArea>
                 </FormField>
                 <FormField label="State">
                   <Input.Select name="state">
@@ -136,9 +169,6 @@ const Business = () => {
                       onUtilityBillSelect(e);
                     }}
                     onBlur={() => setFieldTouched('utilityBill')}
-                    // onChange={event => {
-                    //   setFieldValue('utilityBill', event.currentTarget.files[0]);
-                    // }}
                     className={'invisible hidden'}
                   />
                   <div className="flex flex-col ml-3 border-red-500 borde">
@@ -148,8 +178,59 @@ const Business = () => {
                     <p className="text-sm text-blue">Max 10MB</p>
                   </div>
                 </div>
-                {uploading && <Progress value={uploadProgress} />}
+                {uploadingUtilityBill && <Progress value={uploadProgress} />}
                 {errors.utilityBill && <span className="text-red-500">{errors.utilityBill}</span>}
+
+                <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
+                  <label htmlFor="meansOfId">
+                    <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
+                  </label>
+                  <input
+                    id="meansOfId"
+                    name="meansOfId"
+                    type="file"
+                    onChange={e => {
+                      setFieldValue('meansOfId', e.currentTarget.files![0]);
+                      onMeansOfIdSelect(e);
+                    }}
+                    onBlur={() => setFieldTouched('meansOfId')}
+                    
+                    className={'invisible hidden'}
+                  />
+                  <div className="flex flex-col ml-3 border-red-500 borde">
+                    <p className="font-bold text-md">
+                      {/* {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'} */}
+                    </p>
+                    <p className="text-sm text-blue">Max 10MB</p>
+                  </div>
+                </div>
+                {uploadingMeansOfId && <Progress value={uploadProgress} />}
+                {errors.meansOfId && <span className="text-red-500">{errors.meansOfId}</span>}
+
+                <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
+                  <label htmlFor="bankStatement">
+                    <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
+                  </label>
+                  <input
+                    id="bankStatement"
+                    name="bankStatement"
+                    type="file"
+                    onChange={e => {
+                      setFieldValue('bankStatement', e.currentTarget.files![0]);
+                      onBankStatementSelect(e);
+                    }}
+                    onBlur={() => setFieldTouched('bankStatement')}
+                    className={'invisible hidden'}
+                  />
+                  <div className="flex flex-col ml-3 border-red-500 borde">
+                    <p className="font-bold text-md">
+                      {/* {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'} */}
+                    </p>
+                    <p className="text-sm text-blue">Max 10MB</p>
+                  </div>
+                </div>
+                {uploadingBankStatement && <Progress value={uploadProgress} />}
+                {errors.bankStatement && <span className="text-red-500">{errors.bankStatement}</span>}
 
                 <Button type="submit" full>
                   Submit
