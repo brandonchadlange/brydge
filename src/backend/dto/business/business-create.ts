@@ -6,4 +6,6 @@ export class BusinessCreateDTO {
   operationalAddress: string = "";
   state: string = "";
   utilityBillUrl: string = "";
+  meansOfIdUrl: string = "";
+  bankStatementUrl: string = "";
 }

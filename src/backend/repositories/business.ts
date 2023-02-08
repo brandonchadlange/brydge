@@ -21,6 +21,8 @@ const createBusiness = async (data: BusinessCreateDTO) => {
       bankVerificationNumber: data.bankVerificationNumber,
       operationalAddress: data.operationalAddress,
       utilityBillUrl: data.utilityBillUrl,
+      meansOfIdUrl: data.meansOfIdUrl,
+      bankStatementUrl: data.bankStatementUrl,
       registrationNumber: data.registrationNumber,
       state: data.state,
     },
