@@ -3,21 +3,23 @@ import { ReactNode } from "react";
 export type AppTableColumn<T> = {
   name: string;
   heading: string;
+  headerClass?: string;
   component: (data: T) => ReactNode;
 };
 
 export type AppTableProps<T> = {
   data?: T[];
   columns?: AppTableColumn<T>[];
+  children?: ReactNode;
 };
 
-function AppTable<T>({ columns, data }: AppTableProps<T>) {
+function AppTable<T>({ children, columns, data }: AppTableProps<T>) {
   return (
-    <table className="w-full">
+    <table className="w-full h-full">
       <thead>
         <tr className="text-left">
           {columns?.map((column) => (
-            <th key={column.name}>{column.heading}</th>
+            <th key={column.name} className={column.headerClass}>{column.heading}</th>
           ))}
         </tr>
       </thead>
@@ -31,6 +33,9 @@ function AppTable<T>({ columns, data }: AppTableProps<T>) {
             ))}
           </tr>
         ))}
+        {
+          !data?.length && children
+        }
       </tbody>
     </table>
   );

@@ -2,8 +2,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
-import { useContext } from "react";
-import { UserContext } from "@/context";
 
 const navLinks = [
   {
@@ -39,15 +37,14 @@ const navLinks = [
 ];
 
 const Logout = () => {
-  const { user } = useContext(UserContext);
-
   return (
-    <div className="bg-[url('/mask.jpg')] absolute bottom-6 h-36 w-70 px-6 flex flex-col justify-center rounded-lg">
-      <span className="mb-4 text-center">
-        Financial solution for Deals {user.name}
+    <div className="absolute bottom-6 h-36 w-70 px-6 flex flex-col justify-center rounded-2xl bg-dark-500">
+      <Image className="bg-white m-auto mt-4 rounded" src={"logo-black.svg"} width={50} height={50} alt="logo"/>
+      <span className="my-2 text-white text-center text-sm">
+        Simplifying Trade Finance in Africa
       </span>
       <button
-        className="px-5 py-3 text-white rounded-full font-primary bg-dark-500"
+        className="bg-white px-5 py-3 mb-2 text-dark-500 rounded-full font-primary"
         onClick={() => signOut({ callbackUrl: "/login", redirect: true })}
       >
         Log out
