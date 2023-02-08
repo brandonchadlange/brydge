@@ -99,13 +99,11 @@ const CreatedDealsTable = ({ className }: CreatedDealsTableProps) => {
         Created Deals
       </div>
       <AppTable columns={columns} data={[]}>
-        <tr className="h-full w-full">
-          <td className="flex flex-col items-center justify-center h-full w-full" colSpan={4}>
-            <BsSearch />
-            <div>Oops! You do not have any deals yet</div>
-            <Button type="button" className="underline !bg-white text-black ">Create new Deal</Button>
-          </td>
-        </tr>
+        <div className="flex flex-col items-center justify-center h-full w-full">
+          <BsSearch />
+          <div>Oops! You do not have any deals yet</div>
+          <Button type="button" className="underline !bg-white text-black ">Create new Deal</Button>
+        </div>
       </AppTable>
     </Card>
   );
