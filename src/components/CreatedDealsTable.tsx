@@ -7,6 +7,7 @@ import AppTable, { AppTableColumn } from './table';
 
 interface CreatedDealsTableProps {
   className?: string;
+  onCreateDeal: () => void;
 }
 
 interface Member {
@@ -92,7 +93,7 @@ const deals: Deal[] = [
 ];
 
 
-const CreatedDealsTable = ({ className }: CreatedDealsTableProps) => {
+export default function CreatedDealsTable({ className, onCreateDeal }: CreatedDealsTableProps) {
   return (
     <Card className={`p-4 h-96 ${className}`}>
       <div className="flex justify-between font-medium mb-4">
@@ -102,11 +103,9 @@ const CreatedDealsTable = ({ className }: CreatedDealsTableProps) => {
         <div className="flex flex-col items-center justify-center h-full w-full">
           <BsSearch />
           <div>Oops! You do not have any deals yet</div>
-          <Button type="button" className="underline !bg-white text-black ">Create new Deal</Button>
+          <Button type="button" className="underline !bg-white text-black" onClick={onCreateDeal}>Create new Deal</Button>
         </div>
       </AppTable>
     </Card>
   );
 };
-
-export default CreatedDealsTable;
