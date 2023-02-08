@@ -15,29 +15,31 @@ export type AppTableProps<T> = {
 
 function AppTable<T>({ children, columns, data }: AppTableProps<T>) {
   return (
-    <table className="w-full h-full">
-      <thead>
-        <tr className="text-left">
-          {columns?.map((column) => (
-            <th key={column.name} className={column.headerClass}>{column.heading}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data?.map((data, idx) => (
-          <tr key={idx}>
+    <>
+      <table className="w-full">
+        <thead>
+          <tr className="text-left">
             {columns?.map((column) => (
-              <td key={column.name} className="py-2">
-                {column.component(data)}
-              </td>
+              <th key={column.name} className={column.headerClass}>{column.heading}</th>
             ))}
           </tr>
-        ))}
-        {
-          !data?.length && children
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data?.map((data, idx) => (
+            <tr key={idx}>
+              {columns?.map((column) => (
+                <td key={column.name} className="py-2">
+                  {column.component(data)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {
+        !data?.length && children
+      }
+    </>
   );
 }
 
