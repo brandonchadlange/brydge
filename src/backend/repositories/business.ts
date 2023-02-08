@@ -1,6 +1,14 @@
 import prismaClient from "../prisma";
 import { BusinessCreateDTO } from "../dto/business/business-create";
 
+const getBusinessById = async (businessId: string) => {
+  return prismaClient.business.findFirst({
+    where: {
+      id: businessId,
+    },
+  });
+};
+
 const getUserBusinesses = async (userId: string) => {
   const businesses = await prismaClient.businessUser.findMany({
     where: {
@@ -38,10 +46,35 @@ const createBusinessUser = async (businessId: string, userId: string) => {
   });
 };
 
+const approveBusiness = async (businessId: string) => {
+  await prismaClient.business.update({
+    where: {
+      id: businessId,
+    },
+    data: {
+      approved: true,
+    },
+  });
+};
+
+const setSubAccountId = async (businessId: string, subAccountId: string) => {
+  await prismaClient.business.update({
+    where: {
+      id: businessId,
+    },
+    data: {
+      subAccountId: subAccountId,
+    },
+  });
+};
+
 const BusinessRepository = {
+  getBusinessById,
   getUserBusinesses,
   createBusiness,
   createBusinessUser,
+  approveBusiness,
+  setSubAccountId,
 };
 
 export default BusinessRepository;

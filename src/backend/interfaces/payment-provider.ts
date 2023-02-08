@@ -1,4 +1,7 @@
+import { Business, Deal } from "@prisma/client";
+
 export interface IPaymentProvider {
-  createAccount: () => void;
-  fundAccount: () => void;
+  onBusinessAccountApproved: (business: Business) => void;
+  onDealCreate: (deal: Deal) => void;
+  fundVirtualAccount: () => void;
 }

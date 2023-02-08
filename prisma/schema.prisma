@@ -64,6 +64,8 @@ model Business {
   meansOfIdUrl           String
   utilityBillUrl         String
   bankStatementUrl       String
+  subAccountId           String?
+  approved               Boolean        @default(false)
   users                  BusinessUser[]
   Deal                   Deal[]
 }
