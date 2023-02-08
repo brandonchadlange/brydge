@@ -2,17 +2,21 @@ import Button from '@/components/Button';
 import { Header } from '@/components/Header';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { FormEvent, useState } from 'react';
+
+type UserType = "undefined" | "syndicate" | "business";
 
 const Onboarding = () => {
   const router = useRouter();
   const { push } = router;
+  const [userType, setUserType] = useState<UserType>("undefined");
 
-  const onSubmit = (data: any) => {
-    const { user_type } = data;
-
-    if (user_type === 'syndicate') {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    if (userType === 'syndicate') {
       push('/onboarding/syndicate');
-    } else if (user_type === 'business') {
+    } else if (userType === 'business') {
       push('/onboarding/business');
     }
   };
@@ -23,11 +27,12 @@ const Onboarding = () => {
       <main className="font-primary w-fit px-4 mx-auto mt-12 h-[calc(100vh-80px)] flex flex-col items-center">
         <h1 className="text-2xl font-bold">Welcome to brydge 🎉</h1>
         <p className="my-5 text-dark-300">Choose your preferred option to get started</p>
-        <form onSubmit={onSubmit} className="mx-auto sm:w-2/3">
+        <form onSubmit={e => onSubmit(e)} className="mx-auto sm:w-2/3">
           <ul className="font-medium bg-white rounded-lg text-dark">
             <li className="w-full p-2 border border-gray-400 rounded-lg focus-within:border focus-within:border-dark-500">
               <div className="flex pl-3">
                 <input
+                  onChange={e => setUserType(e.target.value as UserType)}
                   type="radio"
                   value="syndicate"
                   id="list-syndicate-radio"
@@ -45,6 +50,7 @@ const Onboarding = () => {
             <li className="w-full p-2 mt-3 border border-gray-400 rounded-lg focus-within:border focus-within:border-dark-500">
               <div className="flex pl-3">
                 <input
+                  onChange={e => setUserType(e.target.value as UserType)}
                   type="radio"
                   value="business"
                   id="list-business-radio"
