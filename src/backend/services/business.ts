@@ -6,7 +6,7 @@ const getUserBusinesses = async (userId: string) => {
 };
 
 const createBusiness = async (data: BusinessCreateDTO, userId: string) => {
-  const newBusiness = await BusinessRepository.createBusiness();
+  const newBusiness = await BusinessRepository.createBusiness(data);
 
   await BusinessRepository.createBusinessUser(newBusiness.id, userId);
 

@@ -9,10 +9,14 @@ const endpoints = {
       return "/api/user";
     },
     updateUser() {
-      return '/api/user';
+      return "/api/user";
     },
   },
-  business: {},
+  business: {
+    createBussiness() {
+      return "/api/business";
+    },
+  },
   syndicate: {
     getSynidicates() {
       return "/api/syndicate";

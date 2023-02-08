@@ -1,4 +1,5 @@
 import prismaClient from "../prisma";
+import { BusinessCreateDTO } from "../dto/business/business-create";
 
 const getUserBusinesses = async (userId: string) => {
   const businesses = await prismaClient.businessUser.findMany({
@@ -13,9 +14,16 @@ const getUserBusinesses = async (userId: string) => {
   return businesses.map((e) => e.business);
 };
 
-const createBusiness = async () => {
+const createBusiness = async (data: BusinessCreateDTO) => {
   return prismaClient.business.create({
-    data: {},
+    data: {
+      registeredName: data.registeredName,
+      bankVerificationNumber: data.bankVerificationNumber,
+      operationalAddress: data.operationalAddress,
+      utilityBillUrl: data.utilityBillUrl,
+      registrationNumber: data.registrationNumber,
+      state: data.state,
+    },
   });
 };
 
