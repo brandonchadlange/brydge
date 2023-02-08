@@ -3,7 +3,7 @@ import React from 'react';
 import { HiOutlineDocumentArrowUp } from 'react-icons/hi2';
 import Button from './Button';
 import Input from './input/';
-import FormField from './input/form-field';
+import FormField from './input/FormField';
 import { Formik, Form, FormikHelpers, Field } from 'formik';
 import * as Yup from 'yup';
 import states from '@/frontend/utility/nigerian-states';
@@ -42,11 +42,12 @@ const getSyndicateFormValidation = () => {
 
 const StructuredSyndicate = () => {
   const onSubmit = async (data: any) => {
-    await syndicateService.createStructuredSyndicate(data);
+    // await syndicateService.createStructuredSyndicate(data);
+    console.log(data);
   };
 
   return (
-    <div className="max-h-screen overflow-y-hidden">
+    <div className="max-h-screen">
       <Formik initialValues={getSyndicateForm()} validationSchema={getSyndicateFormValidation()} onSubmit={onSubmit}>
         {({ errors, values, setFieldValue, setFieldTouched }) => (
           <Form>
@@ -86,15 +87,12 @@ const StructuredSyndicate = () => {
                 name="utilityBill"
                 type="file"
                 onBlur={() => setFieldTouched('utilityBill')}
-                onChange={event => {
-                  setFieldValue('utilityBill', event.currentTarget.files[0]);
-                }}
                 className={'invisible hidden'}
               />
               <div className="flex flex-col ml-3 border-red-500 borde">
-                <p className="font-bold text-md">
+                {/* <p className="font-bold text-md">
                   {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'}
-                </p>
+                </p> */}
                 <p className="text-sm text-blue">Max 10MB</p>
               </div>
             </div>

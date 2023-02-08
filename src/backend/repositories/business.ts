@@ -1,4 +1,4 @@
-import prismaClient from '../prisma';
+import prismaClient from "../prisma";
 
 const getUserBusinesses = async (userId: string) => {
   const businesses = await prismaClient.businessUser.findMany({
@@ -10,11 +10,28 @@ const getUserBusinesses = async (userId: string) => {
     },
   });
 
-  return businesses.map(e => e.business);
+  return businesses.map((e) => e.business);
+};
+
+const createBusiness = async () => {
+  return prismaClient.business.create({
+    data: {},
+  });
+};
+
+const createBusinessUser = async (businessId: string, userId: string) => {
+  return prismaClient.businessUser.create({
+    data: {
+      businessId: businessId,
+      userId: userId,
+    },
+  });
 };
 
 const BusinessRepository = {
   getUserBusinesses,
+  createBusiness,
+  createBusinessUser,
 };
 
 export default BusinessRepository;

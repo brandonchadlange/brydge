@@ -46,7 +46,7 @@ const Login = () => {
         {providerList.map((provider) => (
           <button
             onClick={() =>
-              signIn(provider.id, { redirect: true, callbackUrl: "/dashboard" })
+              signIn(provider.id, { redirect: true, callbackUrl: "/api/login" })
             }
             key={provider.id}
             type="button"

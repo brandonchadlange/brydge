@@ -55,9 +55,15 @@ model VerificationToken {
 }
 
 model Business {
-  id    String         @id @default(cuid())
-  users BusinessUser[]
-  Deal  Deal[]
+  id                     String         @id @default(cuid())
+  registeredName         String
+  registrationNumber     String
+  bankVerificationNumber String
+  operationalAddress     String
+  state                  String
+  utilityBillUrl         String
+  users                  BusinessUser[]
+  Deal                   Deal[]
 }
 
 model BusinessUser {

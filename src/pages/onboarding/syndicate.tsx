@@ -4,13 +4,6 @@ import Link from 'next/link'
 import StructuredSyndicate from '@/components/StructuredSyndicate'
 import UnstructuredSyndicate from '@/components/UnstructuredSyndicate'
 
-type SyndicateFormFields = {
-  // include types
-  // registered_name: string
-}
-
-interface ViewTypes {}
-
 const Syndicate = () => {
   const [view, setView] = React.useState('structured')
 
@@ -56,7 +49,7 @@ const Syndicate = () => {
             fees. <span className='text-blue'>See fee overview</span>
           </p>
         </section>
-        <section className='col-span-1 px-2 overflow-x-hidden overflow-y-auto'>
+        <section className='col-span-1 px-2'>
           {view === 'structured' && <StructuredSyndicate />}
           {view === 'unstructured' && <UnstructuredSyndicate />}
         </section>
