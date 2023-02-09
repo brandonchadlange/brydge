@@ -1,13 +1,12 @@
-import React from 'react';
-import Image from 'next/image';
-import { BsSearch, BsPlusLg } from 'react-icons/bs';
-import { CircularProgressbar } from 'react-circular-progressbar'
-import 'react-circular-progressbar/dist/styles.css';
+import Image from "next/image";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { BsPlusLg, BsSearch } from "react-icons/bs";
 
-import Button from '../components/Button';
+import Button from "../components/Button";
 
-import Card from '../components/card';
-import AppTable, { AppTableColumn } from '../components/table';
+import Card from "../components/card";
+import AppTable, { AppTableColumn } from "../components/table";
 
 interface CreatedDealsTableProps {
   className?: string;
@@ -21,9 +20,9 @@ interface Member {
   image: string;
   carryPercent: string;
   status: string;
-};
+}
 
-interface Deal {
+declare interface Deal {
   id: string;
   name: string;
   description: string;
@@ -34,11 +33,10 @@ interface Deal {
   members: Member[];
 }
 
-
 const columns: AppTableColumn<Deal>[] = [
   {
-    name: 'name',
-    heading: 'Name | Description',
+    name: "name",
+    heading: "Name | Description",
     headerClass: "font-medium text-gray-500 text-sm",
     component(data) {
       return (
@@ -49,11 +47,11 @@ const columns: AppTableColumn<Deal>[] = [
             text={`${data.competed}%`}
             styles={{
               path: {
-                stroke: 'black',
+                stroke: "black",
               },
               text: {
-                fill: 'black',
-              }
+                fill: "black",
+              },
             }}
           />
           <div className="text-sm ml-4">
@@ -65,39 +63,34 @@ const columns: AppTableColumn<Deal>[] = [
     },
   },
   {
-    name: 'members',
-    heading: 'Members',
+    name: "members",
+    heading: "Members",
     headerClass: "font-medium text-gray-500 text-sm",
     component(e) {
       return (
         <div className="flex">
-          {
-            e.members.slice(0, 5).map(member => (
-              <Image
-                key={member.id}
-                className="rounded-full -ml-2 border-2 border-white"
-                src={member.image}
-                alt={member.name}
-                width={48}
-                height={48}
-              />
-            ))
-          }
-          {
-            !!e.members.slice(5).length && (
-              <div className="rounded-full w-12 h-12 -ml-2 border-2 bg-gray-300 border-white flex items-center justify-center">
-                <BsPlusLg className="text-gray-400 text-sm" />
-              </div>
-            )
-          }
-          
+          {e.members.slice(0, 5).map((member) => (
+            <Image
+              key={member.id}
+              className="rounded-full -ml-2 border-2 border-white"
+              src={member.image}
+              alt={member.name}
+              width={48}
+              height={48}
+            />
+          ))}
+          {!!e.members.slice(5).length && (
+            <div className="rounded-full w-12 h-12 -ml-2 border-2 bg-gray-300 border-white flex items-center justify-center">
+              <BsPlusLg className="text-gray-400 text-sm" />
+            </div>
+          )}
         </div>
       );
     },
   },
   {
-    name: 'amount',
-    heading: 'Amount',
+    name: "amount",
+    heading: "Amount",
     headerClass: "font-medium text-gray-500 text-sm",
     component(e) {
       return (
@@ -106,15 +99,15 @@ const columns: AppTableColumn<Deal>[] = [
             {e.currency} {e.amount}
           </div>
           <div className="text-xs text-gray-400">
-          {e.currency} {e.goalAmount} Goal
+            {e.currency} {e.goalAmount} Goal
           </div>
         </div>
       );
     },
   },
   {
-    name: 'action',
-    heading: 'Action',
+    name: "action",
+    heading: "Action",
     headerClass: "font-medium text-gray-500 text-sm",
     component(e) {
       return <Button type="button">View</Button>;
@@ -125,58 +118,65 @@ const columns: AppTableColumn<Deal>[] = [
 const members: Member[] = [
   {
     id: Math.round(Math.random() * 100000).toString(),
-    name: 'Peter Graham',
-    dealId: '2',
-    image: 'https://picsum.photos/200',
-    carryPercent: '10%',
-    status: 'Pending',
+    name: "Peter Graham",
+    dealId: "2",
+    image: "https://picsum.photos/200",
+    carryPercent: "10%",
+    status: "Pending",
   },
   {
     id: Math.round(Math.random() * 100000).toString(),
-    name: 'Gracie Montez',
-    dealId: '1',
-    image: 'https://picsum.photos/200',
-    carryPercent: '10%',
-    status: 'Pending',
+    name: "Gracie Montez",
+    dealId: "1",
+    image: "https://picsum.photos/200",
+    carryPercent: "10%",
+    status: "Pending",
   },
 ];
 
 const deals: Deal[] = [
   {
     id: Math.round(Math.random() * 100000).toString(),
-    name: 'Deal 1',
-    description: 'Deal description',
+    name: "Deal 1",
+    description: "Deal description",
     competed: 70,
     members,
     amount: 60000,
-    currency: '$',
-    goalAmount: 70000
+    currency: "$",
+    goalAmount: 70000,
   },
   {
     id: Math.round(Math.random() * 100000).toString(),
-    name: 'Deal 2',
-    description: 'Deal 2 description',
+    name: "Deal 2",
+    description: "Deal 2 description",
     members,
     competed: 50,
     amount: 25000,
-    currency: '$',
-    goalAmount: 50000
+    currency: "$",
+    goalAmount: 50000,
   },
 ];
 
-export default function CreatedDealsTable({ className, onCreateDeal }: CreatedDealsTableProps) {
+export default function CreatedDealsTable({
+  className,
+  onCreateDeal,
+}: CreatedDealsTableProps) {
   return (
     <Card className={`p-4 h-96 ${className}`}>
-      <div className="flex justify-between font-medium mb-4">
-        Created Deals
-      </div>
+      <div className="flex justify-between font-medium mb-4">Created Deals</div>
       <AppTable columns={columns} data={deals}>
         <div className="flex flex-col items-center justify-center h-full w-full">
           <BsSearch />
           <div>Oops! You do not have any deals yet</div>
-          <Button type="button" className="underline !bg-white text-black" onClick={onCreateDeal}>Create new Deal</Button>
+          <Button
+            type="button"
+            className="underline !bg-white text-black"
+            onClick={onCreateDeal}
+          >
+            Create new Deal
+          </Button>
         </div>
       </AppTable>
     </Card>
   );
-};
+}
