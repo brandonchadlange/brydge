@@ -38,12 +38,19 @@ const navLinks = [
 
 const Logout = () => {
   return (
-    <div className="bg-[url('/mask.jpg')] absolute bottom-6 h-36 w-70 px-6 flex flex-col justify-center rounded-lg">
-      <span className="mb-4 text-center">
-        Financial solution for Deals blah balh
+    <div className="fixed bottom-6 w-70 px-6 py-4 flex flex-col justify-center rounded-3xl bg-dark-500">
+      <Image
+        className="m-auto mt-4"
+        src={"logo.svg"}
+        width={24}
+        height={24}
+        alt="logo"
+      />
+      <span className="my-6 text-white text-center text-sm">
+        Simplifying Trade Finance in Africa
       </span>
       <button
-        className="px-5 py-3 text-white rounded-full font-primary bg-dark-500"
+        className="bg-white px-5 py-3 mb-2 text-dark-500 rounded-full font-primary"
         onClick={() => signOut({ callbackUrl: "/login", redirect: true })}
       >
         Log out

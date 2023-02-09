@@ -40,8 +40,8 @@ model User {
   emailVerified             DateTime?
   image                     String?
   accounts                  Account[]
-  sessions                  Session[]
   BusinessUser              BusinessUser[]
+  sessions                  Session[]
   StructuredSyndicateUser   StructuredSyndicateUser[]
   UnstructuredSyndicateUser UnstructuredSyndicateUser[]
 }
@@ -55,8 +55,19 @@ model VerificationToken {
 }
 
 model Business {
-  id    String         @id @default(cuid())
-  users BusinessUser[]
+  id                     String         @id @default(cuid())
+  bankVerificationNumber String
+  operationalAddress     String
+  registeredName         String
+  registrationNumber     String
+  state                  String
+  meansOfIdUrl           String
+  utilityBillUrl         String
+  bankStatementUrl       String
+  subAccountId           String?
+  approved               Boolean        @default(false)
+  users                  BusinessUser[]
+  Deal                   Deal[]
 }
 
 model BusinessUser {
@@ -89,9 +100,9 @@ model StructuredSyndicateUser {
 
 model UnstructuredSyndicate {
   id                     String                      @id @default(cuid())
+  utilityBillUrl         String
   name                   String
   bankVerificationNumber Int
-  utilityBillUrl         String
   users                  UnstructuredSyndicateUser[]
 }
 
@@ -103,22 +114,16 @@ model UnstructuredSyndicateUser {
   user                    User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model PendingDeal {
-  id             String @id @default(cuid())
-  syndicateId    String
+model Deal {
+  id             String   @id @default(cuid())
+  businessId     String
   name           String
   fundAmount     Int
   expectedReturn Int
   expectedTenure Int
-}
-
-model OpenDeal {
-  id               String   @id @default(cuid())
-  syndicateId      String
-  name             String
-  fundAmount       Int
-  expectedReturn   Int
-  expectedTenure   Int
-  approvedDateTime DateTime
-  approvedByUserId String
+  accountId      String?  @unique()
+  accountNumber  String?
+  accountName    String?
+  bankName       String?
+  business       Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }

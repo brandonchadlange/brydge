@@ -1,6 +1,8 @@
-import { CreateStructuredSyndicateDTO } from '../dto/syndicate/create-structured-syndicate';
-import { CreateStructuredSyndicateUserDTO } from '../dto/syndicate/create-structured-syndicate-user';
-import prismaClient from '../prisma';
+import { CreateStructuredSyndicateDTO } from "../dto/syndicate/create-structured-syndicate";
+import { CreateStructuredSyndicateUserDTO } from "../dto/syndicate/create-structured-syndicate-user";
+import { CreateUnstructuredSyndicateDTO } from "../dto/syndicate/create-unstructured-syndicate";
+import { CreateUnstructuredSyndicateUserDTO } from "../dto/syndicate/create-unstructured-syndicate-user";
+import prismaClient from "../prisma";
 
 const getUserStructuredSyndicates = async (userId: string) => {
   const syndicates = await prismaClient.structuredSyndicateUser.findMany({
@@ -12,7 +14,7 @@ const getUserStructuredSyndicates = async (userId: string) => {
     },
   });
 
-  return syndicates.map(e => e.structuredSyndicate);
+  return syndicates.map((e) => e.structuredSyndicate);
 };
 
 const getUserUnstructuredSyndicates = async (userId: string) => {
@@ -25,10 +27,12 @@ const getUserUnstructuredSyndicates = async (userId: string) => {
     },
   });
 
-  return syndicates.map(e => e.unstructuredSyndicate);
+  return syndicates.map((e) => e.unstructuredSyndicate);
 };
 
-const createStructuredSyndicate = async (data: CreateStructuredSyndicateDTO) => {
+const createStructuredSyndicate = async (
+  data: CreateStructuredSyndicateDTO
+) => {
   return prismaClient.structuredSyndicate.create({
     data: {
       registeredName: data.registeredName,
@@ -42,7 +46,9 @@ const createStructuredSyndicate = async (data: CreateStructuredSyndicateDTO) => 
   });
 };
 
-const createStructuredSyndicateUser = async (data: CreateStructuredSyndicateUserDTO) => {
+const createStructuredSyndicateUser = async (
+  data: CreateStructuredSyndicateUserDTO
+) => {
   return prismaClient.structuredSyndicateUser.create({
     data: {
       structuredSyndicateId: data.structuredSyndicateId,
@@ -51,7 +57,28 @@ const createStructuredSyndicateUser = async (data: CreateStructuredSyndicateUser
   });
 };
 
-const createUnstructuredSyndicate = async () => {};
+const createUnstructuredSyndicate = async (
+  data: CreateUnstructuredSyndicateDTO
+) => {
+  return prismaClient.unstructuredSyndicate.create({
+    data: {
+      name: data.name,
+      bankVerificationNumber: data.bankVerificationNumber,
+      utilityBillUrl: data.utilityBillUrl,
+    },
+  });
+};
+
+const createUnstructuredSyndicateUser = async (
+  data: CreateUnstructuredSyndicateUserDTO
+) => {
+  return prismaClient.unstructuredSyndicateUser.create({
+    data: {
+      unstructuredSyndicateId: data.unstructuredSyndicateId,
+      userId: data.userId,
+    },
+  });
+};
 
 const SyndicateRepository = {
   getUserStructuredSyndicates,
@@ -59,6 +86,7 @@ const SyndicateRepository = {
   createStructuredSyndicate,
   createStructuredSyndicateUser,
   createUnstructuredSyndicate,
+  createUnstructuredSyndicateUser,
 };
 
 export default SyndicateRepository;

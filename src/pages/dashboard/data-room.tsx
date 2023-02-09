@@ -1,8 +1,7 @@
-import withDashboardLayout from '@/components/withDashboardLayout'
-import React from 'react'
+import DashboardLayout from "@/components/withDashboardLayout";
 
 const DataRoom = () => {
-  return <div>DataRoom</div>
-}
+  return <DashboardLayout>DataRoom</DashboardLayout>;
+};
 
-export default withDashboardLayout(DataRoom)
+export default DataRoom;

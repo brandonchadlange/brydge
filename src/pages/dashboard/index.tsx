@@ -1,183 +1,150 @@
-import { useContext, useEffect, useState } from 'react';
-import { Form, Formik } from 'formik';
+import { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-import Card from '@/components/card';
-import Input from '@/components/input/';
-import Layout from '@/components/layout';
-import Progress from '@/components/progress';
-import Slideout from '@/components/slide-out';
-import AppTable, { AppTableColumn } from '@/components/table';
-import withDashboardLayout from '@/components/withDashboardLayout';
-import syndicateService from '@/frontend/services/syndicate';
-import { UserContext } from '@/context';
-import showToast from '@/frontend/utility/show-toast';
+import Slideout from "@/components/slide-out";
+import AppTable, { AppTableColumn } from "@/components/table";
+import withDashboardLayout from "@/components/withDashboardLayout";
+import syndicateService from "@/frontend/services/syndicate";
+import { UserContext } from "@/context";
+import userService from "@/frontend/services/user";
+import DealForm from "../deals/deal-creation-form";
+import WelcomeCard from "@/components/WelcomeCard";
+import ViewDealsCard from "@/components/ViewDealsCard";
+import CreatedDealsCard from "@/Organisms/CreatedDealsTable";
+import WalletCard from "@/Organisms/WalletCard";
+import { HiXMark } from "react-icons/hi2";
+import DashboardLayout from "@/components/withDashboardLayout";
 
 const Dashboard = () => {
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [file, setFile] = useState<File>();
-  const [uploadedImageUrl, setUploadedImageUrl] = useState();
+  const [showDealCreation, setShowDealCreation] = useState(false);
 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    syndicateService.getSyndicates();
-    const message = user.isSyndicateUser ? 'Hello syndicate user 😉' : 'Hello Normal user 😉';
-    showToast(message);
+    const getSyndicates = async () => {
+      const syndicates = await syndicateService.getSyndicates();
+      console.log({ syndicates });
+    };
+
+    const getUserState = async () => {
+      const userState = await userService.getUserState();
+      setUser!({ ...user, ...userState });
+      if (!userState.isOnboarded) {
+        toast(
+          (t) => (
+            <div className="flex justify-between items-center bg-blue-200 rounded font-medium w-ful w-[700px] p-4 left-[-418px] absolute ">
+              <span>
+                Hey there {user.name} Welcome 🎉. Complete your{" "}
+                <span className="text-blue-500">verification</span> to do more
+                with brydge
+              </span>
+              <HiXMark
+                className="h-6 w-6"
+                onClick={() => {
+                  toast.dismiss(t.id);
+                }}
+              />
+            </div>
+          ),
+          {
+            className: "!bg-blue-200 !w-0 !p-0 m-0 none",
+            duration: Infinity,
+          }
+        );
+      }
+    };
+
+    getSyndicates();
+    getUserState();
   }, []);
 
-  const showSlideOut = () => {
-    setShowOverlay(true);
-  };
-
-  const initialValues = {
-    legalName: '',
-    rcNumber: '',
+  const toggleSlideOut = () => {
+    setShowDealCreation(!showDealCreation);
   };
 
   return (
-    <>
-      <div className="container p-8">
-        <Card>
-          <h1 className="text-lg font-bold font-primary">Company Details</h1>
-          <Layout.Grid columns={2}>
-            <Formik initialValues={initialValues} onSubmit={() => {}}>
-              <Form>
-                <Input.Text placeholder="Legal name" name="firstName" />
-                <Input.Text placeholder="Legal name" name="lastName" />
-              </Form>
-            </Formik>
-          </Layout.Grid>
-        </Card>
-        <div className="p-4">
-          <input type="file" />
-          <button className="rounded-md bg-black text-white px-6 text-sm">
-            Upload File
-          </button>
-          { uploadedImageUrl && <Image src={uploadedImageUrl} alt="uploaded-image" width={200} height={200}/>}
-        </div>
-        <div className="bg-white rounded-md mt-12 shadow-sm">
-          <div className="flex justify-between p-4">
-            <div className="flex gap-2">
-              <div className="h-12 w-12 bg-gray-700 rounded-md"></div>
-              <div>
-                <h1 className="text-lg font-bold font-primary">The Pryde Lab</h1>
-                <p className="text-xs">Importation of fibre from eastern europe</p>
-              </div>
+    <DashboardLayout>
+      <div className={`container p-8 pt-32`}>
+        <div className="flex justify-between gap-8">
+          <div className="w-10/12">
+            <div className="flex h-48 mb-6 justify-between gap-8">
+              <WelcomeCard className="!bg-dark-500 w-2/3" />
+              <ViewDealsCard className="w-1/3" />
             </div>
-            <div className="flex gap-10 align-bottom">
-              <div className="w-40">
-                <Progress value={70} />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold font-primary">$ 12,000.00</h1>
-                <p className="text-xs">Amount Raised</p>
-              </div>
-            </div>
+            <CreatedDealsCard onCreateDeal={toggleSlideOut} />
           </div>
-          <hr className="text-gray-500 my-2 h-1" />
-          <div className="flex justify-between p-4">
-            <div className="flex gap-10">
-              <div>
-                <h3>30%</h3>
-                <p className="text-xs">Lead Allocation</p>
-              </div>
-              <div>
-                <h3>March 20, 2023</h3>
-                <p className="text-xs">Closing Date</p>
-              </div>
-              <div>
-                <h3>4</h3>
-                <p className="text-xs">Co Investors</p>
-              </div>
-              <div>
-                <h3>Raising</h3>
-                <p className="text-xs">Status</p>
-              </div>
-            </div>
-            <button className="rounded-md bg-red-200 text-red-400 px-6 text-sm">Deactivate</button>
-          </div>
+          <WalletCard className="w-4/12" />
         </div>
-        <div className="mt-12">
-          <Card>
-            <TableTest />
-          </Card>
-        </div>
-        <div className="mt-12">
-          <Input.Date />
-        </div>
-        <button onClick={() => showSlideOut()}>Show slideout</button>
-        <Slideout show={showOverlay} setShow={setShowOverlay}>
+
+        <Slideout show={showDealCreation} setShow={toggleSlideOut}>
           <div className="p-4">
-            <h1 className="text-lg font-bold font-primary">Create Deal</h1>
-            <Input.FormField label="Investor" description="do some amazing shizzz">
-              <Input.Text placeholder="Investor" name="investor" />
-            </Input.FormField>
-            <Input.Text placeholder="Amount" name="amount" />
+            <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
+            <DealForm />
           </div>
         </Slideout>
       </div>
-    </>
+    </DashboardLayout>
   );
 };
 
-type Member = {
-  id: string;
-  lp: string;
-  deal: string;
-  carryPercent: string;
-  status: string;
-};
+// type Member = {
+//   id: string;
+//   lp: string;
+//   deal: string;
+//   carryPercent: string;
+//   status: string;
+// };
 
-const TableTest = () => {
-  const columns: AppTableColumn<Member>[] = [
-    {
-      name: 'lp',
-      heading: 'LP',
-      component(data) {
-        return <p className="font-bold">{data.lp}</p>;
-      },
-    },
-    {
-      name: 'deal',
-      heading: 'Deal',
-      component(e) {
-        return <>{e.deal}</>;
-      },
-    },
-    {
-      name: 'carryPercent',
-      heading: 'Carry %',
-      component(e) {
-        return <>{e.carryPercent}</>;
-      },
-    },
-    {
-      name: 'status',
-      heading: 'Status',
-      component(e) {
-        return <>{e.status}</>;
-      },
-    },
-  ];
+// const TableTest = () => {
+//   const columns: AppTableColumn<Member>[] = [
+//     {
+//       name: "lp",
+//       heading: "LP",
+//       component(data) {
+//         return <p className="font-bold">{data.lp}</p>;
+//       },
+//     },
+//     {
+//       name: "deal",
+//       heading: "Deal",
+//       component(e) {
+//         return <>{e.deal}</>;
+//       },
+//     },
+//     {
+//       name: "carryPercent",
+//       heading: "Carry %",
+//       component(e) {
+//         return <>{e.carryPercent}</>;
+//       },
+//     },
+//     {
+//       name: "status",
+//       heading: "Status",
+//       component(e) {
+//         return <>{e.status}</>;
+//       },
+//     },
+//   ];
 
-  const data: Member[] = [
-    {
-      id: '1',
-      lp: 'Peter Graham',
-      deal: 'Fibre Importation',
-      carryPercent: '10%',
-      status: 'Pending',
-    },
-    {
-      id: '1',
-      lp: 'Gracie Montez',
-      deal: 'Fibre Importation',
-      carryPercent: '10%',
-      status: 'Pending',
-    },
-  ];
+//   const data: Member[] = [
+//     {
+//       id: "1",
+//       lp: "Peter Graham",
+//       deal: "Fibre Importation",
+//       carryPercent: "10%",
+//       status: "Pending",
+//     },
+//     {
+//       id: "1",
+//       lp: "Gracie Montez",
+//       deal: "Fibre Importation",
+//       carryPercent: "10%",
+//       status: "Pending",
+//     },
+//   ];
 
-  return <AppTable columns={columns} data={data}></AppTable>;
-};
+//   return <AppTable columns={columns} data={data}></AppTable>;
+// };
 
-export default withDashboardLayout(Dashboard);
+export default Dashboard;

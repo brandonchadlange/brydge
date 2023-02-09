@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import { CgSpinner } from 'react-icons/cg';
 
-type Props = {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'button' | 'submit' | 'reset' | undefined;
   className?: string;
   children: any;
   loading?: boolean;
+  disabled?: boolean;
   full?: boolean;
 };
 
@@ -16,7 +17,6 @@ const Button = ({ loading, className, children, full, ...rest }: Props) => {
         full && 'w-full'
       } ${className}`}
       {...rest}
-      onClick={e => {}}
     >
       {loading ? <CgSpinner className="w-6 h-6 animate-spin" /> : children}
     </button>

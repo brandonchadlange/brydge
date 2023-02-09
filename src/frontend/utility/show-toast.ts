@@ -1,9 +1,9 @@
 import toast, { ToastPosition, ToastType } from 'react-hot-toast'
 
-type ShowToastProps = {
+interface ShowToastProps {
     type?: ToastType;
     position?: ToastPosition;
-    durationInMs?: number
+    durationInMs?: number;
 }
 
 const defaultToastProps: ShowToastProps = {
