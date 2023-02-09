@@ -17,7 +17,6 @@ const Button = ({ loading, className, children, full, ...rest }: Props) => {
         full && 'w-full'
       } ${className}`}
       {...rest}
-      onClick={e => {}}
     >
       {loading ? <CgSpinner className="w-6 h-6 animate-spin" /> : children}
     </button>

@@ -38,9 +38,9 @@ const navLinks = [
 
 const Logout = () => {
   return (
-    <div className="absolute bottom-6 h-36 w-70 px-6 flex flex-col justify-center rounded-2xl bg-dark-500">
-      <Image className="bg-white m-auto mt-4 rounded" src={"logo-black.svg"} width={50} height={50} alt="logo"/>
-      <span className="my-2 text-white text-center text-sm">
+    <div className="fixed bottom-6 w-70 px-6 py-4 flex flex-col justify-center rounded-3xl bg-dark-500">
+      <Image className="m-auto mt-4" src={"logo.svg"} width={24} height={24} alt="logo"/>
+      <span className="my-6 text-white text-center text-sm">
         Simplifying Trade Finance in Africa
       </span>
       <button
