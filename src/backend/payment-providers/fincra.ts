@@ -49,7 +49,7 @@ class FincraPaymentProvider implements IPaymentProvider {
     const subAccount = await createSubAccount({
       name: "John Doe",
       country: "DE",
-      email: "test5@mail.com",
+      email: "test6@mail.com",
       mobile: "01101101104",
     });
 
