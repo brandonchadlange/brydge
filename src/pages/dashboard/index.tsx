@@ -1,21 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
-import Image from 'next/image'
+import toast from 'react-hot-toast';
 
-import Card from '@/components/card';
-import Input from '@/components/input';
-import Progress from '@/components/progress';
 import Slideout from '@/components/slide-out';
 import AppTable, { AppTableColumn } from '@/components/table';
 import withDashboardLayout from '@/components/withDashboardLayout';
 import syndicateService from '@/frontend/services/syndicate';
 import { UserContext } from '@/context';
-import showToast from '@/frontend/utility/show-toast';
 import userService from '@/frontend/services/user';
 import DealForm from '../deals/deal-creation-form'
 import WelcomeCard from '@/components/WelcomeCard';
 import ViewDealsCard from '@/components/ViewDealsCard';
-import CreatedDealsCard from '@/components/CreatedDealsTable';
+import CreatedDealsCard from '@/Organisms/CreatedDealsTable';
 import WalletCard from '@/Organisms/WalletCard';
+import { HiXMark } from 'react-icons/hi2';
 
 const Dashboard = () => {
   const [showDealCreation, setShowDealCreation] = useState(false);
@@ -31,9 +28,19 @@ const Dashboard = () => {
     const getUserState = async () => {
       const userState  = await userService.getUserState();
       setUser!({ ...user, ...userState});
-
-      const message = userState.isSyndicate ? 'Hello syndicate user 😉' : `Hello ${userState.name} 😉`;
-      showToast(message);
+      if (!userState.isOnboarded) {
+        toast((t) => (
+          <div className="flex justify-between items-center bg-blue-200 rounded font-medium w-ful w-[700px] p-4 left-[-418px] absolute ">
+            <span>Hey there {user.name} Welcome 🎉. Complete your <span className="text-blue-500">verification</span> to do more with brydge</span>
+            <HiXMark className="h-6 w-6" onClick={() => {
+              toast.dismiss(t.id);
+            }} />
+          </div>
+        ), {
+          className: '!bg-blue-200 !w-0 !p-0 m-0 none',
+          duration: Infinity
+        });
+      }
     }
 
     getSyndicates();
@@ -45,27 +52,25 @@ const Dashboard = () => {
   };
 
   return (
-    <>
-      <div className="container p-8">
-        <div className="flex justify-between gap-8">
-          <div className="w-10/12">
-            <div className="flex h-48 mb-6 justify-between gap-8">
-              <WelcomeCard className="!bg-dark-500 w-2/3"/>
-              <ViewDealsCard className="w-1/3"/>
-            </div>
-            <CreatedDealsCard onCreateDeal={toggleSlideOut}/>
+    <div className={`container p-8 pt-32`}>
+      <div className="flex justify-between gap-8">
+        <div className="w-10/12">
+          <div className="flex h-48 mb-6 justify-between gap-8">
+            <WelcomeCard className="!bg-dark-500 w-2/3"/>
+            <ViewDealsCard className="w-1/3"/>
           </div>
-          <WalletCard className="w-4/12"/>
+          <CreatedDealsCard onCreateDeal={toggleSlideOut}/>
         </div>
-
-        <Slideout show={showDealCreation} setShow={toggleSlideOut}>
-          <div className="p-4">
-            <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
-            <DealForm />
-          </div>
-        </Slideout>
+        <WalletCard className="w-4/12"/>
       </div>
-    </>
+
+      <Slideout show={showDealCreation} setShow={toggleSlideOut}>
+        <div className="p-4">
+          <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
+          <DealForm />
+        </div>
+      </Slideout>
+    </div>
   );
 };
 
