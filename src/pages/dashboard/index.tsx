@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 import Slideout from "@/components/slide-out";
-import AppTable, { AppTableColumn } from "@/components/table";
-import withDashboardLayout from "@/components/withDashboardLayout";
 import syndicateService from "@/frontend/services/syndicate";
 import { UserContext } from "@/context";
 import userService from "@/frontend/services/user";
@@ -12,7 +9,6 @@ import WelcomeCard from "@/components/WelcomeCard";
 import ViewDealsCard from "@/components/ViewDealsCard";
 import CreatedDealsCard from "@/Organisms/CreatedDealsTable";
 import WalletCard from "@/Organisms/WalletCard";
-import { HiXMark } from "react-icons/hi2";
 import DashboardLayout from "@/components/withDashboardLayout";
 
 const Dashboard = () => {
@@ -29,29 +25,6 @@ const Dashboard = () => {
     const getUserState = async () => {
       const userState = await userService.getUserState();
       setUser!({ ...user, ...userState });
-      if (!userState.isOnboarded) {
-        toast(
-          (t) => (
-            <div className="flex justify-between items-center bg-blue-200 rounded font-medium w-ful w-[700px] p-4 left-[-418px] absolute ">
-              <span>
-                Hey there {user.name} Welcome 🎉. Complete your{" "}
-                <span className="text-blue-500">verification</span> to do more
-                with brydge
-              </span>
-              <HiXMark
-                className="h-6 w-6"
-                onClick={() => {
-                  toast.dismiss(t.id);
-                }}
-              />
-            </div>
-          ),
-          {
-            className: "!bg-blue-200 !w-0 !p-0 m-0 none",
-            duration: Infinity,
-          }
-        );
-      }
     };
 
     getSyndicates();
