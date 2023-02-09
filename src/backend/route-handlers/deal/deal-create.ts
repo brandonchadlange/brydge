@@ -8,6 +8,7 @@ const dealCreateRouteHandler = async (
   res: NextApiResponse
 ) => {
   const dealCreateRequest = req.body as DealCreateDTO;
+
   const newDeal = await DealService.createDeal(dealCreateRequest);
 
   const paymentProvider = new FincraPaymentProvider();

@@ -2,11 +2,17 @@ import Button from "@/components/Button";
 import authService, { Provider } from "@/frontend/services/auth";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Input from "./input/index";
 
 const Login = () => {
   const [providerList, setProviderList] = useState<Provider[]>([]);
+  const router = useRouter();
+  const callbackUrl = router.query.callbackUrl;
+  const loginCallbackUrl = callbackUrl
+    ? `/api/login?callbackUrl=${callbackUrl}`
+    : "/api/login";
 
   const fetchAuthProviders = async () => {
     const response = await authService.getProviders();
@@ -46,7 +52,10 @@ const Login = () => {
         {providerList.map((provider) => (
           <button
             onClick={() =>
-              signIn(provider.id, { redirect: true, callbackUrl: "/api/login" })
+              signIn(provider.id, {
+                redirect: true,
+                callbackUrl: loginCallbackUrl,
+              })
             }
             key={provider.id}
             type="button"
