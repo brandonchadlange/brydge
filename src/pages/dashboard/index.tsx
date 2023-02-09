@@ -22,7 +22,6 @@ const Dashboard = () => {
   useEffect(() => {
     const getSyndicates = async () => {
      const syndicates = await syndicateService.getSyndicates();
-     console.log({ syndicates });
     }
 
     const getUserState = async () => {

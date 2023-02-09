@@ -8,9 +8,13 @@ import documentService from '@/frontend/services/document';
 import states from '@/frontend/utility/nigerian-states';
 import { Form, Formik } from 'formik';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { HiOutlineDocumentArrowUp } from 'react-icons/hi2';
 import * as Yup from 'yup';
+import showToast from '@/frontend/utility/show-toast';
+import {ColorRing} from 'react-loader-spinner'
+
 
 const FILE_SIZE = 10000 * 1024;
 
@@ -58,52 +62,57 @@ const Business = () => {
   const [utilityBill, setUtilityBill] = useState<File | null>(null);
   const [meansOfId, setMeansOfId] = useState<File | null>(null);
   const [bankStatement, setBankStatement] = useState<File | null>(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadingUtilityBill, setUploadingUtilityBill] = useState(false);
-  const [uploadingMeansOfId, setUploadingMeansOfId] = useState(false);
-  const [uploadingBankStatement, setUploadingBankStatement] = useState(false);
+  const [loading, setLoading] = useState<Boolean>(false)
+  const [utilityBillUploadProgress, setUtilityBillUploadProgress] = useState(0);
+  const [meansOfIdUploadProgress, setMeansOfIdUploadProgress] = useState(0);
+  const [bankStatementUploadProgress, setBankStatementUploadProgress] = useState(0);
+  const [uploadingDocuments, setUploadingDocuments] = useState(false);
+  const router = useRouter()
+
+  const uploadProgress = Math.round((utilityBillUploadProgress + meansOfIdUploadProgress + bankStatementUploadProgress) * 100/300)
 
   const onUtilityBillSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     setUtilityBill(file);
-    setUploadingUtilityBill(true);
-    const doc = await documentService.uploadDocument(file, setUploadProgress);
-    setUploadingUtilityBill(false);
   };
   const onMeansOfIdSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     setMeansOfId(file);
-    setUploadingMeansOfId(true);
-    const doc = await documentService.uploadDocument(file, setUploadProgress);
-    setUploadingMeansOfId(false);
   };
   const onBankStatementSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     setBankStatement(file);
-    setUploadingBankStatement(true);
-    const doc = await documentService.uploadDocument(file, setUploadProgress);
-    setUploadingBankStatement(false);
   };
 
   const onSubmit = async (values: any) => {
     // Upload file to get utilityBillUrl
-    const utilityBillDocument = await documentService.uploadDocument(utilityBill!);
-    const meansOfIdDocument = await documentService.uploadDocument(meansOfId!);
-    const bankStatementDocument = await documentService.uploadDocument(bankStatement!);
+    setUploadingDocuments(true)
+    const utilityBillDocument = await documentService.uploadDocument(utilityBill!, setUtilityBillUploadProgress);
+    const meansOfIdDocument = await documentService.uploadDocument(meansOfId!, setMeansOfIdUploadProgress);
+    const bankStatementDocument = await documentService.uploadDocument(bankStatement!, setBankStatementUploadProgress);
+    setUploadingDocuments(false)
+    
+    try{
+      setLoading(true)
+      const data = await businessService.createBusiness({
+        registeredName: values.registeredName,
+        registrationNumber: values.registrationNumber,
+        bankVerificationNumber: values.bankVerificationNumber,
+        operationalAddress: values.operationalAddress,
+        state: values.state,
+        utilityBillUrl: utilityBillDocument.publicUrl || '',
+        meansOfIdUrl: meansOfIdDocument.publicUrl || '',
+        bankStatementUrl: bankStatementDocument.publicUrl || '',
+      });
+      setLoading(false)
+      showToast('Business successfully created!')
+      router.push('/dashboard')
+    } catch (e){
+      setLoading(false)
+      showToast('Oops! Something went wrong. Please try again')
+    }
+    
 
-    console.log({utilityBillDocument, meansOfIdDocument, bankStatementDocument})
-
-
-    const data = await businessService.createBusiness({
-      registeredName: values.registeredName,
-      registrationNumber: values.registrationNumber,
-      bankVerificationNumber: values.bankVerificationNumber,
-      operationalAddress: values.operationalAddress,
-      state: values.state,
-      utilityBillUrl: utilityBillDocument.publicUrl || '',
-      meansOfIdUrl: meansOfIdDocument.publicUrl || '',
-      bankStatementUrl: bankStatementDocument.publicUrl || '',
-    });
   };
 
   return (
@@ -156,6 +165,7 @@ const Business = () => {
                       ))}
                   </Input.Select>
                 </FormField>
+                <FormField label="Utility Bill">
                 <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
                   <label htmlFor="utilityBill">
                     <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
@@ -178,9 +188,10 @@ const Business = () => {
                     <p className="text-sm text-blue">Max 10MB</p>
                   </div>
                 </div>
-                {uploadingUtilityBill && <Progress value={uploadProgress} />}
                 {errors.utilityBill && <span className="text-red-500">{errors.utilityBill}</span>}
+                </FormField>
 
+                <FormField label="Means of Id">
                 <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
                   <label htmlFor="meansOfId">
                     <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
@@ -204,9 +215,10 @@ const Business = () => {
                     <p className="text-sm text-blue">Max 10MB</p>
                   </div>
                 </div>
-                {uploadingMeansOfId && <Progress value={uploadProgress} />}
                 {errors.meansOfId && <span className="text-red-500">{errors.meansOfId}</span>}
+                </FormField>
 
+                <FormField label="Bank Statement">
                 <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
                   <label htmlFor="bankStatement">
                     <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
@@ -229,9 +241,20 @@ const Business = () => {
                     <p className="text-sm text-blue">Max 10MB</p>
                   </div>
                 </div>
-                {uploadingBankStatement && <Progress value={uploadProgress} />}
                 {errors.bankStatement && <span className="text-red-500">{errors.bankStatement}</span>}
+                </FormField>
+                {uploadingDocuments && <Progress value={uploadProgress} />}
 
+                {loading && <ColorRing
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  ariaLabel="circles-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="m-auto"
+                  visible={true}
+                />}
+                
                 <Button type="submit" full>
                   Submit
                 </Button>
