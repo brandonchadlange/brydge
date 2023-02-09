@@ -8,3 +8,5 @@ export default RouteHandler({
     res.status(200).send(null);
   },
 });
+
+// https://bryde.co/api/webhooks/fincra

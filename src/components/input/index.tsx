@@ -1,11 +1,11 @@
-import DateInput from './Date';
-import EmailInput from './Email';
-import FormField from './FormField';
-import PasswordInput from './Password';
-import TextInput from './text';
-import TextAreaInput from './TextArea';
-import SelectInput from './Select';
-import FileInput from './File';
+import DateInput from "./date";
+import EmailInput from "./email";
+import FileInput from "./file";
+import FormField from "./FormField";
+import PasswordInput from "./password";
+import SelectInput from "./select";
+import TextInput from "./text";
+import TextAreaInput from "./TextArea";
 // import CheckboxInput from './checkbox';
 
 const Input = {

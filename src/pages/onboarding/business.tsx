@@ -1,56 +1,82 @@
-import Button from '@/components/Button';
-import { Header } from '@/components/Header';
-import Input from '@/components/input/';
-import FormField from '@/components/input/FormField';
-import Progress from '@/components/progress';
-import businessService from '@/frontend/services/business';
-import documentService from '@/frontend/services/document';
-import states from '@/frontend/utility/nigerian-states';
-import { Form, Formik } from 'formik';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { HiOutlineDocumentArrowUp } from 'react-icons/hi2';
-import * as Yup from 'yup';
+import Button from "@/components/Button";
+import { Header } from "@/components/Header";
+import Input from "@/components/input/";
+import FormField from "@/components/input/FormField";
+import Progress from "@/components/progress";
+import businessService from "@/frontend/services/business";
+import documentService from "@/frontend/services/document";
+import states from "@/frontend/utility/nigerian-states";
+import { Form, Formik } from "formik";
+import Link from "next/link";
+import React, { useState } from "react";
+import { HiOutlineDocumentArrowUp } from "react-icons/hi2";
+import * as Yup from "yup";
 
 const FILE_SIZE = 10000 * 1024;
 
-const SUPPORTED_FORMATS = ['application/pdf'];
+const SUPPORTED_FORMATS = ["application/pdf"];
 
 const getBusinessForm = () => {
   return {
-  registeredName: "",
-  registrationNumber: "",
-  bankVerificationNumber: "",
-  operationalAddress:  "",
-  state:  "",
-  utilityBillUrl: "",
-  meansOfIdUrl: "",
-  bankStatementUrl:"",
+    registeredName: "",
+    registrationNumber: "",
+    bankVerificationNumber: "",
+    operationalAddress: "",
+    state: "",
+    utilityBillUrl: "",
+    meansOfIdUrl: "",
+    bankStatementUrl: "",
   };
 };
 
 const getBusinessFormValidation = () => {
   return Yup.object().shape({
-    registeredName: Yup.string().required('Business name is required'),
-    registrationNumber: Yup.string().required('Registration number is required'),
+    registeredName: Yup.string().required("Business name is required"),
+    registrationNumber: Yup.string().required(
+      "Registration number is required"
+    ),
     bankVerificationNumber: Yup.string()
-      .required('BVN is required')
-      .matches(/^[0-9]+$/, 'Must be only digits')
-      .test('bvn', 'Must be exactly 10 characters', val => val?.length === 10),
-    operationalAddress: Yup.string().required('Address is required'),
-    state: Yup.string().required('State is required').oneOf(states, 'Select state'),
+      .required("BVN is required")
+      .matches(/^[0-9]+$/, "Must be only digits")
+      .test(
+        "bvn",
+        "Must be exactly 10 characters",
+        (val) => val?.length === 10
+      ),
+    operationalAddress: Yup.string().required("Address is required"),
+    state: Yup.string()
+      .required("State is required")
+      .oneOf(states, "Select state"),
     utilityBill: Yup.mixed()
-      .required('Please upload your utility bill')
-      .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
-      .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
+      .required("Please upload your utility bill")
+      .test(
+        "fileSize",
+        "File is too large",
+        (value) => value?.size <= FILE_SIZE
+      )
+      .test("fileType", "Unsupported file format", (value) =>
+        SUPPORTED_FORMATS.includes(value?.type)
+      ),
     meansOfId: Yup.mixed()
-      .required('Please upload your utility bill')
-      .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
-      .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
+      .required("Please upload your utility bill")
+      .test(
+        "fileSize",
+        "File is too large",
+        (value) => value?.size <= FILE_SIZE
+      )
+      .test("fileType", "Unsupported file format", (value) =>
+        SUPPORTED_FORMATS.includes(value?.type)
+      ),
     bankStatement: Yup.mixed()
-      .required('Please upload your utility bill')
-      .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
-      .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
+      .required("Please upload your utility bill")
+      .test(
+        "fileSize",
+        "File is too large",
+        (value) => value?.size <= FILE_SIZE
+      )
+      .test("fileType", "Unsupported file format", (value) =>
+        SUPPORTED_FORMATS.includes(value?.type)
+      ),
   });
 };
 
@@ -63,7 +89,9 @@ const Business = () => {
   const [uploadingMeansOfId, setUploadingMeansOfId] = useState(false);
   const [uploadingBankStatement, setUploadingBankStatement] = useState(false);
 
-  const onUtilityBillSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onUtilityBillSelect = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = e.target.files![0];
     setUtilityBill(file);
     setUploadingUtilityBill(true);
@@ -77,7 +105,9 @@ const Business = () => {
     const doc = await documentService.uploadDocument(file, setUploadProgress);
     setUploadingMeansOfId(false);
   };
-  const onBankStatementSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onBankStatementSelect = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = e.target.files![0];
     setBankStatement(file);
     setUploadingBankStatement(true);
@@ -87,12 +117,19 @@ const Business = () => {
 
   const onSubmit = async (values: any) => {
     // Upload file to get utilityBillUrl
-    const utilityBillDocument = await documentService.uploadDocument(utilityBill!);
+    const utilityBillDocument = await documentService.uploadDocument(
+      utilityBill!
+    );
     const meansOfIdDocument = await documentService.uploadDocument(meansOfId!);
-    const bankStatementDocument = await documentService.uploadDocument(bankStatement!);
+    const bankStatementDocument = await documentService.uploadDocument(
+      bankStatement!
+    );
 
-    console.log({utilityBillDocument, meansOfIdDocument, bankStatementDocument})
-
+    console.log({
+      utilityBillDocument,
+      meansOfIdDocument,
+      bankStatementDocument,
+    });
 
     const data = await businessService.createBusiness({
       registeredName: values.registeredName,
@@ -100,9 +137,9 @@ const Business = () => {
       bankVerificationNumber: values.bankVerificationNumber,
       operationalAddress: values.operationalAddress,
       state: values.state,
-      utilityBillUrl: utilityBillDocument.publicUrl || '',
-      meansOfIdUrl: meansOfIdDocument.publicUrl || '',
-      bankStatementUrl: bankStatementDocument.publicUrl || '',
+      utilityBillUrl: utilityBillDocument.publicUrl || "",
+      meansOfIdUrl: meansOfIdDocument.publicUrl || "",
+      bankStatementUrl: bankStatementDocument.publicUrl || "",
     });
   };
 
@@ -114,7 +151,8 @@ const Business = () => {
           <div className="px-8 py-4 mb-4 text-white rounded-lg lg:w-3/5 bg-dark">
             <p className="text-lg font-semibold mb">Business</p>
             <p className="text-sm text-gray-400">
-              A group of persons that come together to invest. It is usually on a deal-by-deal basis.
+              A group of persons that come together to invest. It is usually on
+              a deal-by-deal basis.
             </p>
           </div>
           <div className="flex mb-4 lg:w-3/5">
@@ -127,29 +165,49 @@ const Business = () => {
             Create a new business
           </Link>
           <p className="mt-2 text-sm text-gray-500">
-            This user is also a<span className="text-blue"> Merchant-Exporter, Importer, supplier, aggregator.</span>
+            This user is also a
+            <span className="text-blue">
+              {" "}
+              Merchant-Exporter, Importer, supplier, aggregator.
+            </span>
           </p>
         </section>
         <section className="col-span-1 px-2 overflow-x-hidden overflow-y-auto">
-          <Formik initialValues={getBusinessForm()} validationSchema={getBusinessFormValidation()} onSubmit={onSubmit}>
+          <Formik
+            initialValues={getBusinessForm()}
+            validationSchema={getBusinessFormValidation()}
+            onSubmit={onSubmit}
+          >
             {({ errors, setFieldValue, values, setFieldTouched }) => (
               <Form>
                 <FormField label="Business Name">
-                  <Input.Text placeholder="Name of Business" name="registeredName" />
+                  <Input.Text
+                    placeholder="Name of Business"
+                    name="registeredName"
+                  />
                 </FormField>
                 <FormField label="Registration Number">
-                  <Input.Text placeholder="Enter RC Number" name="registrationNumber" />
+                  <Input.Text
+                    placeholder="Enter RC Number"
+                    name="registrationNumber"
+                  />
                 </FormField>
                 <FormField label="BVN">
-                  <Input.Text placeholder="Enter BVN" name="bankVerificationNumber" />
+                  <Input.Text
+                    placeholder="Enter BVN"
+                    name="bankVerificationNumber"
+                  />
                 </FormField>
                 <FormField label="Address">
-                  <Input.TextArea placeholder="Enter street name and number" name="operationalAddress"></Input.TextArea>
+                  <Input.TextArea
+                    placeholder="Enter street name and number"
+                    name="operationalAddress"
+                  ></Input.TextArea>
                 </FormField>
                 <FormField label="State">
                   <Input.Select name="state">
                     {states.length &&
-                      states.map(state => (
+                      states.map((state) => (
                         <option key={state} value={state}>
                           {state}
                         </option>
@@ -164,12 +222,12 @@ const Business = () => {
                     id="utilityBill"
                     name="utilityBill"
                     type="file"
-                    onChange={e => {
-                      setFieldValue('utilityBill', e.currentTarget.files![0]);
+                    onChange={(e) => {
+                      setFieldValue("utilityBill", e.currentTarget.files![0]);
                       onUtilityBillSelect(e);
                     }}
-                    onBlur={() => setFieldTouched('utilityBill')}
-                    className={'invisible hidden'}
+                    onBlur={() => setFieldTouched("utilityBill")}
+                    className={"invisible hidden"}
                   />
                   <div className="flex flex-col ml-3 border-red-500 borde">
                     <p className="font-bold text-md">
@@ -179,7 +237,9 @@ const Business = () => {
                   </div>
                 </div>
                 {uploadingUtilityBill && <Progress value={uploadProgress} />}
-                {errors.utilityBill && <span className="text-red-500">{errors.utilityBill}</span>}
+                {/* {errors.utilityBill && (
+                  <span className="text-red-500">{errors.utilityBill}</span>
+                )} */}
 
                 <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
                   <label htmlFor="meansOfId">
@@ -189,13 +249,12 @@ const Business = () => {
                     id="meansOfId"
                     name="meansOfId"
                     type="file"
-                    onChange={e => {
-                      setFieldValue('meansOfId', e.currentTarget.files![0]);
+                    onChange={(e) => {
+                      setFieldValue("meansOfId", e.currentTarget.files![0]);
                       onMeansOfIdSelect(e);
                     }}
-                    onBlur={() => setFieldTouched('meansOfId')}
-                    
-                    className={'invisible hidden'}
+                    onBlur={() => setFieldTouched("meansOfId")}
+                    className={"invisible hidden"}
                   />
                   <div className="flex flex-col ml-3 border-red-500 borde">
                     <p className="font-bold text-md">
@@ -205,7 +264,9 @@ const Business = () => {
                   </div>
                 </div>
                 {uploadingMeansOfId && <Progress value={uploadProgress} />}
-                {errors.meansOfId && <span className="text-red-500">{errors.meansOfId}</span>}
+                {/* {errors.meansOfId && (
+                  <span className="text-red-500">{errors.meansOfId}</span>
+                )} */}
 
                 <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
                   <label htmlFor="bankStatement">
@@ -215,12 +276,12 @@ const Business = () => {
                     id="bankStatement"
                     name="bankStatement"
                     type="file"
-                    onChange={e => {
-                      setFieldValue('bankStatement', e.currentTarget.files![0]);
+                    onChange={(e) => {
+                      setFieldValue("bankStatement", e.currentTarget.files![0]);
                       onBankStatementSelect(e);
                     }}
-                    onBlur={() => setFieldTouched('bankStatement')}
-                    className={'invisible hidden'}
+                    onBlur={() => setFieldTouched("bankStatement")}
+                    className={"invisible hidden"}
                   />
                   <div className="flex flex-col ml-3 border-red-500 borde">
                     <p className="font-bold text-md">
@@ -230,7 +291,9 @@ const Business = () => {
                   </div>
                 </div>
                 {uploadingBankStatement && <Progress value={uploadProgress} />}
-                {errors.bankStatement && <span className="text-red-500">{errors.bankStatement}</span>}
+                {/* {errors.bankStatement && (
+                  <span className="text-red-500">{errors.bankStatement}</span>
+                )} */}
 
                 <Button type="submit" full>
                   Submit
