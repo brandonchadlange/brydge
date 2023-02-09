@@ -1,6 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Image from 'next/image';
+import toast from "react-hot-toast";
 import { BsBell, BsSearch } from 'react-icons/bs';
+import { HiXMark } from 'react-icons/hi2';
+
 import { UserContext } from '@/context';
 
 interface HeaderNavMenuProps {
@@ -9,6 +12,33 @@ interface HeaderNavMenuProps {
 
 export default function HeaderNavMenu({ className }: HeaderNavMenuProps) {
   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+      if (user.name && !user?.isOnboarded) {
+        toast(
+          (t) => (
+            <div className="flex justify-between items-center bg-blue-200 rounded font-medium w-ful w-[700px] p-4 left-[-418px] absolute ">
+              <span>
+                Hey there {user.name} Welcome 🎉. Complete your{" "}
+                <span className="text-blue-500">verification</span> to do more
+                with brydge
+              </span>
+              <HiXMark
+                className="h-6 w-6"
+                onClick={() => {
+                  toast.dismiss(t.id);
+                }}
+              />
+            </div>
+          ),
+          {
+            className: "!bg-blue-200 !w-0 !p-0 m-0 none",
+            duration: Infinity,
+          }
+        );
+      }
+  }, [user]);
+
   if (!user.name) return null;
 
   return (
