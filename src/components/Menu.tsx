@@ -105,7 +105,7 @@ const Menu = () => {
             name={link.name}
             href={link.url}
             iconURL={link.iconURL}
-            active={router.asPath === `${link.url}`}
+            active={router.asPath.includes(link.url)}
           />
         ))}
       </ul>

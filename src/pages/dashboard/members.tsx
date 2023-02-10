@@ -72,7 +72,7 @@ const Members = () => {
         <div className="flex justify-end">
           <AppButton type="button">Invite member</AppButton>
         </div>
-        <Card className="mt-8">
+        <Card className="mt-4 px-6">
           <MemberTable />
         </Card>
       </div>
