@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import toast from "react-hot-toast";
 import { BsBell, BsSearch } from 'react-icons/bs';
@@ -12,10 +12,11 @@ interface HeaderNavMenuProps {
 
 export default function HeaderNavMenu({ className }: HeaderNavMenuProps) {
   const { user } = useContext(UserContext);
+  const [toastId, setToastId] = useState<string>();
 
   useEffect(() => {
-      if (user.name && !user?.isOnboarded) {
-        toast(
+      if (user.name && !user?.isOnboarded && !toastId) {
+        const toast_id = toast(
           (t) => (
             <div className="flex justify-between items-center bg-blue-200 rounded font-medium w-ful w-[700px] p-4 left-[-418px] absolute ">
               <span>
@@ -27,6 +28,7 @@ export default function HeaderNavMenu({ className }: HeaderNavMenuProps) {
                 className="h-6 w-6"
                 onClick={() => {
                   toast.dismiss(t.id);
+                  setToastId(undefined);
                 }}
               />
             </div>
@@ -36,6 +38,8 @@ export default function HeaderNavMenu({ className }: HeaderNavMenuProps) {
             duration: Infinity,
           }
         );
+
+        setToastId(toast_id)
       }
   }, [user]);
 

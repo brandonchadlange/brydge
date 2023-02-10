@@ -22,3 +22,20 @@ body {
 #phone-input input {
   outline: none;
 } */
+
+.react-tabs .react-tabs__tab {
+  margin-right: 32px;
+}
+
+.react-tabs__tab-panel {
+  display: initial !important;
+  height: 100%;
+}
+
+.react-tabs__tab.bottom-border {
+  border-bottom: 4px solid theme('colors.blue.500');
+}
+
+.react-tabs__tab.bottom-border::after {
+  content: none !important;
+}

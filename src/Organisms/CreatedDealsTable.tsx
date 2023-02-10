@@ -4,36 +4,19 @@ import { BsSearch, BsPlusLg } from 'react-icons/bs';
 import { CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css';
 
-import Button from '../components/Button';
 
-import Card from '../components/card';
-import AppTable, { AppTableColumn } from '../components/table';
+import Button from '@/components/Button';
+import Card from '@/components/card';
+import EmptyStateCard from '@/components/EmptyStateCard';
+import AppTable, { AppTableColumn } from '@/components/table';
+
+import { Deal, Member } from '@/pages/api/types';
+import { formatDate } from '@/utils/formatDate';
 
 interface CreatedDealsTableProps {
   className?: string;
   onCreateDeal: () => void;
 }
-
-interface Member {
-  id: string;
-  name: string;
-  dealId: string;
-  image: string;
-  carryPercent: string;
-  status: string;
-};
-
-interface Deal {
-  id: string;
-  name: string;
-  description: string;
-  competed: number;
-  amount: number;
-  currency: string;
-  goalAmount: number;
-  members: Member[];
-}
-
 
 const columns: AppTableColumn<Deal>[] = [
   {
@@ -96,6 +79,14 @@ const columns: AppTableColumn<Deal>[] = [
     },
   },
   {
+    name: 'createdDate',
+    heading: 'Created Date',
+    headerClass: "font-medium text-gray-500 text-sm",
+    component(e) {
+      return formatDate(e.createdDate);
+    },
+  },
+  {
     name: 'amount',
     heading: 'Amount',
     headerClass: "font-medium text-gray-500 text-sm",
@@ -144,6 +135,7 @@ const members: Member[] = [
 const deals: Deal[] = [
   {
     id: Math.round(Math.random() * 100000).toString(),
+    createdDate: Date.now(),
     name: 'Deal 1',
     description: 'Deal description',
     competed: 70,
@@ -155,6 +147,7 @@ const deals: Deal[] = [
   {
     id: Math.round(Math.random() * 100000).toString(),
     name: 'Deal 2',
+    createdDate: Date.now(),
     description: 'Deal 2 description',
     members,
     competed: 50,
@@ -171,11 +164,7 @@ export default function CreatedDealsTable({ className, onCreateDeal }: CreatedDe
         Created Deals
       </div>
       <AppTable columns={columns} data={deals}>
-        <div className="flex flex-col items-center justify-center h-full w-full">
-          <BsSearch />
-          <div>Oops! You do not have any deals yet</div>
-          <Button type="button" className="underline !bg-white text-black" onClick={onCreateDeal}>Create new Deal</Button>
-        </div>
+        <EmptyStateCard message="Oops! You do not have any deals yet" buttonText="Create new Deal" onAddClick={onCreateDeal} />
       </AppTable>
     </Card>
   );

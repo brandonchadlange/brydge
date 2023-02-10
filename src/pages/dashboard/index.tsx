@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className={`container p-8 pt-32`}>
+      <div className={`container p-8 pt-24`}>
         <div className="flex justify-between gap-8">
           <div className="w-10/12">
             <div className="flex h-48 mb-6 justify-between gap-8">
