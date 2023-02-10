@@ -1,8 +1,7 @@
-import withDashboardLayout from '@/components/withDashboardLayout'
-import React from 'react'
+import DashboardLayout from "@/components/withDashboardLayout";
 
 const MyWallet = () => {
-  return <div>MyWallet</div>
-}
+  return <DashboardLayout>MyWallet</DashboardLayout>;
+};
 
-export default withDashboardLayout(MyWallet)
+export default MyWallet;

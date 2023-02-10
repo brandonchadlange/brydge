@@ -102,7 +102,6 @@ const Business = () => {
     const file = e.target.files![0];
     setMeansOfId(file);
   };
-
   const onBankStatementSelect = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {

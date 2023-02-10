@@ -1,6 +1,6 @@
 // import { DetailedHTMLProps, InputHTMLAttributes } from "react";
-import { useField } from 'formik';
-import { ReactNode } from 'react';
+import { useField } from "formik";
+import { ReactNode } from "react";
 type CustomCheckboxInputProps = {
   placeholder?: string;
   name: string;
@@ -8,8 +8,14 @@ type CustomCheckboxInputProps = {
 
 type CheckboxInputProps = CustomCheckboxInputProps;
 
-const CheckboxInput = ({ children, ...props }: { children: ReactNode; props: CheckboxInputProps }) => {
-  const [field, meta] = useField({ ...props, type: 'checkbox' });
+const CheckboxInput = ({
+  children,
+  ...props
+}: {
+  children: ReactNode;
+  props: CheckboxInputProps;
+}) => {
+  // const [field, meta] = useField({ ...props, type: 'checkbox' });
   return (
     // <>
     //   <label htmlFor="acceptedTerms" className="flex flex-row justify-between mt-4">
