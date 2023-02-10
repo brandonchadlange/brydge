@@ -61,11 +61,11 @@ model Business {
   registeredName         String
   registrationNumber     String
   state                  String
-  meansOfIdUrl           String
   utilityBillUrl         String
   bankStatementUrl       String
-  subAccountId           String?
+  meansOfIdUrl           String
   approved               Boolean        @default(false)
+  subAccountId           String?
   users                  BusinessUser[]
   Deal                   Deal[]
 }
@@ -121,9 +121,9 @@ model Deal {
   fundAmount     Int
   expectedReturn Int
   expectedTenure Int
-  accountId      String?  @unique()
-  accountNumber  String?
   accountName    String?
+  accountNumber  String?
   bankName       String?
+  accountId      String?
   business       Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
 }
