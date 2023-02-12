@@ -18,9 +18,11 @@ function AppTable<T>({ children, columns, data }: AppTableProps<T>) {
     <>
       <table className="w-full">
         <thead>
-          <tr className="text-left">
+          <tr className="text-left text-gray-500 font-light">
             {columns?.map((column) => (
-              <th key={column.name} className={column.headerClass}>{column.heading}</th>
+              <th key={column.name} className={column.headerClass}>
+                {column.heading}
+              </th>
             ))}
           </tr>
         </thead>
@@ -36,9 +38,7 @@ function AppTable<T>({ children, columns, data }: AppTableProps<T>) {
           ))}
         </tbody>
       </table>
-      {
-        !data?.length && children
-      }
+      {!data?.length && children}
     </>
   );
 }

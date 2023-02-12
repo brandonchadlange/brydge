@@ -1,29 +1,29 @@
-import Button from '@/components/Button';
-import Input from '@/components/input';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import states from '@/frontend/utility/nigerian-states';
-import Progress from '@/components/progress';
+import Button from "@/components/Button";
+import Input from "@/components/input";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import states from "@/frontend/utility/nigerian-states";
+import Progress from "@/components/progress";
 
 const getDealForm = () => {
   return {
-    companyName: '',
-    transactionType: '',
-    dealSize: '',
-    allocation: '',
-    spvTerms: '',
-    goalClosingDate: '',
+    companyName: "",
+    transactionType: "",
+    dealSize: "",
+    allocation: "",
+    spvTerms: "",
+    goalClosingDate: "",
   };
 };
 
 const getDealFormValidation = () => {
   return Yup.object().shape({
-    companyName: Yup.string().required('Company name is required'),
-    transactionType: Yup.string().required('Please select transaction type'),
-    dealSize: Yup.string().required('Deal size is required'),
-    allocation: Yup.string().required('Syndicate head is required'),
-    spvTerms: Yup.string().required('Required'),
-    goalClosingDate: Yup.date().required('Please add a goal closing date'),
+    companyName: Yup.string().required("Company name is required"),
+    transactionType: Yup.string().required("Please select transaction type"),
+    dealSize: Yup.string().required("Deal size is required"),
+    allocation: Yup.string().required("Syndicate head is required"),
+    spvTerms: Yup.string().required("Required"),
+    goalClosingDate: Yup.date().required("Please add a goal closing date"),
   });
 };
 
@@ -35,9 +35,14 @@ const DealForm = () => {
   };
 
   return (
-    <div className="max-h-screen overflow-y-hidden">
+    <div className="p-6">
+      <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
       <Progress value={50} />
-      <Formik initialValues={getDealForm()} validationSchema={getDealFormValidation()} onSubmit={onSubmit}>
+      <Formik
+        initialValues={getDealForm()}
+        validationSchema={getDealFormValidation()}
+        onSubmit={onSubmit}
+      >
         {({ errors, values, setFieldValue, setFieldTouched }) => (
           <Form>
             <Input.FormField label="Company Name">
@@ -46,14 +51,17 @@ const DealForm = () => {
             <Input.FormField label="Transaction Type">
               <Input.Select name="transactionType" placeholder="select">
                 {states.length &&
-                  states.map(state => (
+                  states.map((state) => (
                     <option key={state} value={state}>
                       {state}
                     </option>
                   ))}
               </Input.Select>
             </Input.FormField>
-            <Input.FormField description="The total amount the company wants to raise this round" label="Deal Size">
+            <Input.FormField
+              description="The total amount the company wants to raise this round"
+              label="Deal Size"
+            >
               <Input.Text placeholder="Enter Goal Amount" name="dealSize" />
             </Input.FormField>
             <Input.FormField
@@ -66,19 +74,26 @@ const DealForm = () => {
               description="Not shown to LPs. Non standard liquidation preferences, interest rates, redemtion rights, etc."
               label="SPV Terms"
             >
-              <Input.TextArea placeholder="Write or paste terms here" name="spvTerms" />
+              <Input.TextArea
+                placeholder="Write or paste terms here"
+                name="spvTerms"
+              />
             </Input.FormField>
 
             <Input.FormField label="Goal Closing Date">
               <input
                 type="date"
                 className="w-full px-5 py-2 my-3 border-2 rounded-lg focus:outline-none focus:border-dark-300 focus:ring-1 focus:ring-dark-300"
-                onBlur={() => setFieldTouched('goalClosingDate')}
-                onChange={event => {
-                  setFieldValue('goalClosingDate', event.target.value);
+                onBlur={() => setFieldTouched("goalClosingDate")}
+                onChange={(event) => {
+                  setFieldValue("goalClosingDate", event.target.value);
                 }}
               />
-              {errors.goalClosingDate && <div className="text-red-500 text-xs">{errors.goalClosingDate}</div>}
+              {errors.goalClosingDate && (
+                <div className="text-red-500 text-xs">
+                  {errors.goalClosingDate}
+                </div>
+              )}
             </Input.FormField>
 
             <Button type="submit" full>

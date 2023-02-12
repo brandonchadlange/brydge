@@ -18,8 +18,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const getSyndicates = async () => {
-     const syndicates = await syndicateService.getSyndicates();
-    }
+      const syndicates = await syndicateService.getSyndicates();
+    };
 
     const getUserState = async () => {
       const userState = await userService.getUserState();
@@ -49,8 +49,7 @@ const Dashboard = () => {
         </div>
 
         <Slideout show={showDealCreation} setShow={toggleSlideOut}>
-          <div className="p-4">
-            <h1 className="text-lg font-bold font-primary mb-4">Create Deal</h1>
+          <div>
             <DealForm />
           </div>
         </Slideout>

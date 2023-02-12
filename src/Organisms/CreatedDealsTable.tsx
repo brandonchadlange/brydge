@@ -3,14 +3,13 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
 
+import Button from "@/components/Button";
+import Card from "@/components/card";
+import EmptyStateCard from "@/components/EmptyStateCard";
+import AppTable, { AppTableColumn } from "@/components/table";
 
-import Button from '@/components/Button';
-import Card from '@/components/card';
-import EmptyStateCard from '@/components/EmptyStateCard';
-import AppTable, { AppTableColumn } from '@/components/table';
-
-import { Deal, Member } from '@/pages/api/types';
-import { formatDate } from '@/utils/formatDate';
+import { Deal, Member } from "@/pages/api/types";
+import { formatDate } from "@/utils/formatDate";
 
 interface CreatedDealsTableProps {
   className?: string;
@@ -73,16 +72,16 @@ const columns: AppTableColumn<Deal>[] = [
     },
   },
   {
-    name: 'createdDate',
-    heading: 'Created Date',
+    name: "createdDate",
+    heading: "Created Date",
     headerClass: "font-medium text-gray-500 text-sm",
     component(e) {
       return formatDate(e.createdDate);
     },
   },
   {
-    name: 'amount',
-    heading: 'Amount',
+    name: "amount",
+    heading: "Amount",
     headerClass: "font-medium text-gray-500 text-sm",
     component(e) {
       return (
@@ -126,30 +125,7 @@ const members: Member[] = [
   },
 ];
 
-const deals: Deal[] = [
-  {
-    id: Math.round(Math.random() * 100000).toString(),
-    createdDate: Date.now(),
-    name: 'Deal 1',
-    description: 'Deal description',
-    competed: 70,
-    members,
-    amount: 60000,
-    currency: "$",
-    goalAmount: 70000,
-  },
-  {
-    id: Math.round(Math.random() * 100000).toString(),
-    name: 'Deal 2',
-    createdDate: Date.now(),
-    description: 'Deal 2 description',
-    members,
-    competed: 50,
-    amount: 25000,
-    currency: "$",
-    goalAmount: 50000,
-  },
-];
+const deals: Deal[] = [];
 
 export default function CreatedDealsTable({
   className,
@@ -159,7 +135,11 @@ export default function CreatedDealsTable({
     <Card className={`p-4 h-96 ${className}`}>
       <div className="flex justify-between font-medium mb-4">Created Deals</div>
       <AppTable columns={columns} data={deals}>
-        <EmptyStateCard message="Oops! You do not have any deals yet" buttonText="Create new Deal" onAddClick={onCreateDeal} />
+        <EmptyStateCard
+          message="Oops! You do not have any deals yet"
+          buttonText="Create new Deal"
+          onAddClick={onCreateDeal}
+        />
       </AppTable>
     </Card>
   );
