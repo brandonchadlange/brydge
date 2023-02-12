@@ -1,12 +1,14 @@
-import Button from "@/components/Button";
-import authService, { Provider } from "@/frontend/services/auth";
+import React, { useEffect, useState }  from "react";
+import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Input from "./input/index";
 
-const Login = () => {
+import Button from "@/components/Button";
+import authService, { Provider } from "@/frontend/services/auth";
+import Input from "./input/index";
+import OTPScreen from "@/Organisms/OTPScreen";
+
+export default function LoginPage(){
   const [providerList, setProviderList] = useState<Provider[]>([]);
   const router = useRouter();
   const callbackUrl = router.query.callbackUrl;
@@ -22,10 +24,12 @@ const Login = () => {
   useEffect(() => {
     fetchAuthProviders();
   }, []);
+  
 
   return (
-    <div className="flex items-center justify-center h-screen font-primary w-100">
-      <div className="flex flex-col w-10/12 p-4 text-center items-center md:justify-center h-5/6 md:w-3/5 md:h-3/4">
+    <div className="flex items-center justify-center h-screen w-100">
+      <OTPScreen />
+      {/* <div className="flex flex-col w-10/12 p-4 text-center items-center md:justify-center h-5/6 md:w-3/5 md:h-3/4">
         <span className="text-2xl font-bold">Log in</span>
         <span className="my-5 font-semibold opacity-80 md:my-3">
           Fill in your log in details to proceed
@@ -70,9 +74,7 @@ const Login = () => {
             Create Account
           </Link>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
-
-export default Login;
