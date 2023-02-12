@@ -6,7 +6,6 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import authService, { Provider } from "@/frontend/services/auth";
 import Input from "./input/index";
-import OTPScreen from "@/Organisms/OTPScreen";
 
 export default function LoginPage(){
   const [providerList, setProviderList] = useState<Provider[]>([]);
@@ -28,8 +27,7 @@ export default function LoginPage(){
 
   return (
     <div className="flex items-center justify-center h-screen w-100">
-      <OTPScreen />
-      {/* <div className="flex flex-col w-10/12 p-4 text-center items-center md:justify-center h-5/6 md:w-3/5 md:h-3/4">
+      <div className="flex flex-col w-10/12 p-4 text-center items-center md:justify-center h-5/6 md:w-3/5 md:h-3/4">
         <span className="text-2xl font-bold">Log in</span>
         <span className="my-5 font-semibold opacity-80 md:my-3">
           Fill in your log in details to proceed
@@ -74,7 +72,7 @@ export default function LoginPage(){
             Create Account
           </Link>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
