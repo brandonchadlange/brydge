@@ -10,14 +10,14 @@ const navLinks = [
     iconURL: "/tile.svg",
   },
   {
+    name: "Deals Room",
+    url: "/deals-room",
+    iconURL: "/files.svg",
+  },
+  {
     name: "Data Room",
     url: "/dashboard/data-room",
     iconURL: "/file-text.svg",
-  },
-  {
-    name: "Deal Funds",
-    url: "/deal-funds",
-    iconURL: "/files.svg",
   },
   {
     name: "Transactions",
@@ -41,7 +41,7 @@ const Logout = () => {
     <div className="fixed bottom-6 w-70 px-6 py-4 flex flex-col justify-center rounded-3xl bg-dark-500">
       <Image
         className="m-auto mt-4"
-        src={"logo.svg"}
+        src="/logo.svg"
         width={24}
         height={24}
         alt="logo"
@@ -105,7 +105,7 @@ const Menu = () => {
             name={link.name}
             href={link.url}
             iconURL={link.iconURL}
-            active={router.asPath === `${link.url}`}
+            active={router.asPath.includes(link.url)}
           />
         ))}
       </ul>

@@ -16,7 +16,7 @@ const Slideout = (props: SlideoutProps) => {
     return (
       <>
         <Overlay show={props.show} onClick={hideOverlay}></Overlay>
-        <div className="w-96 h-screen bg-white absolute right-0 top-0 shadow-xl">
+        <div className="w-96 h-screen bg-white absolute right-0 top-0 shadow-xl overflow-y-auto">
           {props.children}
         </div>
       </>

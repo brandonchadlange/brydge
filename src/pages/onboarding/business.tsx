@@ -2,14 +2,17 @@ import Button from "@/components/Button";
 import { Header } from "@/components/Header";
 import Input from "@/components/input/";
 import FormField from "@/components/input/FormField";
-import Progress from "@/components/progress";
+import Overlay from "@/components/overlay";
 import businessService from "@/frontend/services/business";
 import documentService from "@/frontend/services/document";
 import states from "@/frontend/utility/nigerian-states";
+import showToast from "@/frontend/utility/show-toast";
 import { Form, Formik } from "formik";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { HiOutlineDocumentArrowUp } from "react-icons/hi2";
+import { Bars } from "react-loader-spinner";
 import * as Yup from "yup";
 
 const FILE_SIZE = 10000 * 1024;
@@ -84,63 +87,66 @@ const Business = () => {
   const [utilityBill, setUtilityBill] = useState<File | null>(null);
   const [meansOfId, setMeansOfId] = useState<File | null>(null);
   const [bankStatement, setBankStatement] = useState<File | null>(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadingUtilityBill, setUploadingUtilityBill] = useState(false);
-  const [uploadingMeansOfId, setUploadingMeansOfId] = useState(false);
-  const [uploadingBankStatement, setUploadingBankStatement] = useState(false);
+  const [loading, setLoading] = useState<Boolean>(false);
+
+  const router = useRouter();
 
   const onUtilityBillSelect = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = e.target.files![0];
     setUtilityBill(file);
-    setUploadingUtilityBill(true);
-    const doc = await documentService.uploadDocument(file, setUploadProgress);
-    setUploadingUtilityBill(false);
   };
+
   const onMeansOfIdSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
     setMeansOfId(file);
-    setUploadingMeansOfId(true);
-    const doc = await documentService.uploadDocument(file, setUploadProgress);
-    setUploadingMeansOfId(false);
   };
   const onBankStatementSelect = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = e.target.files![0];
     setBankStatement(file);
-    setUploadingBankStatement(true);
-    const doc = await documentService.uploadDocument(file, setUploadProgress);
-    setUploadingBankStatement(false);
+  };
+
+  const uploadDocuments = async () => {
+    const [utilityBillDoc, meansOfIdDoc, bankStatementDoc] = await Promise.all([
+      documentService.uploadDocument(utilityBill!),
+      documentService.uploadDocument(meansOfId!),
+      documentService.uploadDocument(bankStatement!),
+    ]);
+
+    return {
+      utilityBillDocument: utilityBillDoc,
+      meansOfIdDocument: meansOfIdDoc,
+      bankStatementDocument: bankStatementDoc,
+    };
   };
 
   const onSubmit = async (values: any) => {
-    // Upload file to get utilityBillUrl
-    const utilityBillDocument = await documentService.uploadDocument(
-      utilityBill!
-    );
-    const meansOfIdDocument = await documentService.uploadDocument(meansOfId!);
-    const bankStatementDocument = await documentService.uploadDocument(
-      bankStatement!
-    );
+    setLoading(true);
 
-    console.log({
-      utilityBillDocument,
-      meansOfIdDocument,
-      bankStatementDocument,
-    });
+    const { utilityBillDocument, meansOfIdDocument, bankStatementDocument } =
+      await uploadDocuments();
 
-    const data = await businessService.createBusiness({
-      registeredName: values.registeredName,
-      registrationNumber: values.registrationNumber,
-      bankVerificationNumber: values.bankVerificationNumber,
-      operationalAddress: values.operationalAddress,
-      state: values.state,
-      utilityBillUrl: utilityBillDocument.publicUrl || "",
-      meansOfIdUrl: meansOfIdDocument.publicUrl || "",
-      bankStatementUrl: bankStatementDocument.publicUrl || "",
-    });
+    try {
+      await businessService.createBusiness({
+        registeredName: values.registeredName,
+        registrationNumber: values.registrationNumber,
+        bankVerificationNumber: values.bankVerificationNumber,
+        operationalAddress: values.operationalAddress,
+        state: values.state,
+        utilityBillUrl: utilityBillDocument.publicUrl || "",
+        meansOfIdUrl: meansOfIdDocument.publicUrl || "",
+        bankStatementUrl: bankStatementDocument.publicUrl || "",
+      });
+      setLoading(false);
+      showToast("Business successfully created!");
+      router.push("/dashboard");
+    } catch (e) {
+      setLoading(false);
+      showToast("Oops! Something went wrong. Please try again");
+    }
   };
 
   return (
@@ -214,86 +220,119 @@ const Business = () => {
                       ))}
                   </Input.Select>
                 </FormField>
-                <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
-                  <label htmlFor="utilityBill">
-                    <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
-                  </label>
-                  <input
-                    id="utilityBill"
-                    name="utilityBill"
-                    type="file"
-                    onChange={(e) => {
-                      setFieldValue("utilityBill", e.currentTarget.files![0]);
-                      onUtilityBillSelect(e);
-                    }}
-                    onBlur={() => setFieldTouched("utilityBill")}
-                    className={"invisible hidden"}
-                  />
-                  <div className="flex flex-col ml-3 border-red-500 borde">
-                    <p className="font-bold text-md">
-                      {/* {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'} */}
-                    </p>
-                    <p className="text-sm text-blue">Max 10MB</p>
+                <FormField label="Utility Bill">
+                  <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
+                    <label htmlFor="utilityBill">
+                      <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
+                    </label>
+                    <input
+                      id="utilityBill"
+                      name="utilityBill"
+                      type="file"
+                      accept="application/pdf"
+                      onChange={(e) => {
+                        setFieldValue("utilityBill", e.currentTarget.files![0]);
+                        onUtilityBillSelect(e);
+                      }}
+                      onBlur={() => setFieldTouched("utilityBill")}
+                      className={"invisible hidden"}
+                    />
+                    <div className="flex flex-col ml-3 border-red-500 borde">
+                      <p className="font-bold text-md">
+                        {utilityBill?.name
+                          ? utilityBill?.name
+                          : "Click to upload"}
+                      </p>
+                      <p className="text-sm text-blue">Max 10MB</p>
+                    </div>
                   </div>
-                </div>
-                {uploadingUtilityBill && <Progress value={uploadProgress} />}
-                {/* {errors.utilityBill && (
-                  <span className="text-red-500">{errors.utilityBill}</span>
-                )} */}
+                  {errors.utilityBillUrl && (
+                    <span className="text-red-500">
+                      {errors.utilityBillUrl}
+                    </span>
+                  )}
+                </FormField>
 
-                <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
-                  <label htmlFor="meansOfId">
-                    <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
-                  </label>
-                  <input
-                    id="meansOfId"
-                    name="meansOfId"
-                    type="file"
-                    onChange={(e) => {
-                      setFieldValue("meansOfId", e.currentTarget.files![0]);
-                      onMeansOfIdSelect(e);
-                    }}
-                    onBlur={() => setFieldTouched("meansOfId")}
-                    className={"invisible hidden"}
-                  />
-                  <div className="flex flex-col ml-3 border-red-500 borde">
-                    <p className="font-bold text-md">
-                      {/* {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'} */}
-                    </p>
-                    <p className="text-sm text-blue">Max 10MB</p>
+                <FormField label="Means of Id">
+                  <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
+                    <label htmlFor="meansOfId">
+                      <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
+                    </label>
+                    <input
+                      id="meansOfId"
+                      name="meansOfId"
+                      type="file"
+                      accept="application/pdf"
+                      onChange={(e) => {
+                        setFieldValue("meansOfId", e.currentTarget.files![0]);
+                        onMeansOfIdSelect(e);
+                      }}
+                      onBlur={() => setFieldTouched("meansOfId")}
+                      className={"invisible hidden"}
+                    />
+                    <div className="flex flex-col ml-3 border-red-500 borde">
+                      <p className="font-bold text-md">
+                        {meansOfId?.name ? meansOfId?.name : "Click to upload"}
+                      </p>
+                      <p className="text-sm text-blue">Max 10MB</p>
+                    </div>
                   </div>
-                </div>
-                {uploadingMeansOfId && <Progress value={uploadProgress} />}
-                {/* {errors.meansOfId && (
-                  <span className="text-red-500">{errors.meansOfId}</span>
-                )} */}
+                  {errors.meansOfIdUrl && (
+                    <span className="text-red-500">{errors.meansOfIdUrl}</span>
+                  )}
+                </FormField>
 
-                <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
-                  <label htmlFor="bankStatement">
-                    <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
-                  </label>
-                  <input
-                    id="bankStatement"
-                    name="bankStatement"
-                    type="file"
-                    onChange={(e) => {
-                      setFieldValue("bankStatement", e.currentTarget.files![0]);
-                      onBankStatementSelect(e);
-                    }}
-                    onBlur={() => setFieldTouched("bankStatement")}
-                    className={"invisible hidden"}
-                  />
-                  <div className="flex flex-col ml-3 border-red-500 borde">
-                    <p className="font-bold text-md">
-                      {/* {values?.utilityBill?.name ? values?.utilityBill?.name : 'Click to upload'} */}
-                    </p>
-                    <p className="text-sm text-blue">Max 10MB</p>
+                <FormField label="Bank Statement">
+                  <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
+                    <label htmlFor="bankStatement">
+                      <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
+                    </label>
+                    <input
+                      id="bankStatement"
+                      name="bankStatement"
+                      type="file"
+                      accept="application/pdf"
+                      onChange={(e) => {
+                        setFieldValue(
+                          "bankStatement",
+                          e.currentTarget.files![0]
+                        );
+                        onBankStatementSelect(e);
+                      }}
+                      onBlur={() => setFieldTouched("bankStatement")}
+                      className={"invisible hidden"}
+                    />
+                    <div className="flex flex-col ml-3 border-red-500 borde">
+                      <p className="font-bold text-md">
+                        {bankStatement?.name
+                          ? bankStatement?.name
+                          : "Click to upload"}
+                      </p>
+                      <p className="text-sm text-blue">Max 10MB</p>
+                    </div>
                   </div>
-                </div>
-                {uploadingBankStatement && <Progress value={uploadProgress} />}
-                {/* {errors.bankStatement && (
-                  <span className="text-red-500">{errors.bankStatement}</span>
-                )} */}
+                  {errors.bankStatementUrl && (
+                    <span className="text-red-500">
+                      {errors.bankStatementUrl}
+                    </span>
+                  )}
+                </FormField>
+
+                {loading && (
+                  <Overlay show>
+                    <div className="h-full flex flex-col align-middle">
+                      <Bars
+                        height="80"
+                        width="80"
+                        color="#1d1d1d"
+                        ariaLabel="bars-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="m-auto"
+                        visible={true}
+                      />
+                    </div>
+                  </Overlay>
+                )}
 
                 <Button type="submit" full>
                   Submit
