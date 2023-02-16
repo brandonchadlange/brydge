@@ -7,14 +7,10 @@ export type DealAccountInformation = {
   bankName: string;
 };
 
-const createDeal = (data: DealCreateDTO) => {
-  return prismaClient.deal.create({
-    data: {
-      businessId: data.businessId,
-      name: data.name,
-      fundAmount: data.fundAmount,
-      expectedReturn: data.expectedReturn,
-      expectedTenure: data.expectedTenure,
+const getDealById = async (dealId: string) => {
+  return prismaClient.deal.findFirst({
+    where: {
+      id: dealId,
     },
   });
 };
@@ -23,6 +19,18 @@ const getDealByAccountId = async (accountId: string) => {
   return prismaClient.deal.findFirst({
     where: {
       accountId: accountId,
+    },
+  });
+};
+
+const createDeal = (data: DealCreateDTO) => {
+  return prismaClient.deal.create({
+    data: {
+      businessId: data.businessId,
+      name: data.name,
+      fundAmount: data.fundAmount,
+      expectedReturn: data.expectedReturn,
+      expectedTenure: data.expectedTenure,
     },
   });
 };
@@ -55,9 +63,10 @@ const setDealAccountInformation = async (
 };
 
 const DealRepository = {
+  getDealById,
+  getDealByAccountId,
   createDeal,
   setDealAccountId,
-  getDealByAccountId,
   setDealAccountInformation,
 };
 

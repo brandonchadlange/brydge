@@ -1,12 +1,16 @@
 import { DealCreateDTO } from "../dto/deal/deal-create";
 import DealRepository, { DealAccountInformation } from "../repositories/deal";
 
-const createDeal = async (data: DealCreateDTO) => {
-  return DealRepository.createDeal(data);
+const getDealById = async (dealId: string) => {
+  return DealRepository.getDealById(dealId);
 };
 
 const getDealByAccountId = async (accountId: string) => {
   return DealRepository.getDealByAccountId(accountId);
+};
+
+const createDeal = async (data: DealCreateDTO) => {
+  return DealRepository.createDeal(data);
 };
 
 const setDealAccountId = async (dealId: string, accountId: string) => {
@@ -21,8 +25,9 @@ const setDealAccountInformation = async (
 };
 
 const DealService = {
-  createDeal,
+  getDealById,
   getDealByAccountId,
+  createDeal,
   setDealAccountId,
   setDealAccountInformation,
 };

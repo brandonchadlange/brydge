@@ -115,7 +115,7 @@ model UnstructuredSyndicateUser {
 }
 
 model Deal {
-  id             String   @id @default(cuid())
+  id             String         @id @default(cuid())
   businessId     String
   name           String
   fundAmount     Int
@@ -125,5 +125,15 @@ model Deal {
   accountNumber  String?
   bankName       String?
   accountId      String?
-  business       Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business       Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  DealDocument   DealDocument[]
+}
+
+model DealDocument {
+  id        String @id @default(cuid())
+  dealId    String
+  name      String
+  type      String
+  publicUrl String
+  deal      Deal   @relation(fields: [dealId], references: [id], onDelete: Cascade)
 }
