@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const LeftPanel = () => {
   return (
-    <div className="hidden md:block max-w-4xl">
+    <div className="hidden md:block max-w-4xl text-white">
       <div className="relative flex flex-col justify-center h-screen left-panel md:col-span-1 p-7">
         <Link href="/" className="absolute text-2xl font-bold top-6">
           Brydge.
@@ -17,7 +17,7 @@ const LeftPanel = () => {
           <Image
             src="/avatar-group.png"
             alt="avatar faces"
-            className="my-8 mix-blend-multiply"
+            className="my-8 rounded-full"
             width={150}
             height={50}
           />
@@ -39,11 +39,11 @@ const LeftPanel = () => {
       {/* styles */}
       <style jsx>{`
         .left-panel {
-          background: linear-gradient(180deg, #B4FF14 0%, rgba(255, 230, 97, 0.69) 100%);
-        }
-
-        .earth {
-          background: linear-gradient(0deg, rgba(217, 217, 217, 0), rgba(217, 217, 217, 0)), linear-gradient(70.75deg, #FFFFFF 6.73%, rgba(255, 255, 255, 0) 80.85%);
+          background-image: linear-gradient(
+            rgba(0, 0, 0, 0.85),
+            rgba(0, 0, 0, 0.85)
+          ),
+          url("/wood-mask.jpg");
         }
       `}</style>
     </div>
