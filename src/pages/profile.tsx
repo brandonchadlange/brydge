@@ -1,20 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { HiOutlineTrash } from "react-icons/hi";
 
-import AppButton from "@/components/Button";
 import Card from "@/components/card";
 import AppTable, { AppTableColumn } from "@/components/table";
 import DashboardLayout from "@/components/withDashboardLayout";
+import { UserContext } from "@/context";
+import Button from "@/components/Button";
 
-export default function Members() {
+export default function Profile() {
+  const { user } = useContext(UserContext);
   return (
     <DashboardLayout>
       <div className={`container p-8 pt-20`}>
-        <div className="flex justify-end mb-4">
-          <AppButton className="font-medium" type="button">Send Invite</AppButton>
-        </div>
+        <Card className="mb-8 p-4 flex justify-between">
+          <div className="flex">
+            <Image className="rounded-lg mr-4" src="https://picsum.photos/200" alt="profile" width={32} height={32} />
+            <div>
+              <div className="font-medium text-lg">
+                {user.name}
+              </div>
+                <div className="text-gray-400 text-sm">
+                  ronniepryde@gmail.com
+                </div>
+            </div>
+          </div>
+          <Button  className="text-red-500 bg-red-200 !px-4 !py-2" type="button">Deactivate Account</Button>
+        </Card>
         <Card className="h-[500px]">
           <Tabs className="h-full" selectedTabClassName="border-none bottom-border" selectedTabPanelClassName="test">
             <TabList>
