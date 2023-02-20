@@ -34,16 +34,14 @@ model Session {
 }
 
 model User {
-  id                        String                      @id @default(cuid())
-  name                      String?
-  email                     String?                     @unique
-  emailVerified             DateTime?
-  image                     String?
-  accounts                  Account[]
-  BusinessUser              BusinessUser[]
-  sessions                  Session[]
-  StructuredSyndicateUser   StructuredSyndicateUser[]
-  UnstructuredSyndicateUser UnstructuredSyndicateUser[]
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  entityId      String
 }
 
 model VerificationToken {
@@ -54,86 +52,73 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Business {
-  id                     String         @id @default(cuid())
-  bankVerificationNumber String
-  operationalAddress     String
-  registeredName         String
-  registrationNumber     String
-  state                  String
-  utilityBillUrl         String
-  bankStatementUrl       String
-  meansOfIdUrl           String
-  approved               Boolean        @default(false)
-  subAccountId           String?
-  users                  BusinessUser[]
-  Deal                   Deal[]
+model Entity {
+  id          String        @id @default(cuid())
+  type        Int
+  merchants   Merchant[]
+  Institution Institution[]
+  individuals Individual[]
 }
 
-model BusinessUser {
-  id         String   @id @default(cuid())
-  businessId String
-  userId     String
-  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Merchant {
+  id                      String   @id @default(cuid())
+  entityId                String
+  registeredName          String
+  registeredCompanyNumber String
+  bankVerificationNumber  Int
+  operationalAddressId    String
+  utilityBillId           String
+  entity                  Entity   @relation(fields: [entityId], references: [id])
+  operationAddress        Address  @relation(fields: [operationalAddressId], references: [id])
+  utilityBill             Document @relation(fields: [utilityBillId], references: [id])
 }
 
-model StructuredSyndicate {
-  id                     String                    @id @default(cuid())
-  registeredName         String
-  registrationNumber     String
-  syndicateHeadName      String
-  bankVerificationNumber String
-  operationalAddress     String
-  state                  String
-  utilityBillUrl         String
-  users                  StructuredSyndicateUser[]
+model Institution {
+  id                      String   @id @default(cuid())
+  entityId                String
+  registeredName          String
+  registeredCompanyNumber String
+  headName                String
+  headEmail               String
+  bankVerificationNumber  Int
+  operationalAddressId    String
+  utilityBillId           String
+  entity                  Entity   @relation(fields: [entityId], references: [id])
+  operationAddress        Address  @relation(fields: [operationalAddressId], references: [id])
+  utilityBill             Document @relation(fields: [utilityBillId], references: [id])
 }
 
-model StructuredSyndicateUser {
-  id                    String              @id @default(cuid())
-  structuredSyndicateId String
-  userId                String
-  structuredSyndicate   StructuredSyndicate @relation(fields: [structuredSyndicateId], references: [id], onDelete: Cascade)
-  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model UnstructuredSyndicate {
-  id                     String                      @id @default(cuid())
-  utilityBillUrl         String
+model Individual {
+  id                     String   @id @default(cuid())
+  entityId               String
   name                   String
   bankVerificationNumber Int
-  users                  UnstructuredSyndicateUser[]
+  operationalAddressId   String
+  utilityBillId          String
+  entity                 Entity   @relation(fields: [entityId], references: [id])
+  operationAddress       Address  @relation(fields: [operationalAddressId], references: [id])
+  utilityBill            Document @relation(fields: [utilityBillId], references: [id])
 }
 
-model UnstructuredSyndicateUser {
-  id                      String                @id @default(cuid())
-  unstructuredSyndicateId String
-  userId                  String
-  unstructuredSyndicate   UnstructuredSyndicate @relation(fields: [unstructuredSyndicateId], references: [id], onDelete: Cascade)
-  user                    User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Address {
+  id          String        @id @default(cuid())
+  street      String
+  houseNumber String
+  zipCode     String
+  city        String
+  state       String
+  Merchant    Merchant[]
+  Institution Institution[]
+  Individual  Individual[]
 }
 
-model Deal {
-  id             String         @id @default(cuid())
-  businessId     String
-  name           String
-  fundAmount     Int
-  expectedReturn Int
-  expectedTenure Int
-  accountName    String?
-  accountNumber  String?
-  bankName       String?
-  accountId      String?
-  business       Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  DealDocument   DealDocument[]
-}
-
-model DealDocument {
-  id        String @id @default(cuid())
-  dealId    String
-  name      String
-  type      String
-  publicUrl String
-  deal      Deal   @relation(fields: [dealId], references: [id], onDelete: Cascade)
+model Document {
+  id          String        @id @default(cuid())
+  name        String
+  contentType String
+  sizeInMb    Int
+  publicUrl   String
+  Merchant    Merchant[]
+  Institution Institution[]
+  Individual  Individual[]
 }
