@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import authService, { Provider } from "@/frontend/services/auth";
 import Input from "./input/index";
 
-export default function LoginPage(){
+export default function LoginPage() {
   const [providerList, setProviderList] = useState<Provider[]>([]);
   const router = useRouter();
   const callbackUrl = router.query.callbackUrl;
@@ -23,7 +23,6 @@ export default function LoginPage(){
   useEffect(() => {
     fetchAuthProviders();
   }, []);
-  
 
   return (
     <div className="flex items-center justify-center h-screen w-100">
@@ -53,12 +52,7 @@ export default function LoginPage(){
         </form>
         {providerList.map((provider) => (
           <button
-            onClick={() =>
-              signIn(provider.id, {
-                redirect: true,
-                callbackUrl: loginCallbackUrl,
-              })
-            }
+            onClick={() => signIn(provider.id)}
             key={provider.id}
             type="button"
             className="mt-4"
@@ -75,4 +69,4 @@ export default function LoginPage(){
       </div>
     </div>
   );
-};
+}

@@ -5,8 +5,6 @@ const createDocumentRef = (
   contentType: string,
   sizeInMb: number
 ) => {
-  console.log(name, contentType, sizeInMb);
-
   return prismaClient.document.create({
     data: {
       name: name,
