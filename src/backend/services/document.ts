@@ -1,6 +1,6 @@
 import { documentStorage } from "../supabase";
 
-export const uploadDocument = async (file: File, name = "untitled") => {
+export const uploadDocument = async (file: File, name: string = "untitled") => {
   const uploadResponse = await documentStorage.upload(name, file, {
     upsert: true,
     contentType: file.type,

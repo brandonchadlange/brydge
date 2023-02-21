@@ -7,8 +7,8 @@ export const useFileUpload = async (file: File) => {
     url: endpoints.uploadFile(),
     data: {
       name: file.name,
-      type: file.type
-    }
+      type: file.type,
+    },
   });
 
   await axios.put(data.url, file, {
@@ -17,10 +17,9 @@ export const useFileUpload = async (file: File) => {
       "Access-Control-Allow-Origin": "*",
     },
     onUploadProgress: (event) => {
-      if (!event.total) return
-      console.log(`progress: ${Math.round((100 * event.loaded) / event.total)}`)
-    }
-  })
+      if (!event.total) return;
+    },
+  });
 
-  return data.url.split('?')[0]
+  return data.url.split("?")[0];
 };
