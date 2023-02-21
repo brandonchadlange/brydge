@@ -1,5 +1,6 @@
 import Input from "@/components/input";
 import applyFormField from "@/components/input/apply-form-field";
+import states from "@/frontend/utility/nigerian-states";
 
 const BusinessName: FormFieldProperties = {
   component: Input.Text,
@@ -25,16 +26,42 @@ const OperationalAddress: FormFieldProperties = {
   label: "Address",
 };
 
+const State: FormFieldProperties = {
+  component: Input.Select,
+  name: "state",
+  label: "State",
+  options: states,
+};
+const UtilityBill: FormFieldProperties = {
+  component: Input.File,
+  name: "state",
+  label: "State",
+};
+const MeansOfId: FormFieldProperties = {
+  component: Input.File,
+  name: "state",
+  label: "State",
+};
+const BankStatement: FormFieldProperties = {
+  component: Input.File,
+  name: "state",
+  label: "State",
+};
+
 const FormFieldMap: Record<FormField, FormFieldProperties> = {
   businessName: BusinessName,
   registrationNumber: RegistrationNumber,
   bankVerificationNumber: BankVerificationNumber,
   operationalAddress: OperationalAddress,
+  state: State,
+  utilityBill: UtilityBill,
+  meansOfId: MeansOfId,
+  bankStatement: BankStatement
 };
 
 const useFormField = (field: FormField) => {
-  const { component, name, label } = FormFieldMap[field];
-  return applyFormField(component, name, label);
+  const { component, name, label, options } = FormFieldMap[field];
+  return applyFormField(component, name, label, options);
 };
 
 export default useFormField;
