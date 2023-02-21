@@ -39,8 +39,10 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  entityId      String?
   accounts      Account[]
   sessions      Session[]
+  Entity        Entity?   @relation(fields: [entityId], references: [id])
 }
 
 model VerificationToken {
@@ -54,9 +56,10 @@ model VerificationToken {
 model Entity {
   id          String        @id @default(cuid())
   type        Int
-  merchants   Merchant[]
-  Institution Institution[]
   individuals Individual[]
+  Institution Institution[]
+  merchants   Merchant[]
+  User        User[]
 }
 
 model Merchant {
@@ -106,9 +109,9 @@ model Address {
   zipCode     String
   city        String
   state       String
-  Merchant    Merchant[]
-  Institution Institution[]
   Individual  Individual[]
+  Institution Institution[]
+  Merchant    Merchant[]
 }
 
 model Document {
@@ -117,7 +120,7 @@ model Document {
   contentType String
   sizeInMb    Int
   publicUrl   String
-  Merchant    Merchant[]
-  Institution Institution[]
   Individual  Individual[]
+  Institution Institution[]
+  Merchant    Merchant[]
 }

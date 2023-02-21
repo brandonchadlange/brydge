@@ -6,19 +6,24 @@ import useFormField from "@/utils/useFormField";
 import useFormValidation from "@/utils/useFormValidator";
 import { Form, Formik } from "formik";
 import OnboardingLayout from "./_layout";
+import states from "@/frontend/utility/nigerian-states";
 
-const BusinessNameField = useFormField("businessName");
-const RegistrationNumberField = useFormField("registrationNumber");
-const BVNField = useFormField("bankVerificationNumber");
-const OperationalAddressField = useFormField("operationalAddress");
-const StateField = applyFormField(Input.Select, "state", "State");
-
-const merchantFormValidation = useFormValidation([
-  "businessName",
-  "bankVerificationNumber",
-]);
 
 const MerchantRegistration = () => {
+  const BusinessNameField = useFormField("businessName");
+  const RegistrationNumberField = useFormField("registrationNumber");
+  const BVNField = useFormField("bankVerificationNumber");
+  const OperationalAddressField = useFormField("operationalAddress");
+  const StateField = useFormField("state");
+  
+  const merchantFormValidation = useFormValidation([
+    "businessName",
+    "registrationNumber",
+    "bankVerificationNumber",
+    "operationalAddress",
+    "state",
+    "utilityBill"
+  ]);
   const overlayLoader = useOverlayLoader();
 
   const onFormSubmit = (data: any) => {
@@ -34,7 +39,6 @@ const MerchantRegistration = () => {
         onSubmit={onFormSubmit}
         // initialValues={getBusinessForm()}
         validationSchema={merchantFormValidation}
-        // onSubmit={onSubmit}
       >
         {({ errors, setFieldValue, values, setFieldTouched }) => (
           <Form>
