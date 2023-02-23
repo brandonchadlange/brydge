@@ -23,13 +23,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <UserContextProvider>
-        <main className={`${syne.variable} ${montserrat.variable}`}>
-          <Toaster />
-          <HeaderNavMenu />
-          <Component {...pageProps} />
-        </main>
-      </UserContextProvider>
+      <main className={`${syne.variable} ${montserrat.variable}`}>
+        <Toaster />
+        <HeaderNavMenu />
+        <Component {...pageProps} />
+      </main>
     </QueryClientProvider>
   );
 }

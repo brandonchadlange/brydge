@@ -12,18 +12,8 @@ const endpoints = {
       return "/api/user";
     },
   },
-  business: {
-    createBussiness() {
-      return "/api/business";
-    },
-  },
-  syndicate: {
-    getSynidicates() {
-      return "/api/syndicate";
-    },
-    createStructuredSyndicate() {
-      return "/api/syndicate/structured";
-    },
+  registration(entityType: EntityType) {
+    return `/api/registration/${entityType}`;
   },
   uploadFile() {
     return "/api/s3/upload-file";

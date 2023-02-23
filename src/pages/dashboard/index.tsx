@@ -16,20 +16,6 @@ const Dashboard = () => {
 
   const { user, setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    const getSyndicates = async () => {
-      const syndicates = await syndicateService.getSyndicates();
-    };
-
-    const getUserState = async () => {
-      const userState = await userService.getUserState();
-      setUser!({ ...user, ...userState });
-    };
-
-    getSyndicates();
-    getUserState();
-  }, []);
-
   const toggleSlideOut = () => {
     setShowDealCreation(!showDealCreation);
   };
