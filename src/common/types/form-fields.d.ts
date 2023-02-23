@@ -1,6 +1,6 @@
 declare type FormField =
-  | "businessName"
-  | "registrationNumber"
+  | "registeredName"
+  | "registeredCompanyNumber"
   | "bankVerificationNumber"
   | "operationalAddress";
 
@@ -12,4 +12,6 @@ declare type FormFieldProperties = {
   component: ComponentType<any>;
   name: string;
   label: string;
+  placeholder?: string;
+  options?: Array<any>;
 };

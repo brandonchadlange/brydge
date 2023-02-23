@@ -1,40 +1,44 @@
 import Input from "@/components/input";
 import applyFormField from "@/components/input/apply-form-field";
 
-const BusinessName: FormFieldProperties = {
+const RegisteredName: FormFieldProperties = {
   component: Input.Text,
-  name: "businessName",
-  label: "Business Name",
+  name: "registeredName",
+  label: "Registered Name",
+  placeholder: "Name of company",
 };
 
 const RegistrationNumber: FormFieldProperties = {
   component: Input.Text,
-  name: "registrationNumber",
-  label: "Registration Number",
+  name: "registeredCompanyNumber",
+  label: "RC Number",
+  placeholder: "Enter RC number",
 };
 
 const BankVerificationNumber: FormFieldProperties = {
-  component: Input.Text,
+  component: Input.Number,
   name: "bankVerificationNumber",
-  label: "BVN",
+  label: "Bank Verification Number",
+  placeholder: "Enter BVN",
 };
 
 const OperationalAddress: FormFieldProperties = {
   component: Input.TextArea,
   name: "operationalAddress",
   label: "Address",
+  placeholder: "Enter operational address",
 };
 
 const FormFieldMap: Record<FormField, FormFieldProperties> = {
-  businessName: BusinessName,
-  registrationNumber: RegistrationNumber,
+  registeredName: RegisteredName,
+  registeredCompanyNumber: RegistrationNumber,
   bankVerificationNumber: BankVerificationNumber,
   operationalAddress: OperationalAddress,
 };
 
 const useFormField = (field: FormField) => {
-  const { component, name, label } = FormFieldMap[field];
-  return applyFormField(component, name, label);
+  const { component, ...fieldDetail } = FormFieldMap[field];
+  return applyFormField(component, fieldDetail);
 };
 
 export default useFormField;

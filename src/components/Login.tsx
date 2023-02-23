@@ -52,7 +52,12 @@ export default function LoginPage() {
         </form>
         {providerList.map((provider) => (
           <button
-            onClick={() => signIn(provider.id)}
+            onClick={() =>
+              signIn(provider.id, {
+                redirect: true,
+                callbackUrl: loginCallbackUrl,
+              })
+            }
             key={provider.id}
             type="button"
             className="mt-4"

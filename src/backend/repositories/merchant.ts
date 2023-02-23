@@ -1,14 +1,14 @@
 import prismaClient from "../prisma";
 
-const createMerchant = () => {
+const createMerchant = (data: CreateMerchantDetail) => {
   return prismaClient.merchant.create({
     data: {
-      entityId: "",
-      registeredName: "",
-      registeredCompanyNumber: "",
-      bankVerificationNumber: 0,
-      operationalAddressId: "",
-      utilityBillId: "",
+      entityId: data.entityId,
+      registeredName: data.registeredName,
+      registeredCompanyNumber: data.registeredCompanyNumber,
+      bankVerificationNumber: data.bankVerificationNumber,
+      operationalAddressId: data.operationalAddressId,
+      utilityBillId: data.utilityBillId,
     },
   });
 };

@@ -39,8 +39,10 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  entityId      String?
   accounts      Account[]
   sessions      Session[]
+  entity        Entity?   @relation(fields: [entityId], references: [id])
 }
 
 model VerificationToken {
@@ -57,6 +59,7 @@ model Entity {
   merchants   Merchant[]
   Institution Institution[]
   individuals Individual[]
+  User        User[]
 }
 
 model Merchant {
@@ -120,4 +123,17 @@ model Document {
   Merchant    Merchant[]
   Institution Institution[]
   Individual  Individual[]
+}
+
+model Deal {
+  id                 String   @id @default(cuid())
+  name               String
+  description        String
+  reference          String
+  amount             Int
+  startDate          DateTime
+  endDate            DateTime
+  requestedAmount    Int
+  returnOnInvestment Int
+  carryPercentage    Int
 }
