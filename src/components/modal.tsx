@@ -16,7 +16,7 @@ const Modal = (props: ModalProps) => {
     return (
       <>
         <Overlay show={props.show} onClick={hideOverlay}></Overlay>
-        <div className="w-96 bg-white absolute shadow-xl">{props.children}</div>
+        <div className="w-96  bg-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl shadow-xl">{props.children}</div>
       </>
     );
   }
