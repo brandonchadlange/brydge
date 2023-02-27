@@ -7,6 +7,7 @@ import { formatDate } from "@/utils/formatDate";
 import EmptyStateCard from "@/components/EmptyStateCard";
 import Card from "@/components/card";
 import AppTable, { AppTableColumn } from "@/components/table";
+import InviteModal from "@/components/InviteModal";
 
 export default function DealRoom() {
   const deal: Deal = {
@@ -61,6 +62,7 @@ export default function DealRoom() {
           </Tabs>
         </Card>
       </div>
+      <InviteModal />
     </DashboardLayout>
   );
 }

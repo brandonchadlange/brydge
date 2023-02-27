@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+import Image from "next/image";
+import * as Yup from "yup";
 
 import Slideout from "@/components/slide-out";
 import syndicateService from "@/frontend/services/syndicate";
@@ -10,6 +12,11 @@ import ViewDealsCard from "@/components/ViewDealsCard";
 import CreatedDealsCard from "@/Organisms/CreatedDealsTable";
 import WalletCard from "@/Organisms/WalletCard";
 import DashboardLayout from "@/components/withDashboardLayout";
+import Modal from "@/components/modal";
+import Input from "@/components/input";
+import { Form, Formik } from "formik";
+import FormField from "@/components/input/FormField";
+import Button from "@/components/Button";
 
 const Dashboard = () => {
   const [showDealCreation, setShowDealCreation] = useState(false);
@@ -19,6 +26,8 @@ const Dashboard = () => {
   const toggleSlideOut = () => {
     setShowDealCreation(!showDealCreation);
   };
+
+  const [show, setShow] = useState(true);
 
   return (
     <DashboardLayout>
@@ -39,6 +48,7 @@ const Dashboard = () => {
             <DealForm />
           </div>
         </Slideout>
+        
       </div>
     </DashboardLayout>
   );

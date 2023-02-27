@@ -56,9 +56,9 @@ model VerificationToken {
 model Entity {
   id          String        @id @default(cuid())
   type        Int
-  merchants   Merchant[]
-  Institution Institution[]
   individuals Individual[]
+  Institution Institution[]
+  merchants   Merchant[]
   User        User[]
 }
 
@@ -109,9 +109,9 @@ model Address {
   zipCode     String
   city        String
   state       String
-  Merchant    Merchant[]
-  Institution Institution[]
   Individual  Individual[]
+  Institution Institution[]
+  Merchant    Merchant[]
 }
 
 model Document {
@@ -120,20 +120,7 @@ model Document {
   contentType String
   sizeInMb    Int
   publicUrl   String
-  Merchant    Merchant[]
-  Institution Institution[]
   Individual  Individual[]
-}
-
-model Deal {
-  id                 String   @id @default(cuid())
-  name               String
-  description        String
-  reference          String
-  amount             Int
-  startDate          DateTime
-  endDate            DateTime
-  requestedAmount    Int
-  returnOnInvestment Int
-  carryPercentage    Int
+  Institution Institution[]
+  Merchant    Merchant[]
 }
