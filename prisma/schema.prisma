@@ -34,15 +34,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   entityId      String?
   accounts      Account[]
   sessions      Session[]
-  entity        Entity?   @relation(fields: [entityId], references: [id])
+  entity        Entity?        @relation(fields: [entityId], references: [id])
+  memberInvites MemberInvite[]
+  Notification  Notification[]
 }
 
 model VerificationToken {
@@ -51,6 +53,26 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model MemberInvite {
+  id             String        @id @default(cuid())
+  userType       Int
+  merchantId     String
+  userId         String?
+  emailAddress   String?
+  notificationId String?
+  merchant       Merchant      @relation(fields: [merchantId], references: [id])
+  user           User?         @relation(fields: [userId], references: [id])
+  notification   Notification? @relation(fields: [notificationId], references: [id])
+}
+
+model Notification {
+  id            String         @id @default(cuid())
+  action        Int
+  userId        String
+  user          User           @relation(fields: [userId], references: [id])
+  memberInvites MemberInvite[]
 }
 
 model Entity {
@@ -63,16 +85,17 @@ model Entity {
 }
 
 model Merchant {
-  id                      String   @id @default(cuid())
+  id                      String         @id @default(cuid())
   entityId                String
   registeredName          String
   registeredCompanyNumber String
   bankVerificationNumber  Int
   operationalAddressId    String
   utilityBillId           String
-  entity                  Entity   @relation(fields: [entityId], references: [id])
-  operationAddress        Address  @relation(fields: [operationalAddressId], references: [id])
-  utilityBill             Document @relation(fields: [utilityBillId], references: [id])
+  entity                  Entity         @relation(fields: [entityId], references: [id])
+  operationAddress        Address        @relation(fields: [operationalAddressId], references: [id])
+  utilityBill             Document       @relation(fields: [utilityBillId], references: [id])
+  memberInvites           MemberInvite[]
 }
 
 model Institution {
@@ -127,13 +150,17 @@ model Document {
 
 model Deal {
   id                 String   @id @default(cuid())
+  merchantId         String
   name               String
+  approvalStatus     Int // pending, active, declined
   description        String
-  reference          String
-  amount             Int
+  orderNumber        String
+  orderValueInCents  Int
+  orderValueCurrency String
   startDate          DateTime
   endDate            DateTime
   requestedAmount    Int
   returnOnInvestment Int
-  carryPercentage    Int
+  managementFee      Int
+  paymentTerms       Int // Letter of Credit, Invoice factoring, discounting, Cash against the document
 }

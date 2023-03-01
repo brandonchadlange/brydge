@@ -26,7 +26,6 @@
     "jotai": "^1.13.1",
     "next": "13.1.2",
     "next-auth": "^4.18.8",
-    "nodemailer": "^6.9.0",
     "react": "18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "18.2.0",
@@ -35,6 +34,7 @@
     "react-loader-spinner": "^5.3.4",
     "react-otp-input": "^2.4.0",
     "react-phone-number-input": "^3.2.16",
+    "react-query": "^3.39.3",
     "react-tabs": "^6.0.0",
     "typescript": "4.9.4",
     "yup": "^0.32.11"

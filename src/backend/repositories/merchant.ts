@@ -1,5 +1,13 @@
 import prismaClient from "../prisma";
 
+const getMerchantByEntityId = (entityId: string) => {
+  return prismaClient.merchant.findFirst({
+    where: {
+      entityId: entityId,
+    },
+  });
+};
+
 const createMerchant = (data: CreateMerchantDetail) => {
   return prismaClient.merchant.create({
     data: {
@@ -14,6 +22,7 @@ const createMerchant = (data: CreateMerchantDetail) => {
 };
 
 const MerchantRepository = {
+  getMerchantByEntityId,
   createMerchant,
 };
 

@@ -1,4 +1,11 @@
+import { Document } from "@prisma/client";
 import prismaClient from "../prisma";
+
+type CreateDocrefData = {
+  name: string;
+  contentType: string;
+  sizeInMb: number;
+};
 
 const createDocumentRef = (
   name: string,
