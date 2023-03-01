@@ -15,6 +15,14 @@ const getUserById = async (id: string) => {
   return new UserModel(user);
 };
 
+const getUserByEmail = async (email: string) => {
+  return prismaClient.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+};
+
 const updateUserEntity = async (id: string, entityId: string) => {
   return prismaClient.user.update({
     where: {
@@ -28,6 +36,7 @@ const updateUserEntity = async (id: string, entityId: string) => {
 
 const UserRepository = {
   getUserById,
+  getUserByEmail,
   updateUserEntity,
 };
 

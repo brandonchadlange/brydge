@@ -1,24 +1,50 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 
+import EntityRepository from "@/backend/repositories/entity";
+import UserRepository from "@/backend/repositories/user";
+import { EntityType } from "@/common/enums";
+import { MerchantState } from "@/common/types/merchant";
 import Slideout from "@/components/slide-out";
-import syndicateService from "@/frontend/services/syndicate";
-import { UserContext } from "@/context";
-import userService from "@/frontend/services/user";
-import DealForm from "../deals/deal-creation-form";
-import WelcomeCard from "@/components/WelcomeCard";
 import ViewDealsCard from "@/components/ViewDealsCard";
+import WelcomeCard from "@/components/WelcomeCard";
+import DashboardLayout from "@/components/withDashboardLayout";
 import CreatedDealsCard from "@/Organisms/CreatedDealsTable";
 import WalletCard from "@/Organisms/WalletCard";
-import DashboardLayout from "@/components/withDashboardLayout";
+import axios from "axios";
+import { GetServerSideProps } from "next";
+import { unstable_getServerSession } from "next-auth";
+import { useQuery } from "react-query";
+import { authOptions } from "../api/auth/[...nextauth]";
+import DealForm from "../deals/deal-creation-form";
 
-const Dashboard = () => {
+// const getMerchantState = () => {
+//   return axios.get<MerchantState>("http://localhost:3000/api/merchant/state");
+// };
+
+const MerchantDashboard = () => {
+  // const merchantStateQuery = useQuery(["merchant-state"], getMerchantState, {
+  //   retry: false,
+  // });
+
+  // console.log(merchantStateQuery);
+
+  return <>Merchant dashboard!!!</>;
+};
+
+const Dashboard = (props: any) => {
   const [showDealCreation, setShowDealCreation] = useState(false);
-
-  const { user, setUser } = useContext(UserContext);
 
   const toggleSlideOut = () => {
     setShowDealCreation(!showDealCreation);
   };
+
+  // if (props.entity.type === EntityType.merchant) {
+  //   return (
+  //     <DashboardLayout>
+  //       <MerchantDashboard />
+  //     </DashboardLayout>
+  //   );
+  // }
 
   return (
     <DashboardLayout>
@@ -44,64 +70,20 @@ const Dashboard = () => {
   );
 };
 
-// type Member = {
-//   id: string;
-//   lp: string;
-//   deal: string;
-//   carryPercent: string;
-//   status: string;
-// };
-
-// const TableTest = () => {
-//   const columns: AppTableColumn<Member>[] = [
-//     {
-//       name: "lp",
-//       heading: "LP",
-//       component(data) {
-//         return <p className="font-bold">{data.lp}</p>;
-//       },
-//     },
-//     {
-//       name: "deal",
-//       heading: "Deal",
-//       component(e) {
-//         return <>{e.deal}</>;
-//       },
-//     },
-//     {
-//       name: "carryPercent",
-//       heading: "Carry %",
-//       component(e) {
-//         return <>{e.carryPercent}</>;
-//       },
-//     },
-//     {
-//       name: "status",
-//       heading: "Status",
-//       component(e) {
-//         return <>{e.status}</>;
-//       },
-//     },
-//   ];
-
-//   const data: Member[] = [
-//     {
-//       id: "1",
-//       lp: "Peter Graham",
-//       deal: "Fibre Importation",
-//       carryPercent: "10%",
-//       status: "Pending",
-//     },
-//     {
-//       id: "1",
-//       lp: "Gracie Montez",
-//       deal: "Fibre Importation",
-//       carryPercent: "10%",
-//       status: "Pending",
-//     },
-//   ];
-
-//   return <AppTable columns={columns} data={data}></AppTable>;
-// };
-
 export default Dashboard;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = (await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  )) as any;
+  const user = await UserRepository.getUserById(session.uid);
+  const entity = await EntityRepository.getEntityById(user!.map().entityId!);
+
+  return {
+    props: {
+      entity,
+    },
+  };
+};

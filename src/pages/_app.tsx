@@ -1,12 +1,12 @@
-import "../styles/globals.css";
-import "react-tabs/style/react-tabs.css";
-import type { AppProps } from "next/app";
 import { Montserrat, Syne } from "@next/font/google";
+import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
-import { QueryClientProvider, QueryClient } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
+import "react-tabs/style/react-tabs.css";
+import "../styles/globals.css";
 
-import { UserContextProvider } from "../context";
 import HeaderNavMenu from "@/Molecules/NavMenu";
+import { SessionProvider } from "next-auth/react";
 
 const syne = Syne({
   subsets: ["latin"],
