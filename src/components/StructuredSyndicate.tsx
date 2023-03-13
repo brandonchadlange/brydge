@@ -1,24 +1,29 @@
-import syndicateService from '@/frontend/services/syndicate';
-import React from 'react';
-import { HiOutlineDocumentArrowUp } from 'react-icons/hi2';
-import Button from './Button';
-import Input from './input/';
-import FormField from './input/FormField';
-import { Formik, Form, FormikHelpers, Field } from 'formik';
-import * as Yup from 'yup';
-import states from '@/frontend/utility/nigerian-states';
+import syndicateService from "@/frontend/services/syndicate";
+import React from "react";
+import { HiOutlineDocumentArrowUp } from "react-icons/hi2";
+import Button from "./Button";
+import Input from "./input/";
+import FormField from "./input/FormField";
+import { Formik, Form, FormikHelpers, Field } from "formik";
+import * as Yup from "yup";
+import states from "@/frontend/utility/nigerian-states";
 
 const FILE_SIZE = 10000 * 1024;
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png', 'application/pdf'];
+const SUPPORTED_FORMATS = [
+  "image/jpg",
+  "image/jpeg",
+  "image/png",
+  "application/pdf",
+];
 
 const getSyndicateForm = () => {
   return {
-    syndicateName: '',
-    rcNumber: '',
-    syndicateHead: '',
-    bvn: '',
-    address: '',
-    state: '',
+    syndicateName: "",
+    rcNumber: "",
+    syndicateHead: "",
+    bvn: "",
+    address: "",
+    state: "",
     utilityBill: null,
     // acceptedTerms: false,
   };
@@ -26,16 +31,22 @@ const getSyndicateForm = () => {
 
 const getSyndicateFormValidation = () => {
   return Yup.object().shape({
-    syndicateName: Yup.string().required('Company name is required'),
-    rcNumber: Yup.string().required('Registration number is required'),
-    bvn: Yup.string().required('BVN is required'),
-    syndicateHead: Yup.string().required('Syndicate head is required'),
-    address: Yup.string().required('Address is required'),
-    state: Yup.string().required().oneOf(states, 'Select state'),
+    syndicateName: Yup.string().required("Company name is required"),
+    rcNumber: Yup.string().required("Registration number is required"),
+    bvn: Yup.string().required("BVN is required"),
+    syndicateHead: Yup.string().required("Syndicate head is required"),
+    address: Yup.string().required("Address is required"),
+    state: Yup.string().required().oneOf(states, "Select state"),
     utilityBill: Yup.mixed()
-      .required('Please upload your utility bill')
-      .test('fileSize', 'File is too large', value => value?.size <= FILE_SIZE)
-      .test('fileType', 'Unsupported file format', value => SUPPORTED_FORMATS.includes(value?.type)),
+      .required("Please upload your utility bill")
+      .test(
+        "fileSize",
+        "File is too large",
+        (value) => value?.size <= FILE_SIZE
+      )
+      .test("fileType", "Unsupported file format", (value) =>
+        SUPPORTED_FORMATS.includes(value?.type)
+      ),
     // acceptedTerms: Yup.boolean().required().oneOf([true], 'Accept the terms and conditions.'),
   });
 };
@@ -43,34 +54,46 @@ const getSyndicateFormValidation = () => {
 const StructuredSyndicate = () => {
   const onSubmit = async (data: any) => {
     // await syndicateService.createStructuredSyndicate(data);
-    console.log(data);
   };
 
   return (
     <div className="max-h-screen">
-      <Formik initialValues={getSyndicateForm()} validationSchema={getSyndicateFormValidation()} onSubmit={onSubmit}>
+      <Formik
+        initialValues={getSyndicateForm()}
+        validationSchema={getSyndicateFormValidation()}
+        onSubmit={onSubmit}
+      >
         {({ errors, values, setFieldValue, setFieldTouched }) => (
           <Form>
             <FormField label="Syndicate Name">
-              <Input.Text placeholder="Name of Syndicate" name="syndicateName" />
+              <Input.Text
+                placeholder="Name of Syndicate"
+                name="syndicateName"
+              />
             </FormField>
             <FormField label="Registration Number">
               <Input.Text placeholder="Enter RC Number" name="rcNumber" />
             </FormField>
             <FormField label="Syndicate Head">
-              <Input.Text placeholder="Enter Sydicate head's name" name="syndicateHead" />
+              <Input.Text
+                placeholder="Enter Sydicate head's name"
+                name="syndicateHead"
+              />
             </FormField>
             <FormField label="BVN">
               <Input.Text placeholder="Enter BVN" name="bvn" />
             </FormField>
             <FormField label="Address">
-              <Input.TextArea placeholder="Enter street name and number" name="address" />
+              <Input.TextArea
+                placeholder="Enter street name and number"
+                name="address"
+              />
             </FormField>
 
             <FormField label="State">
               <Input.Select name="state">
                 {states.length &&
-                  states.map(state => (
+                  states.map((state) => (
                     <option key={state} value={state}>
                       {state}
                     </option>
@@ -86,8 +109,8 @@ const StructuredSyndicate = () => {
                 id="utilityBill"
                 name="utilityBill"
                 type="file"
-                onBlur={() => setFieldTouched('utilityBill')}
-                className={'invisible hidden'}
+                onBlur={() => setFieldTouched("utilityBill")}
+                className={"invisible hidden"}
               />
               <div className="flex flex-col ml-3 border-red-500 borde">
                 {/* <p className="font-bold text-md">
@@ -96,7 +119,9 @@ const StructuredSyndicate = () => {
                 <p className="text-sm text-blue">Max 10MB</p>
               </div>
             </div>
-            {errors.utilityBill && <span className="text-red-500">{errors.utilityBill}</span>}
+            {errors.utilityBill && (
+              <span className="text-red-500">{errors.utilityBill}</span>
+            )}
 
             {/* <Input.Checkbox name="acceptedTerms">
               <p className="font-secondary text-[12px]">

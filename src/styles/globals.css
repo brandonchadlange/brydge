@@ -23,7 +23,7 @@ body {
   outline: none;
 } */
 
-.react-tabs .react-tabs__tab {
+.react-tabs__tab {
   margin-right: 32px;
 }
 

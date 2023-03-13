@@ -1,64 +1,48 @@
-import { DealCreateDTO } from "../dto/deal/deal-create";
+import { DealApprovalStatus } from "@/common/enums/deal";
 import prismaClient from "../prisma";
 
-export type DealAccountInformation = {
-  accountNumber: string;
-  accountName: string;
-  bankName: string;
-};
-
-const createDeal = (data: DealCreateDTO) => {
-  return prismaClient.deal.create({
-    data: {
-      businessId: data.businessId,
-      name: data.name,
-      fundAmount: data.fundAmount,
-      expectedReturn: data.expectedReturn,
-      expectedTenure: data.expectedTenure,
-    },
-  });
-};
-
-const getDealByAccountId = async (accountId: string) => {
+const getMerchantActiveDeal = (merchantId: string) => {
   return prismaClient.deal.findFirst({
     where: {
-      accountId: accountId,
+      merchantId: merchantId,
+      approvalStatus: DealApprovalStatus.active,
     },
   });
 };
 
-const setDealAccountId = async (dealId: string, accountId: string) => {
-  return await prismaClient.deal.update({
+const getMerchantPendingDeal = (merchantId: string) => {
+  return prismaClient.deal.findFirst({
     where: {
-      id: dealId,
-    },
-    data: {
-      accountId: accountId,
+      merchantId: merchantId,
+      approvalStatus: DealApprovalStatus.pending,
     },
   });
 };
 
-const setDealAccountInformation = async (
-  dealId: string,
-  data: DealAccountInformation
-) => {
-  return await prismaClient.deal.update({
-    where: {
-      id: dealId,
-    },
+const createDeal = () => {
+  return prismaClient.deal.create({
     data: {
-      accountNumber: data.accountNumber,
-      accountName: data.accountName,
-      bankName: data.bankName,
+      name: "",
+      description: "",
+      merchantId: "",
+      orderNumber: "",
+      orderValueInCents: 0,
+      orderValueCurrency: "",
+      requestedAmount: 0,
+      startDate: new Date(),
+      endDate: new Date(),
+      managementFee: 0,
+      paymentTerms: 0,
+      returnOnInvestment: 0,
+      approvalStatus: DealApprovalStatus.pending,
     },
   });
 };
 
 const DealRepository = {
+  getMerchantActiveDeal,
+  getMerchantPendingDeal,
   createDeal,
-  setDealAccountId,
-  getDealByAccountId,
-  setDealAccountInformation,
 };
 
 export default DealRepository;

@@ -1,33 +1,23 @@
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import * as React from "react";
 
 const LeftPanel = () => {
   return (
-    <div className="hidden md:block max-w-4xl">
-      <div className="relative flex flex-col justify-center h-screen text-white left-panel md:col-span-1 p-7 font-primary bg-dark-500">
+    <div className="hidden md:block max-w-4xl text-white">
+      <div className="relative flex flex-col justify-center h-screen left-panel md:col-span-1 p-7">
         <Link href="/" className="absolute text-2xl font-bold top-6">
           Brydge.
         </Link>
-        {/* <Link href='/' className='absolute text-2xl font-bold top-6'>
-          <Image
-            src='/logo-white.png'
-            alt='Brydge.com'
-            className=''
-            width={100}
-            height={100}
-          />
-        </Link> */}
-        <div>
-          <h2 className="mb-3 text-3xl font-bold">
-            We are facilitating deals from different industries, handling
-            diligence and sourcing.
+        <div className="flex flex-col px-16">
+          <h2 className="mb-8 text-3xl font-bold">
+            We are facilitating deals from different industries, handling diligence and sourcing.
           </h2>
-          <p className="mb-3 opacity-80">Over 1000+ investors and counting</p>
+          <p className="opacity-80">Over 1000+ investors and counting</p>
           <Image
             src="/avatar-group.png"
             alt="avatar faces"
-            className="my-3"
+            className="my-8 rounded-full"
             width={150}
             height={50}
           />
@@ -35,16 +25,25 @@ const LeftPanel = () => {
             Join our community
           </Link>
         </div>
+        <div className="earth rounded-full absolute right-4 bottom-4">
+          <Image
+            src="/earth.svg"
+            alt="earth"
+            className="mix-blend-multiply"
+            width={440}
+            height={450}
+          />
+        </div>
       </div>
 
       {/* styles */}
       <style jsx>{`
         .left-panel {
           background-image: linear-gradient(
-              rgba(0, 0, 0, 0.85),
-              rgba(0, 0, 0, 0.85)
-            ),
-            url("/wood-mask.jpg");
+            rgba(0, 0, 0, 0.85),
+            rgba(0, 0, 0, 0.85)
+          ),
+          url("/wood-mask.jpg");
         }
       `}</style>
     </div>
