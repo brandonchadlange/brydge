@@ -20,6 +20,12 @@ const FormFieldValidationMap: Record<FormField, FormFieldValidation> = {
   operationalAddress: {
     rule: "",
   },
+  email: {
+    rule: "",
+  },
+  password: {
+    rule: "",
+  },
 };
 
 const useFormValidation = (fields: FormField[]) => {

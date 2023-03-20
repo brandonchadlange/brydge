@@ -34,10 +34,21 @@ const updateUserEntity = async (id: string, entityId: string) => {
   });
 };
 
+const createUser = async (data: CreateUserRequest) => {
+  return prismaClient.user.create({
+    data: {
+      email: data.email,
+      password: data.passwordHash,
+      name: data.name,
+    },
+  });
+};
+
 const UserRepository = {
   getUserById,
   getUserByEmail,
   updateUserEntity,
+  createUser,
 };
 
 export default UserRepository;

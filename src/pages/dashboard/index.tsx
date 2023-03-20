@@ -47,26 +47,24 @@ const Dashboard = (props: any) => {
   // }
 
   return (
-    <DashboardLayout>
-      <div className={`container p-8 pt-24`}>
-        <div className="flex justify-between gap-8">
-          <div className="w-10/12">
-            <div className="flex h-48 mb-6 justify-between gap-8">
-              <WelcomeCard className="!bg-dark-500 w-2/3" />
-              <ViewDealsCard className="w-1/3" />
-            </div>
-            <CreatedDealsCard onCreateDeal={toggleSlideOut} />
+    <div className={`container p-8 pt-24`}>
+      <div className="flex justify-between gap-8">
+        <div className="w-10/12">
+          <div className="flex h-48 mb-6 justify-between gap-8">
+            <WelcomeCard className="!bg-dark-500 w-2/3" />
+            <ViewDealsCard className="w-1/3" />
           </div>
-          <WalletCard className="w-4/12" />
+          <CreatedDealsCard onCreateDeal={toggleSlideOut} />
         </div>
-
-        <Slideout show={showDealCreation} setShow={toggleSlideOut}>
-          <div>
-            <DealForm />
-          </div>
-        </Slideout>
+        <WalletCard className="w-4/12" />
       </div>
-    </DashboardLayout>
+
+      <Slideout show={showDealCreation} setShow={toggleSlideOut}>
+        <div>
+          <DealForm />
+        </div>
+      </Slideout>
+    </div>
   );
 };
 
