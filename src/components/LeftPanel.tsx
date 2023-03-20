@@ -1,21 +1,26 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+
+import Avatars from "@/assets/images/layout/auth/avatars.png";
 
 const LeftPanel = () => {
   return (
     <div className="hidden md:block max-w-4xl text-white">
-      <div className="relative flex flex-col justify-center h-screen left-panel md:col-span-1 p-7">
+      <div className="relative flex flex-col justify-center h-screen bg-dark-auth bg-auth-panel-pattern md:col-span-1 p-7">
         <Link href="/" className="absolute text-2xl font-bold top-6">
           Brydge.
+          {/* <Image src={LogoWhite} alt="logo-white" /> */}
         </Link>
-        <div className="flex flex-col px-16">
-          <h2 className="mb-8 text-3xl font-bold">
-            We are facilitating deals from different industries, handling diligence and sourcing.
+        <div className="flex flex-col">
+          <h2 className="mb-8 text-5xl font-semibold font-secondary">
+            Simplifying Global Execution and <br />
+            Financing of Trade.
           </h2>
-          <p className="opacity-80">Over 1000+ investors and counting</p>
+          <p className="font-semibold text-lg">
+            Over 1000+ investors and counting
+          </p>
           <Image
-            src="/avatar-group.png"
+            src={Avatars}
             alt="avatar faces"
             className="my-8 rounded-full"
             width={150}
@@ -25,27 +30,7 @@ const LeftPanel = () => {
             Join our community
           </Link>
         </div>
-        <div className="earth rounded-full absolute right-4 bottom-4">
-          <Image
-            src="/earth.svg"
-            alt="earth"
-            className="mix-blend-multiply"
-            width={440}
-            height={450}
-          />
-        </div>
       </div>
-
-      {/* styles */}
-      <style jsx>{`
-        .left-panel {
-          background-image: linear-gradient(
-            rgba(0, 0, 0, 0.85),
-            rgba(0, 0, 0, 0.85)
-          ),
-          url("/wood-mask.jpg");
-        }
-      `}</style>
     </div>
   );
 };

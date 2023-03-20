@@ -6,30 +6,36 @@ import { HiOutlineTrash } from "react-icons/hi";
 import Card from "@/components/card";
 import AppTable, { AppTableColumn } from "@/components/table";
 import DashboardLayout from "@/components/withDashboardLayout";
-import { UserContext } from "@/context";
 import Button from "@/components/Button";
 
 export default function Profile() {
-  const { user } = useContext(UserContext);
   return (
     <DashboardLayout>
       <div className={`container p-8 pt-20`}>
         <Card className="mb-8 p-4 flex justify-between">
           <div className="flex">
-            <Image className="rounded-lg mr-4" src="https://picsum.photos/200" alt="profile" width={32} height={32} />
+            <Image
+              className="rounded-lg mr-4"
+              src="https://picsum.photos/200"
+              alt="profile"
+              width={32}
+              height={32}
+            />
             <div>
-              <div className="font-medium text-lg">
-                {user.name}
-              </div>
-                <div className="text-gray-400 text-sm">
-                  ronniepryde@gmail.com
-                </div>
+              <div className="font-medium text-lg">User</div>
+              <div className="text-gray-400 text-sm">ronniepryde@gmail.com</div>
             </div>
           </div>
-          <Button  className="text-red-500 bg-red-200 !px-4 !py-2" type="button">Deactivate Account</Button>
+          <Button className="text-red-500 bg-red-200 !px-4 !py-2" type="button">
+            Deactivate Account
+          </Button>
         </Card>
         <Card className="h-[500px]">
-          <Tabs className="h-full" selectedTabClassName="border-none bottom-border" selectedTabPanelClassName="test">
+          <Tabs
+            className="h-full"
+            selectedTabClassName="border-none bottom-border"
+            selectedTabPanelClassName="test"
+          >
             <TabList>
               <Tab>All Members</Tab>
               <Tab>Active</Tab>
@@ -54,7 +60,7 @@ export default function Profile() {
       </div>
     </DashboardLayout>
   );
-};
+}
 
 interface Member {
   id: string;
@@ -65,8 +71,7 @@ interface Member {
   carryPercent: string;
   status: "Pending" | "Accepted";
   amountContributed: number;
-};
-
+}
 
 const MemberTable = () => {
   const columns: AppTableColumn<Member>[] = [
@@ -78,7 +83,13 @@ const MemberTable = () => {
       component(data) {
         return (
           <div className="flex items-center">
-            <Image className="rounded-full mr-4" src={data.image} alt={data.name} width={32} height={32} />
+            <Image
+              className="rounded-full mr-4"
+              src={data.image}
+              alt={data.name}
+              width={32}
+              height={32}
+            />
             <div>
               <div className="font-medium">{data.name}</div>
               <div className="text-sm font-gray-300">{data.email}</div>
@@ -102,7 +113,7 @@ const MemberTable = () => {
       headerClass: "font-medium text-gray-500 text-sm",
       cellClass: "pt-3",
       component(e) {
-        return  <span className="font-semibold">{e.carryPercent}</span>;
+        return <span className="font-semibold">{e.carryPercent}</span>;
       },
     },
     {
@@ -111,7 +122,11 @@ const MemberTable = () => {
       headerClass: "font-medium text-gray-500 text-sm",
       cellClass: "pt-3",
       component(e) {
-        return <span className="bg-amber-100 text-amber-600 font-medium text-sm px-4 py-1 rounded-full">{e.status}</span>;
+        return (
+          <span className="bg-amber-100 text-amber-600 font-medium text-sm px-4 py-1 rounded-full">
+            {e.status}
+          </span>
+        );
       },
     },
     {
@@ -147,6 +162,7 @@ const MemberTable = () => {
     },
   ];
 
-  return <AppTable columns={columns} data={data} headerRowClass="mb-4"></AppTable>;
+  return (
+    <AppTable columns={columns} data={data} headerRowClass="mb-4"></AppTable>
+  );
 };
-

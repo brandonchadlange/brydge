@@ -37,6 +37,7 @@ model User {
   id            String         @id @default(cuid())
   name          String?
   email         String?        @unique
+  password      String         @default("")
   emailVerified DateTime?
   image         String?
   entityId      String?
@@ -45,6 +46,7 @@ model User {
   entity        Entity?        @relation(fields: [entityId], references: [id])
   memberInvites MemberInvite[]
   Notification  Notification[]
+  Wallet        Wallet?
 }
 
 model VerificationToken {
@@ -53,6 +55,11 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model MerchantInvite {
+  id       String @id @default(cuid())
+  userType Int
 }
 
 model MemberInvite {
@@ -163,4 +170,55 @@ model Deal {
   returnOnInvestment Int
   managementFee      Int
   paymentTerms       Int // Letter of Credit, Invoice factoring, discounting, Cash against the document
+}
+
+model VirtualAccount {
+  id               String   @id @default(cuid())
+  virtualAccountId String
+  accountNumber    String
+  accountName      String
+  bankName         String
+  reference        String
+  balance          Balance?
+}
+
+model Wallet {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id])
+  balanceList Balance[]
+}
+
+model Balance {
+  id               String              @id @default(cuid())
+  walletId         String
+  virtualAccountId String              @unique
+  currency         String
+  valueInCents     Int
+  wallet           Wallet              @relation(fields: [walletId], references: [id])
+  virtualAccount   VirtualAccount      @relation(fields: [virtualAccountId], references: [id])
+  transactions     WalletTransaction[]
+}
+
+model WalletTransaction {
+  id                  String   @id @default(cuid())
+  balanceId           String
+  date                DateTime
+  description         String
+  reference           String
+  transactionType     Int
+  status              Int
+  value               Int
+  initialValueInCents Int
+  newValueInCents     Int
+  balance             Balance  @relation(fields: [balanceId], references: [id])
+}
+
+model Beneficiary {
+  id                String @id @default(cuid())
+  fincraId          String
+  firstName         String
+  lastName          String
+  accountHolderName String
+  currency          String
 }

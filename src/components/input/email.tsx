@@ -11,7 +11,7 @@ const EmailInput = (props: EmailInputProps) => {
     <>
       <input
         type="email"
-        className="w-full px-5 py-2 my-3 border-2 rounded-lg focus:outline-none focus:border-dark-300 focus:ring-1 focus:ring-dark-300"
+        className="w-full px-5 py-2 border rounded-lg focus:outline-none focus:border-dark-300 focus:ring-0 focus:ring-dark-300"
         placeholder={props.placeholder}
       />
     </>

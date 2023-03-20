@@ -13,16 +13,16 @@ type EntityRegistrationFormProps = {
   entityType: EntityType;
 };
 
-const RegisteredNameField = useFormField("registeredName");
-const RegistrationNumberField = useFormField("registeredCompanyNumber");
-const BVNField = useFormField("bankVerificationNumber");
-const OperationalAddressField = useFormField("operationalAddress");
-
 type FormFieldsProps = {
   setFieldValue: (field: string, value: any) => void;
 };
 
 const MerchantFormFields = (props: FormFieldsProps) => {
+  const RegisteredNameField = useFormField("registeredName");
+  const RegistrationNumberField = useFormField("registeredCompanyNumber");
+  const BVNField = useFormField("bankVerificationNumber");
+  const OperationalAddressField = useFormField("operationalAddress");
+
   return (
     <>
       <RegisteredNameField />
@@ -40,6 +40,11 @@ const MerchantFormFields = (props: FormFieldsProps) => {
 };
 
 const InstitutionFormFields = (props: FormFieldsProps) => {
+  const RegisteredNameField = useFormField("registeredName");
+  const RegistrationNumberField = useFormField("registeredCompanyNumber");
+  const BVNField = useFormField("bankVerificationNumber");
+  const OperationalAddressField = useFormField("operationalAddress");
+
   return (
     <>
       <RegisteredNameField />
@@ -57,6 +62,10 @@ const InstitutionFormFields = (props: FormFieldsProps) => {
 };
 
 const IndividualFormFields = (props: FormFieldsProps) => {
+  const RegistrationNumberField = useFormField("registeredCompanyNumber");
+  const BVNField = useFormField("bankVerificationNumber");
+  const OperationalAddressField = useFormField("operationalAddress");
+
   return (
     <>
       <RegistrationNumberField />

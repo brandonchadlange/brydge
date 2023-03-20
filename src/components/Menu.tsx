@@ -3,36 +3,48 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 
+import DashboardWhite from "@/images/layout/menu/dashboard-white.svg";
+import DashboardBlack from "@/images/layout/menu/dashboard-black.svg";
+
+import WalletBlack from "@/images/layout/menu/wallet-black.svg";
+import WalletWhite from "@/images/layout/menu/wallet-white.svg";
+
 const navLinks = [
   {
     name: "Dashboard",
     url: "/dashboard",
-    iconURL: "/tile.svg",
+    icon: DashboardBlack,
+    activeIcon: DashboardWhite,
   },
   {
     name: "Deals Room",
     url: "/deals-room",
-    iconURL: "/files.svg",
+    icon: DashboardBlack,
+    activeIcon: DashboardWhite,
   },
   {
     name: "Data Room",
     url: "/dashboard/data-room",
-    iconURL: "/file-text.svg",
+    icon: DashboardBlack,
+    activeIcon: DashboardWhite,
   },
   {
     name: "Transactions",
     url: "/dashboard/transactions",
-    iconURL: "/arrow-up-down.svg",
+    icon: DashboardBlack,
+    activeIcon: DashboardWhite,
   },
   {
     name: "My Wallet",
-    url: "/dashboard/my-wallet",
-    iconURL: "/wallet.svg",
+    url: "/my-wallet",
+    icon: DashboardBlack,
+    activeIcon: WalletWhite,
   },
   {
     name: "Members",
     url: "/dashboard/members",
-    iconURL: "/members.svg",
+    icon: DashboardBlack,
+    activeIcon: DashboardWhite,
   },
 ];
 
@@ -62,12 +74,14 @@ const Logout = () => {
 const MenuLink = ({
   active,
   href,
-  iconURL,
+  icon,
+  activeIcon,
   name,
 }: {
   active: boolean;
   href: string;
-  iconURL: string;
+  icon: any;
+  activeIcon: any;
   name: string;
 }) => {
   return (
@@ -77,13 +91,24 @@ const MenuLink = ({
       } hover:bg-dark-500 hover:text-white`}
     >
       <Link className="flex px-5 py-3" href={href}>
-        <Image
-          src={iconURL}
-          className="mr-2"
-          alt={name}
-          width={20}
-          height={20}
-        />
+        {!active && (
+          <Image
+            src={icon}
+            className="mr-2"
+            alt={name}
+            width={20}
+            height={20}
+          />
+        )}
+        {active && (
+          <Image
+            src={activeIcon}
+            className="mr-2"
+            alt={name}
+            width={20}
+            height={20}
+          />
+        )}
         {name}
       </Link>
     </li>
@@ -104,7 +129,8 @@ const Menu = () => {
             key={link.name}
             name={link.name}
             href={link.url}
-            iconURL={link.iconURL}
+            icon={link.icon}
+            activeIcon={link.activeIcon}
             active={router.asPath.includes(link.url)}
           />
         ))}

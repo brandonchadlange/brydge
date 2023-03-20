@@ -1,6 +1,20 @@
 import Input from "@/components/input";
 import applyFormField from "@/components/input/apply-form-field";
 
+const Email: FormFieldProperties = {
+  component: Input.Email,
+  name: "email",
+  label: "",
+  placeholder: "Email address",
+};
+
+const Password: FormFieldProperties = {
+  component: Input.Password,
+  name: "password",
+  label: "",
+  placeholder: "Password",
+};
+
 const RegisteredName: FormFieldProperties = {
   component: Input.Text,
   name: "registeredName",
@@ -30,6 +44,8 @@ const OperationalAddress: FormFieldProperties = {
 };
 
 const FormFieldMap: Record<FormField, FormFieldProperties> = {
+  email: Email,
+  password: Password,
   registeredName: RegisteredName,
   registeredCompanyNumber: RegistrationNumber,
   bankVerificationNumber: BankVerificationNumber,

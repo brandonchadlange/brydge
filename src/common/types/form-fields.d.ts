@@ -1,4 +1,6 @@
 declare type FormField =
+  | "email"
+  | "password"
   | "registeredName"
   | "registeredCompanyNumber"
   | "bankVerificationNumber"
