@@ -1,9 +1,27 @@
 import axios from "axios";
 import prismaClient from "../prisma";
 
+const BUSINESS_ID = process.env.FINCRA_BUSINESS_ID;
+
+const fincraHttpInstance = axios.create({
+  baseURL: "https://sandboxapi.fincra.com",
+  headers: {
+    "api-key": process.env.FINCRA_API_KEY,
+  },
+});
+
 type ServiceResponse<DATA = any, STATE = any> = {
   data: DATA;
   state: STATE;
+};
+
+type Bank = {
+  id: number;
+  code: string;
+  name: string;
+  swiftCode: string;
+  bic: string;
+  branches: null;
 };
 
 enum FincraVARState {
@@ -11,13 +29,19 @@ enum FincraVARState {
   ERROR,
 }
 
+export enum BeneficiaryState {
+  SUCCESS,
+  ERROR,
+}
+
 type FincraVAR = ServiceResponse<any, FincraVARState>;
+export type FincraBeneficiary = ServiceResponse<any, BeneficiaryState>;
 
 const tryCreateVirtualAccount = async (): Promise<FincraVAR> => {
   try {
-    const response = await axios.request({
+    const response = await fincraHttpInstance.request({
       method: "POST",
-      url: "https://sandboxapi.fincra.com/profile/virtual-accounts/requests/",
+      url: "/profile/virtual-accounts/requests/",
       data: {
         currency: "NGN",
         channel: "wema",
@@ -27,9 +51,6 @@ const tryCreateVirtualAccount = async (): Promise<FincraVAR> => {
           lastName: "Lange",
           bvn: "22161412900",
         },
-      },
-      headers: {
-        "api-key": process.env.FINCRA_API_KEY,
       },
     });
 
@@ -75,9 +96,6 @@ const recievePayment = async (data: any) => {
     },
   });
 
-  console.log(balance);
-  console.log(data);
-
   await prismaClient.walletTransaction.create({
     data: {
       date: data.data.createdAt,
@@ -102,15 +120,144 @@ const recievePayment = async (data: any) => {
   });
 };
 
-const createBeneficiary = async (data: any) => {};
+const getBeneficiary = async (
+  beneficiaryId: string
+): Promise<FincraBeneficiary> => {
+  try {
+    const response = await fincraHttpInstance.request({
+      method: "GET",
+      url: `/profile/beneficiaries/business/${BUSINESS_ID}/${beneficiaryId}`,
+    });
 
-const convert = async () => {};
+    return {
+      state: BeneficiaryState.SUCCESS,
+      data: response.data,
+    };
+  } catch (err) {
+    return {
+      state: BeneficiaryState.ERROR,
+      data: null,
+    };
+  }
+};
 
-const payout = async () => {};
+const createUnitedStatesBeneficiary = async (
+  data: UnitedStatesCorporateDetail
+): Promise<FincraBeneficiary> => {
+  return {
+    state: BeneficiaryState.ERROR,
+    data: null,
+  };
+};
+
+const createKenyaCorporateBeneficiary = async (
+  data: KenyaCorporateDetail
+): Promise<FincraBeneficiary> => {
+  try {
+    const response = await fincraHttpInstance.request({
+      method: "POST",
+      url: "/profile/beneficiaries/business/" + process.env.FINCRA_BUSINESS_ID,
+      data: {
+        accountHolderName: data.accountHolderName,
+        email: data.email,
+        type: "corporate",
+        currency: "KES",
+        destinationAddress: data.accountNumber,
+        paymentDestination: "bank_account",
+        bank: {
+          name: data.bankName,
+          code: data.bankCode,
+          sortCode: data.sortCode,
+          swiftCode: data.swiftCode,
+          address: {
+            country: "KE",
+          },
+        },
+        address: {
+          country: "KE",
+        },
+      },
+    });
+
+    return {
+      state: BeneficiaryState.SUCCESS,
+      data: response.data,
+    };
+  } catch (err: any) {
+    console.log(err.response);
+
+    return {
+      state: BeneficiaryState.ERROR,
+      data: null,
+    };
+  }
+};
+
+const createKenyaIndividualBeneficiary = async (
+  data: KenyaIndividualDetail
+): Promise<FincraBeneficiary> => {
+  try {
+    const response = await fincraHttpInstance.request({
+      method: "POST",
+      url: "/profile/beneficiaries/business/" + BUSINESS_ID,
+      data: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        accountHolderName: data.accountHolderName,
+        email: data.email,
+        type: "individual",
+        currency: "KES",
+        destinationAddress: data.accountNumber,
+        paymentDestination: "bank_account",
+        bank: {
+          name: data.bankName,
+          code: data.bankCode,
+          sortCode: data.sortCode,
+          swiftCode: data.swiftCode,
+          address: {
+            country: "KE",
+          },
+        },
+        address: {
+          country: "KE",
+        },
+      },
+    });
+
+    return {
+      state: BeneficiaryState.SUCCESS,
+      data: response.data,
+    };
+  } catch (err) {
+    return {
+      state: BeneficiaryState.ERROR,
+      data: null,
+    };
+  }
+};
+
+const getBanksByCountryCode = async (countryCode: string) => {
+  try {
+    const response = await fincraHttpInstance.request<{ data: Bank[] }>({
+      method: "GET",
+      url: "/core/banks?country=" + countryCode,
+    });
+
+    return response.data.data;
+  } catch (err: any) {
+    // console.log(err.response);
+    return [];
+  }
+};
 
 const FincraService = {
+  getBeneficiary,
   createNairaVirtualAccount,
   recievePayment,
+  getBanksByCountryCode,
+  createKenyaIndividualBeneficiary,
+  createKenyaCorporateBeneficiary,
+  createUnitedStatesBeneficiary,
 };
 
 export default FincraService;

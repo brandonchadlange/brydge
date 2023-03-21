@@ -47,6 +47,7 @@ model User {
   memberInvites MemberInvite[]
   Notification  Notification[]
   Wallet        Wallet?
+  Beneficiary   Beneficiary[]
 }
 
 model VerificationToken {
@@ -216,9 +217,11 @@ model WalletTransaction {
 
 model Beneficiary {
   id                String @id @default(cuid())
+  userId            String
   fincraId          String
-  firstName         String
-  lastName          String
   accountHolderName String
+  accountType       String
   currency          String
+  country           String
+  user              User   @relation(fields: [userId], references: [id])
 }
