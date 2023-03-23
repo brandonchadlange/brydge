@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         "auth-panel-pattern": "url(/images/layout/auth/pattern.png)",
+        "wallet-card": "url(/wallet-card.png)",
       },
       animation: {
         fade: "fadeIn 0.5s ease-in-out",

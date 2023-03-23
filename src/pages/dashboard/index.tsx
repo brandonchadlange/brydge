@@ -1,87 +1,86 @@
-import { useState } from "react";
+import Card from "@/components/card";
+import PayoutModal, { usePayoutModal } from "@/components/payout-modal";
+import { Inter } from "@next/font/google";
 
-import EntityRepository from "@/backend/repositories/entity";
-import UserRepository from "@/backend/repositories/user";
-import { EntityType } from "@/common/enums";
-import { MerchantState } from "@/common/types/merchant";
-import Slideout from "@/components/slide-out";
-import ViewDealsCard from "@/components/ViewDealsCard";
-import WelcomeCard from "@/components/WelcomeCard";
-import DashboardLayout from "@/components/withDashboardLayout";
-import CreatedDealsCard from "@/Organisms/CreatedDealsTable";
-import WalletCard from "@/Organisms/WalletCard";
-import axios from "axios";
-import { GetServerSideProps } from "next";
-import { unstable_getServerSession } from "next-auth";
-import { useQuery } from "react-query";
-import { authOptions } from "../api/auth/[...nextauth]";
-import DealForm from "../deals/deal-creation-form";
+const inter = Inter({ subsets: ["latin"] });
 
-// const getMerchantState = () => {
-//   return axios.get<MerchantState>("http://localhost:3000/api/merchant/state");
-// };
-
-const MerchantDashboard = () => {
-  // const merchantStateQuery = useQuery(["merchant-state"], getMerchantState, {
-  //   retry: false,
-  // });
-
-  // console.log(merchantStateQuery);
-
-  return <>Merchant dashboard!!!</>;
-};
-
-const Dashboard = (props: any) => {
-  const [showDealCreation, setShowDealCreation] = useState(false);
-
-  const toggleSlideOut = () => {
-    setShowDealCreation(!showDealCreation);
-  };
-
-  // if (props.entity.type === EntityType.merchant) {
-  //   return (
-  //     <DashboardLayout>
-  //       <MerchantDashboard />
-  //     </DashboardLayout>
-  //   );
-  // }
-
+const BalanceCard = () => {
   return (
-    <div className={`container p-8 pt-24`}>
-      <div className="flex justify-between gap-8">
-        <div className="w-10/12">
-          <div className="flex h-48 mb-6 justify-between gap-8">
-            <WelcomeCard className="!bg-dark-500 w-2/3" />
-            <ViewDealsCard className="w-1/3" />
-          </div>
-          <CreatedDealsCard onCreateDeal={toggleSlideOut} />
-        </div>
-        <WalletCard className="w-4/12" />
-      </div>
-
-      <Slideout show={showDealCreation} setShow={toggleSlideOut}>
+    <div className="bg-wallet-card h-[180px] bg-contain bg-center bg-no-repeat p-5 text-white text-sm">
+      <div className="flex flex-col h-full justify-between">
+        <p>My Wallet</p>
         <div>
-          <DealForm />
+          <p className="text-lg font-semibold">₦ 1,250,000.00</p>
+          <p className="text-xs">Total Balance</p>
         </div>
-      </Slideout>
+        <div className="flex">
+          <div>
+            <p className="text-xs">Currency</p>
+            <p>NGN / Nigerian Naira</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Dashboard;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = (await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  )) as any;
-  const user = await UserRepository.getUserById(session.uid);
-  const entity = await EntityRepository.getEntityById(user!.map().entityId!);
-
-  return {
-    props: {
-      entity,
-    },
-  };
+const AccountDetail = ({
+  heading,
+  text,
+}: {
+  heading: string;
+  text: string;
+}) => {
+  return (
+    <>
+      <h3 className={"text-sm font-semibold mt-6 " + inter.className}>
+        {heading}
+      </h3>
+      <p className={"text-xs text-gray-400 font-medium" + inter.className}>
+        {text}
+      </p>
+    </>
+  );
 };
+
+const Dashboard = (props: any) => {
+  const payoutModal = usePayoutModal();
+
+  return (
+    <>
+      <main className="container p-8">
+        <div className="flex gap-8">
+          <div className="w-[360px]">
+            <Card>
+              <BalanceCard />
+              <AccountDetail
+                heading="Account Details"
+                text="You can fund your NGN wallet using these details"
+              />
+              <AccountDetail heading="7645367890" text="Account Number" />
+              <AccountDetail
+                heading="Ronnie Peter Parker"
+                text="Account Name"
+              />
+              <AccountDetail heading="WEMA Bank" text="Bank Name" />
+              <button
+                className="bg-black text-white w-full py-3 font-medium rounded-lg mt-12"
+                onClick={payoutModal.show}
+              >
+                Make Payment
+              </button>
+            </Card>
+          </div>
+          <div className="flex-1">
+            <Card>
+              <h2>Transactions</h2>
+            </Card>
+          </div>
+        </div>
+      </main>
+      <PayoutModal controller={payoutModal} />
+    </>
+  );
+};
+
+export default Dashboard;
