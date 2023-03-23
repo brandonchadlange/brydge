@@ -6,7 +6,6 @@ import { signOut } from "next-auth/react";
 import DashboardWhite from "@/images/layout/menu/dashboard-white.svg";
 import DashboardBlack from "@/images/layout/menu/dashboard-black.svg";
 
-import WalletBlack from "@/images/layout/menu/wallet-black.svg";
 import WalletWhite from "@/images/layout/menu/wallet-white.svg";
 
 const navLinks = [
@@ -14,35 +13,11 @@ const navLinks = [
     name: "Dashboard",
     url: "/dashboard",
     icon: DashboardBlack,
-    activeIcon: DashboardWhite,
+    activeIcon: WalletWhite,
   },
   {
     name: "Deals Room",
     url: "/deals-room",
-    icon: DashboardBlack,
-    activeIcon: DashboardWhite,
-  },
-  {
-    name: "Data Room",
-    url: "/dashboard/data-room",
-    icon: DashboardBlack,
-    activeIcon: DashboardWhite,
-  },
-  {
-    name: "Transactions",
-    url: "/dashboard/transactions",
-    icon: DashboardBlack,
-    activeIcon: DashboardWhite,
-  },
-  {
-    name: "My Wallet",
-    url: "/my-wallet",
-    icon: DashboardBlack,
-    activeIcon: WalletWhite,
-  },
-  {
-    name: "Members",
-    url: "/dashboard/members",
     icon: DashboardBlack,
     activeIcon: DashboardWhite,
   },
