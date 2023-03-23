@@ -250,6 +250,38 @@ const getBanksByCountryCode = async (countryCode: string) => {
   }
 };
 
+const generateConversionQuote = async (data: any) => {
+  const request: any = {
+    action: "receive",
+    transactionType: "disbursement",
+    feeBearer: "business",
+    beneficiaryType: "individual",
+    sourceCurrency: "NGN",
+    destinationCurrency: data.destinationCurrency,
+    amount: data.amount * 100,
+    business: BUSINESS_ID,
+    paymentDestination: "bank_account",
+    paymentScheme: "swift",
+  };
+
+  if (data.destinationCurrency === "KES") {
+    delete request.paymentScheme;
+  }
+
+  try {
+    const response = await fincraHttpInstance.request({
+      method: "POST",
+      url: "/quotes/generate",
+      data: request,
+    });
+
+    return response.data;
+  } catch (err: any) {
+    console.log(err.response);
+    return null;
+  }
+};
+
 const FincraService = {
   getBeneficiary,
   createNairaVirtualAccount,
@@ -258,6 +290,7 @@ const FincraService = {
   createKenyaIndividualBeneficiary,
   createKenyaCorporateBeneficiary,
   createUnitedStatesBeneficiary,
+  generateConversionQuote,
 };
 
 export default FincraService;

@@ -5,6 +5,10 @@ import { Beneficiary } from "@prisma/client";
 import Link from "next/link";
 import { useQuery } from "react-query";
 
+import KELogo from "@/assets/images/ke_logo.png";
+import USLogo from "@/assets/images/us_logo.png";
+import Image from "next/image";
+
 const BeneficiaryTable = () => {
   const { getBeneficiaries } = queries;
   const beneficiaryQuery = useQuery("beneficiaries", getBeneficiaries);
@@ -13,13 +17,26 @@ const BeneficiaryTable = () => {
 
   const columns: AppTableColumn<Beneficiary>[] = [
     {
-      heading: "Beneficiary Name",
+      heading: "Name",
       name: "beneficiaryName",
-      component: (data) => data.accountHolderName,
+      component: (data) => {
+        const imageSrc = data.country === "KE" ? KELogo : USLogo;
+
+        return (
+          <div className="flex gap-2 font-secondary text-sm font-medium">
+            <div>
+              <Image alt="country logo" src={KELogo} height={20} />
+            </div>
+            <div>
+              <p>{data.accountHolderName}</p>
+            </div>
+          </div>
+        );
+      },
       headerClass: "font-semibold text-sm",
     },
     {
-      heading: "Account type",
+      heading: "Account no.",
       name: "accountType",
       component: (data) => data.accountType,
       headerClass: "font-semibold text-sm",

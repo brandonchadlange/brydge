@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Form, Formik, useField } from "formik";
 import axios from "axios";
+import { useRouter } from "next/router";
+import OverlayLoader, { useOverlayLoader } from "@/components/overlay-loader";
+import showToast from "@/frontend/utility/show-toast";
 
 const KenyaDetailsForm = ({
   show,
@@ -36,6 +39,13 @@ const KenyaDetailsForm = ({
   });
 
   const banks = banksQuery.data || [];
+
+  useEffect(() => {
+    if (banks.length > 0 && selectedBank === "") {
+      console.log(banks[0]);
+      setSelectedBank(banks[0].id.toString());
+    }
+  }, [banks]);
 
   useEffect(() => {
     if (selectedBank === "") return;
@@ -248,6 +258,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
 };
 
 const BeneficiaryAddPage = () => {
+  const router = useRouter();
+  const loader = useOverlayLoader();
   const [country, setCountry] = useState("");
   const [accountType, setAccountType] = useState("");
 
@@ -265,6 +277,8 @@ const BeneficiaryAddPage = () => {
   const showUnitedStatesDetails = country === "US";
 
   const onFormSubmit = async (detail: any) => {
+    loader.show();
+
     const request = {
       country,
       type: accountType,
@@ -272,6 +286,11 @@ const BeneficiaryAddPage = () => {
     };
 
     await axios.post("/api/beneficiary", request);
+    loader.hide();
+    showToast("Beneficiary successfully created!", {
+      type: "success",
+    });
+    router.push("/beneficiary");
   };
 
   return (
@@ -330,6 +349,7 @@ const BeneficiaryAddPage = () => {
           </Form>
         )}
       </Formik>
+      <OverlayLoader controller={loader} />
     </main>
   );
 };
