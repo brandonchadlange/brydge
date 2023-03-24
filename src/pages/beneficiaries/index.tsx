@@ -65,7 +65,7 @@ const BeneficiaryPage = () => {
         <div className="flex justify-between mb-10 align-middle text-lg">
           <h1 className="font-semibold">Beneficiaries</h1>
           <Link
-            href="/beneficiary/new"
+            href="/beneficiaries/new"
             className="px-4 py-2 text-sm bg-gray-200 font-medium rounded-md"
           >
             Add New Beneficiary
