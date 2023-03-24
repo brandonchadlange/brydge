@@ -52,9 +52,9 @@ const FormFieldMap: Record<FormField, FormFieldProperties> = {
   operationalAddress: OperationalAddress,
 };
 
-const useFormField = (field: FormField) => {
+const FormField = (field: FormField) => {
   const { component, ...fieldDetail } = FormFieldMap[field];
   return applyFormField(component, fieldDetail);
 };
 
-export default useFormField;
+export default FormField;

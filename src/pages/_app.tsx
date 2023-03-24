@@ -5,8 +5,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import "react-tabs/style/react-tabs.css";
 import "../styles/globals.css";
 
-import HeaderNavMenu from "@/Molecules/NavMenu";
-import { SessionProvider } from "next-auth/react";
 import DashboardLayout from "@/components/withDashboardLayout";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
@@ -30,7 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const AppLayout =
-    router.pathname.includes("/login") || router.pathname.includes("/signup")
+    router.pathname.includes("/login") ||
+    router.pathname.includes("/signup") ||
+    router.pathname.includes("/onboarding")
       ? EmptyLayout
       : DashboardLayout;
 

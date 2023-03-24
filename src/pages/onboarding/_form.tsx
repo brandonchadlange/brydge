@@ -4,7 +4,7 @@ import Input from "@/components/input";
 import OverlayLoader, { useOverlayLoader } from "@/components/overlay-loader";
 import EntityRegistrationService from "@/frontend/services/entity-registration";
 import showToast from "@/frontend/utility/show-toast";
-import useFormField from "@/utils/useFormField";
+import FormField from "@/utils/useFormField";
 import useFormValidation from "@/utils/useFormValidator";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -17,12 +17,12 @@ type FormFieldsProps = {
   setFieldValue: (field: string, value: any) => void;
 };
 
-const MerchantFormFields = (props: FormFieldsProps) => {
-  const RegisteredNameField = useFormField("registeredName");
-  const RegistrationNumberField = useFormField("registeredCompanyNumber");
-  const BVNField = useFormField("bankVerificationNumber");
-  const OperationalAddressField = useFormField("operationalAddress");
+const RegisteredNameField = FormField("registeredName");
+const RegistrationNumberField = FormField("registeredCompanyNumber");
+const BVNField = FormField("bankVerificationNumber");
+const OperationalAddressField = FormField("operationalAddress");
 
+const MerchantFormFields = (props: FormFieldsProps) => {
   return (
     <>
       <RegisteredNameField />
@@ -40,11 +40,6 @@ const MerchantFormFields = (props: FormFieldsProps) => {
 };
 
 const InstitutionFormFields = (props: FormFieldsProps) => {
-  const RegisteredNameField = useFormField("registeredName");
-  const RegistrationNumberField = useFormField("registeredCompanyNumber");
-  const BVNField = useFormField("bankVerificationNumber");
-  const OperationalAddressField = useFormField("operationalAddress");
-
   return (
     <>
       <RegisteredNameField />
@@ -62,10 +57,6 @@ const InstitutionFormFields = (props: FormFieldsProps) => {
 };
 
 const IndividualFormFields = (props: FormFieldsProps) => {
-  const RegistrationNumberField = useFormField("registeredCompanyNumber");
-  const BVNField = useFormField("bankVerificationNumber");
-  const OperationalAddressField = useFormField("operationalAddress");
-
   return (
     <>
       <RegistrationNumberField />

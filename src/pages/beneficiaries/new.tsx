@@ -290,7 +290,7 @@ const BeneficiaryAddPage = () => {
     showToast("Beneficiary successfully created!", {
       type: "success",
     });
-    router.push("/beneficiary");
+    router.push("/beneficiaries");
   };
 
   return (
