@@ -42,12 +42,12 @@ model User {
   image         String?
   entityId      String?
   accounts      Account[]
-  sessions      Session[]
-  entity        Entity?        @relation(fields: [entityId], references: [id])
+  Beneficiary   Beneficiary[]
   memberInvites MemberInvite[]
   Notification  Notification[]
+  sessions      Session[]
+  entity        Entity?        @relation(fields: [entityId], references: [id])
   Wallet        Wallet?
-  Beneficiary   Beneficiary[]
 }
 
 model VerificationToken {
@@ -71,24 +71,24 @@ model MemberInvite {
   emailAddress   String?
   notificationId String?
   merchant       Merchant      @relation(fields: [merchantId], references: [id])
-  user           User?         @relation(fields: [userId], references: [id])
   notification   Notification? @relation(fields: [notificationId], references: [id])
+  user           User?         @relation(fields: [userId], references: [id])
 }
 
 model Notification {
   id            String         @id @default(cuid())
   action        Int
   userId        String
-  user          User           @relation(fields: [userId], references: [id])
   memberInvites MemberInvite[]
+  user          User           @relation(fields: [userId], references: [id])
 }
 
 model Entity {
   id          String        @id @default(cuid())
   type        Int
-  merchants   Merchant[]
-  Institution Institution[]
   individuals Individual[]
+  Institution Institution[]
+  merchants   Merchant[]
   User        User[]
 }
 
@@ -100,10 +100,10 @@ model Merchant {
   bankVerificationNumber  Int
   operationalAddressId    String
   utilityBillId           String
+  memberInvites           MemberInvite[]
   entity                  Entity         @relation(fields: [entityId], references: [id])
   operationAddress        Address        @relation(fields: [operationalAddressId], references: [id])
   utilityBill             Document       @relation(fields: [utilityBillId], references: [id])
-  memberInvites           MemberInvite[]
 }
 
 model Institution {
@@ -140,9 +140,9 @@ model Address {
   zipCode     String
   city        String
   state       String
-  Merchant    Merchant[]
-  Institution Institution[]
   Individual  Individual[]
+  Institution Institution[]
+  Merchant    Merchant[]
 }
 
 model Document {
@@ -151,16 +151,16 @@ model Document {
   contentType String
   sizeInMb    Int
   publicUrl   String
-  Merchant    Merchant[]
-  Institution Institution[]
   Individual  Individual[]
+  Institution Institution[]
+  Merchant    Merchant[]
 }
 
 model Deal {
   id                 String   @id @default(cuid())
   merchantId         String
   name               String
-  approvalStatus     Int // pending, active, declined
+  approvalStatus     Int
   description        String
   orderNumber        String
   orderValueInCents  Int
@@ -170,7 +170,7 @@ model Deal {
   requestedAmount    Int
   returnOnInvestment Int
   managementFee      Int
-  paymentTerms       Int // Letter of Credit, Invoice factoring, discounting, Cash against the document
+  paymentTerms       Int
 }
 
 model VirtualAccount {
@@ -186,8 +186,8 @@ model VirtualAccount {
 model Wallet {
   id          String    @id @default(cuid())
   userId      String    @unique
-  user        User      @relation(fields: [userId], references: [id])
   balanceList Balance[]
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model Balance {
@@ -196,8 +196,8 @@ model Balance {
   virtualAccountId String              @unique
   currency         String
   valueInCents     Int
-  wallet           Wallet              @relation(fields: [walletId], references: [id])
   virtualAccount   VirtualAccount      @relation(fields: [virtualAccountId], references: [id])
+  wallet           Wallet              @relation(fields: [walletId], references: [id])
   transactions     WalletTransaction[]
 }
 
