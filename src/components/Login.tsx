@@ -29,7 +29,8 @@ export default function LoginPage() {
 
   const submitSignInWithCredentials = async (values: any) => {
     const signInResponse = await signIn("credentials", {
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/api/login",
       email: "test@mail.com",
       password: "Pass@123",
     });

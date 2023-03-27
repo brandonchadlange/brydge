@@ -3,7 +3,7 @@ const pages = {
     return "/dashboard";
   },
   merchantOnboarding() {
-    return "/onboarding/merchant";
+    return "/onboarding";
   },
 };
 
