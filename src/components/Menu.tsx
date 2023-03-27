@@ -102,7 +102,7 @@ const Menu = () => {
   const router = useRouter();
 
   return (
-    <div className="relative h-screen p-6 md:col-span-1 w-72 shadow-sm flex flex-col justify-between">
+    <div className="bg-white relative h-screen p-6 md:col-span-1 w-72 shadow-sm flex flex-col justify-between">
       <Link href="/" className="text-2xl font-bold font-primary">
         Brydge
       </Link>

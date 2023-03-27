@@ -42,7 +42,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen w-100">
+    <div className="flex items-center justify-center h-full">
       <div className="flex flex-col w-10/12 p-4  md:justify-center h-5/6 md:w-[440px] md:h-3/4">
         <span className="text-2xl font-semibold text-center">Log in</span>
         <span className="mb-5 text-center opacity-80">

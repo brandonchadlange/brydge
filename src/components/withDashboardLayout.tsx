@@ -11,7 +11,7 @@ const DashboardLayout = ({
   return (
     <section className="flex">
       <Menu />
-      <div className="h-screen font-secondary bg-[#F9F9F9] flex-1">
+      <div className="h-full font-secondary flex-1">
         {children}
         {/* <WrappedComponent /> */}
       </div>

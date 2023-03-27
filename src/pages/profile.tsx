@@ -5,60 +5,57 @@ import { HiOutlineTrash } from "react-icons/hi";
 
 import Card from "@/components/card";
 import AppTable, { AppTableColumn } from "@/components/table";
-import DashboardLayout from "@/components/withDashboardLayout";
 import Button from "@/components/Button";
 
 export default function Profile() {
   return (
-    <DashboardLayout>
-      <div className={`container p-8 pt-20`}>
-        <Card className="mb-8 p-4 flex justify-between">
-          <div className="flex">
-            <Image
-              className="rounded-lg mr-4"
-              src="https://picsum.photos/200"
-              alt="profile"
-              width={32}
-              height={32}
-            />
-            <div>
-              <div className="font-medium text-lg">User</div>
-              <div className="text-gray-400 text-sm">ronniepryde@gmail.com</div>
-            </div>
+    <div className={`container p-8 pt-20`}>
+      <Card className="mb-8 p-4 flex justify-between">
+        <div className="flex">
+          <Image
+            className="rounded-lg mr-4"
+            src="https://picsum.photos/200"
+            alt="profile"
+            width={32}
+            height={32}
+          />
+          <div>
+            <div className="font-medium text-lg">User</div>
+            <div className="text-gray-400 text-sm">ronniepryde@gmail.com</div>
           </div>
-          <Button className="text-red-500 bg-red-200 !px-4 !py-2" type="button">
-            Deactivate Account
-          </Button>
-        </Card>
-        <Card className="h-[500px]">
-          <Tabs
-            className="h-full"
-            selectedTabClassName="border-none bottom-border"
-            selectedTabPanelClassName="test"
-          >
-            <TabList>
-              <Tab>All Members</Tab>
-              <Tab>Active</Tab>
-              <Tab>Pending</Tab>
-              <Tab>Deleted</Tab>
-            </TabList>
+        </div>
+        <Button className="text-red-500 bg-red-200 !px-4 !py-2" type="button">
+          Deactivate Account
+        </Button>
+      </Card>
+      <Card className="h-[500px]">
+        <Tabs
+          className="h-full"
+          selectedTabClassName="border-none bottom-border"
+          selectedTabPanelClassName="test"
+        >
+          <TabList>
+            <Tab>All Members</Tab>
+            <Tab>Active</Tab>
+            <Tab>Pending</Tab>
+            <Tab>Deleted</Tab>
+          </TabList>
 
-            <TabPanel>
-              <MemberTable />
-            </TabPanel>
-            <TabPanel>
-              <MemberTable />
-            </TabPanel>
-            <TabPanel>
-              <MemberTable />
-            </TabPanel>
-            <TabPanel>
-              <MemberTable />
-            </TabPanel>
-          </Tabs>
-        </Card>
-      </div>
-    </DashboardLayout>
+          <TabPanel>
+            <MemberTable />
+          </TabPanel>
+          <TabPanel>
+            <MemberTable />
+          </TabPanel>
+          <TabPanel>
+            <MemberTable />
+          </TabPanel>
+          <TabPanel>
+            <MemberTable />
+          </TabPanel>
+        </Tabs>
+      </Card>
+    </div>
   );
 }
 
