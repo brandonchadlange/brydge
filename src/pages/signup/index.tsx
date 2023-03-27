@@ -15,18 +15,11 @@ const SignupPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section className="grid md:grid-cols-3">
-        <div className="relative md:col-span-2">
-          <button
-            type="button"
-            className="absolute top-8 right-8"
-            onClick={() => router.back()}
-          >
-            Go Back
-          </button>
+      <div className="flex items-center justify-center h-screen w-100">
+      <div className="flex flex-col ">
           <Signup />
-        </div>
-      </section>
+          </div>
+      </div>
     </>
   );
 };

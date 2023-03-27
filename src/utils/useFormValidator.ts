@@ -21,11 +21,17 @@ const FormFieldValidationMap: Record<FormField, FormFieldValidation> = {
     rule: "",
   },
   email: {
-    rule: "",
+    rule: Yup.string().required("Email is required").email(),
   },
   password: {
-    rule: "",
+    rule: Yup.string().required("Password is required"),
   },
+  firstName: {
+    rule: Yup.string().required("First name is required"),
+  },
+  lastName: {
+    rule: Yup.string().required("Last name is required"),
+  }
 };
 
 const useFormValidation = (fields: FormField[]) => {
