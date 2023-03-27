@@ -1,13 +1,14 @@
 import Button from "@/components/Button";
 import OverlayLoader, { useOverlayLoader } from "@/components/overlay-loader";
 import withAuthenticationLayout from "@/components/withAuthenticationLayout";
-import showToast from "@/frontend/utility/show-toast";
 import FormField from "@/utils/useFormField";
 import useFormValidation from "@/utils/useFormValidator";
 import { Form, Formik } from "formik";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import mutations from "@/frontend/utility/mutations";
+import showToast from "@/frontend/utility/show-toast";
 
 
 type FormFieldsProps = {
@@ -35,7 +36,7 @@ const EmailRegistrationFormField = (props: FormFieldsProps) => {
   );
 };
 
-const EmailRegistrationeValidationRulesMap: FormField[] = [
+const EmailRegistrationeValidationRules: FormField[] = [
   "firstName",
   "lastName",
   "email",
@@ -48,14 +49,14 @@ const EmailRegistrationForm = () => {
   const router = useRouter();
   const overlayLoader = useOverlayLoader();
   const FormComponent = EmailRegistrationFormField;
-  const validatorRules = EmailRegistrationeValidationRulesMap;
+  const validatorRules = EmailRegistrationeValidationRules;
   const validationSchema = useFormValidation(validatorRules);
 
   const onFormSubmit = async (data: any) => {
-    // overlayLoader.show();
-    // overlayLoader.hide();
-    // showToast("Success 🎉");
-    // router.push("/email-verification");
+    const registerWithEmail = await mutations.registerWithEmail(data);
+   
+    showToast("Success 🎉");
+    router.push("/signup/email-verification");
     console.log('complete!');
     
   };
@@ -98,7 +99,7 @@ const EmailRegistrationForm = () => {
           </div>
       <OverlayLoader controller={overlayLoader} />
    
-    </div>
+      </div>
     </>
   );
 };

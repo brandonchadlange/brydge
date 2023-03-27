@@ -1,21 +1,30 @@
 // import { DetailedHTMLProps, InputHTMLAttributes } from "react";
 
-type CustomEmailInputProps = {
+import { useField } from "formik";
+import { InputHTMLAttributes } from "react";
+import applyInput from "./apply-input";
+
+interface EmailInputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
-};
-
-type EmailInputProps = CustomEmailInputProps;
-
+  name: string;
+}
 const EmailInput = (props: EmailInputProps) => {
+  const [field, meta] = useField(props);
   return (
     <>
       <input
         type="email"
-        className="w-full px-5 py-2 border rounded-lg focus:outline-none focus:border-dark-300 focus:ring-0 focus:ring-dark-300"
         placeholder={props.placeholder}
+        {...field}
+        {...props}
       />
+      {meta.touched && meta.error ? (
+        <div className=" text-xs text-red-500 ">{meta.error}</div>
+      ) : null}
     </>
   );
 };
 
-export default EmailInput;
+
+export default applyInput(EmailInput);
+

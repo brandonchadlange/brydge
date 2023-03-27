@@ -5,7 +5,7 @@ import Link from "next/link";
 const Signup = () => {
   return (
     <div className="flex items-center justify-center h-screen font-primary w-100">
-      <div className="flex flex-col w-full p-6 text-center h-4/5 md:w-3/5 md:h-3/4">
+      <div className="flex justify-center flex-col w-full p-6 text-center h-4/5 ">
         <span className="text-2xl font-bold">Welcome✋</span>
         <span className="my-5 text-xl font-semibold opacity-70 md:my-3">
           Choose your preferred mode of sign up below
