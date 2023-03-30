@@ -100,6 +100,7 @@ const EntityTypeFieldsComponentMap: Record<
 };
 
 const EntityRegistrationForm = (props: EntityRegistrationFormProps) => {
+  console.log(props.entityType);
   const router = useRouter();
   const overlayLoader = useOverlayLoader();
   const FormComponent = EntityTypeFieldsComponentMap[props.entityType];
