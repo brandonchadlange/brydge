@@ -1,5 +1,5 @@
-import EntityRegistrationForm from "./_form";
-import OnboardingLayout from "./_layout";
+import EntityRegistrationForm from "@/components/onboarding/form";
+import OnboardingLayout from "@/components/onboarding/layout";
 
 const MerchantRegistration = () => {
   return (
