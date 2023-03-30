@@ -3,42 +3,40 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
 
+import DashboardWhite from "@/images/layout/menu/dashboard-white.svg";
+import DashboardBlack from "@/images/layout/menu/dashboard-black.svg";
+
+import BeneficiaryWhite from "@/images/layout/menu/beneficiary-white.svg";
+import BeneficiaryBlack from "@/images/layout/menu/beneficiary-black.svg";
+
+import AccountWhite from "@/images/layout/menu/account-white.svg";
+import AccountBlack from "@/images/layout/menu/account-black.svg";
+import { useState } from "react";
+
 const navLinks = [
   {
     name: "Dashboard",
     url: "/dashboard",
-    iconURL: "/tile.svg",
+    icon: DashboardBlack,
+    activeIcon: DashboardWhite,
   },
   {
-    name: "Deals Room",
-    url: "/deals-room",
-    iconURL: "/files.svg",
+    name: "Beneficiaries",
+    url: "/beneficiaries",
+    icon: BeneficiaryWhite,
+    activeIcon: BeneficiaryBlack,
   },
   {
-    name: "Data Room",
-    url: "/dashboard/data-room",
-    iconURL: "/file-text.svg",
-  },
-  {
-    name: "Transactions",
-    url: "/dashboard/transactions",
-    iconURL: "/arrow-up-down.svg",
-  },
-  {
-    name: "My Wallet",
-    url: "/dashboard/my-wallet",
-    iconURL: "/wallet.svg",
-  },
-  {
-    name: "Members",
-    url: "/dashboard/members",
-    iconURL: "/members.svg",
+    name: "My Account",
+    url: "/account",
+    icon: AccountBlack,
+    activeIcon: AccountWhite,
   },
 ];
 
 const Logout = () => {
   return (
-    <div className="fixed bottom-6 w-70 px-6 py-4 flex flex-col justify-center rounded-3xl bg-dark-500">
+    <div className="bottom-6 px-6 py-4 flex flex-col justify-center rounded-3xl bg-dark-500">
       <Image
         className="m-auto mt-4"
         src="/logo.svg"
@@ -46,7 +44,7 @@ const Logout = () => {
         height={24}
         alt="logo"
       />
-      <span className="my-6 text-white text-center text-sm">
+      <span className="my-6 text-white text-center text-lg">
         Simplifying Trade Finance in Africa
       </span>
       <button
@@ -62,23 +60,33 @@ const Logout = () => {
 const MenuLink = ({
   active,
   href,
-  iconURL,
+  icon,
+  activeIcon,
   name,
 }: {
   active: boolean;
   href: string;
-  iconURL: string;
+  icon: any;
+  activeIcon: any;
   name: string;
 }) => {
+  const [hovering, setHovering] = useState(false);
+
+  const shouldShowActive = hovering || active;
+  const displayIcon = shouldShowActive ? activeIcon : icon;
+
   return (
     <li
-      className={`mb-2 hover:transition ease-in-out rounded-lg ${
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      onMouseOut={() => setHovering(false)}
+      className={`mb-2 hover:transition ease-in-out rounded-xl ${
         active && "bg-dark-500 text-white"
       } hover:bg-dark-500 hover:text-white`}
     >
-      <Link className="flex px-5 py-3" href={href}>
+      <Link className="flex px-5 py-3 gap-4" href={href}>
         <Image
-          src={iconURL}
+          src={displayIcon}
           className="mr-2"
           alt={name}
           width={20}
@@ -94,17 +102,18 @@ const Menu = () => {
   const router = useRouter();
 
   return (
-    <div className="relative h-screen py-6 mx-auto md:col-span-1 w-72">
+    <div className="relative h-screen p-6 md:col-span-1 w-72 shadow-sm flex flex-col justify-between">
       <Link href="/" className="text-2xl font-bold font-primary">
         Brydge
       </Link>
-      <ul className="mx-auto mt-6 mb-auto">
+      <ul className="mt-6 mb-auto">
         {navLinks.map((link) => (
           <MenuLink
             key={link.name}
             name={link.name}
             href={link.url}
-            iconURL={link.iconURL}
+            icon={link.icon}
+            activeIcon={link.activeIcon}
             active={router.asPath.includes(link.url)}
           />
         ))}

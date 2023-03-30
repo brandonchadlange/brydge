@@ -1,70 +1,66 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
-import Card from "@/components/card";
-import AppTable, { AppTableColumn } from "@/components/table";
-import DashboardLayout from "@/components/withDashboardLayout";
-import { Deal } from "../api/types";
 import AppButton from "@/components/Button";
+import Card from "@/components/card";
 import Slideout from "@/components/slide-out";
+import AppTable, { AppTableColumn } from "@/components/table";
 import { useState } from "react";
 
 export default function DealRoom() {
   const [show, setShow] = useState(false);
 
-  const deal: Deal = {
-    id: Math.round(Math.random() * 100000).toString(),
-    name: "Deal 1",
-    createdDate: Date.now(),
-    description: "Deal description",
-    competed: 70,
-    members: [],
-    amount: 60000,
-    currency: "USD",
-    goalAmount: 70000,
-  };
+  // const deal: Deal = {
+  //   id: Math.round(Math.random() * 100000).toString(),
+  //   name: "Deal 1",
+  //   createdDate: Date.now(),
+  //   description: "Deal description",
+  //   competed: 70,
+  //   members: [],
+  //   amount: 60000,
+  //   currency: "USD",
+  //   goalAmount: 70000,
+  // };
 
   return (
-    <DashboardLayout>
-      <div className="rounded-md p-8 pt-10">
-        <div className="flex justify-end">
-          <AppButton onClick={() => setShow(true)} type="button">
-            Create New Deal
-          </AppButton>
-        </div>
-        <Card className="h-[500px] mt-4">
-          <Tabs
-            className="h-full"
-            selectedTabClassName="border-none bottom-border"
-            selectedTabPanelClassName="test"
-          >
-            <TabList>
-              <Tab>All Deals</Tab>
-              <Tab>Active</Tab>
-              <Tab>Pending Review</Tab>
-              <Tab>Denied</Tab>
-            </TabList>
-
-            <TabPanel>
-              <DealTable />
-              {/* <EmptyStateCard message="Oops! You do not have any investors yet" buttonText="Invite Investor" onAddClick={() => { }} /> */}
-            </TabPanel>
-            <TabPanel>
-              <DealTable />
-              {/* <EmptyStateCard message="Oops! You do not have any investors yet" buttonText="Invite Investor" onAddClick={() => { }} /> */}
-            </TabPanel>
-            <TabPanel>
-              <DealTable />
-              {/* <EmptyStateCard message="Oops! You do not have any investors yet" buttonText="Invite Investor" onAddClick={() => { }} /> */}
-            </TabPanel>
-            <TabPanel>
-              <DealTable />
-              {/* <EmptyStateCard message="Oops! You do not have any documents uploaded yet" buttonText="Create new Deal" onAddClick={() => { }} /> */}
-            </TabPanel>
-          </Tabs>
-        </Card>
-        <Slideout show={show} setShow={setShow}></Slideout>
+    <div className="rounded-md p-8 pt-10">
+      <div className="flex justify-end">
+        <AppButton onClick={() => setShow(true)} type="button">
+          Create New Deal
+        </AppButton>
       </div>
-    </DashboardLayout>
+      <Card className="h-[500px] mt-4">
+        <Tabs
+          className="h-full"
+          selectedTabClassName="border-none bottom-border"
+          selectedTabPanelClassName="test"
+        >
+          <TabList>
+            <Tab>All Deals</Tab>
+            <Tab>Active</Tab>
+            <Tab>Pending Review</Tab>
+            <Tab>Denied</Tab>
+          </TabList>
+
+          <TabPanel>
+            <DealTable />
+            {/* <EmptyStateCard message="Oops! You do not have any investors yet" buttonText="Invite Investor" onAddClick={() => { }} /> */}
+          </TabPanel>
+          <TabPanel>
+            <DealTable />
+            {/* <EmptyStateCard message="Oops! You do not have any investors yet" buttonText="Invite Investor" onAddClick={() => { }} /> */}
+          </TabPanel>
+          <TabPanel>
+            <DealTable />
+            {/* <EmptyStateCard message="Oops! You do not have any investors yet" buttonText="Invite Investor" onAddClick={() => { }} /> */}
+          </TabPanel>
+          <TabPanel>
+            <DealTable />
+            {/* <EmptyStateCard message="Oops! You do not have any documents uploaded yet" buttonText="Create new Deal" onAddClick={() => { }} /> */}
+          </TabPanel>
+        </Tabs>
+      </Card>
+      <Slideout show={show} setShow={setShow}></Slideout>
+    </div>
   );
 }
 

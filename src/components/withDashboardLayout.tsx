@@ -1,11 +1,17 @@
 import React, { ReactNode } from "react";
 import Menu from "./Menu";
 
-const DashboardLayout = ({ children, className }: { children: ReactNode; className?: string; }) => {
+const DashboardLayout = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   return (
-    <section className={`grid md:grid-cols-4 ${className}`}>
+    <section className="flex">
       <Menu />
-      <div className="h-screen font-secondary bg-[#F9F9F9] md:col-span-3">
+      <div className="h-screen font-secondary bg-[#F9F9F9] flex-1">
         {children}
         {/* <WrappedComponent /> */}
       </div>

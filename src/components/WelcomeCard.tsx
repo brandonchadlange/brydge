@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { HiInformationCircle, HiXCircle } from "react-icons/hi2";
 
-import { UserContext } from "@/context";
 import Card from "./card";
 
 interface WelcomeCardProps {
@@ -9,11 +8,9 @@ interface WelcomeCardProps {
 }
 
 const WelcomeCard = ({ className }: WelcomeCardProps) => {
-  const { user } = useContext(UserContext);
-
   return (
     <Card className={`text-white ${className}`}>
-      <h3 className="font-semibold mb-2">Hello, {user.name} 😁</h3>
+      <h3 className="font-semibold mb-2">Hello, User 😁</h3>
       <div className="text-sm mb-12">
         Such a wonderful day won&apos;t you say?
       </div>

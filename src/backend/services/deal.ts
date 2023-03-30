@@ -1,30 +1,23 @@
-import { DealCreateDTO } from "../dto/deal/deal-create";
-import DealRepository, { DealAccountInformation } from "../repositories/deal";
+import DealRepository from "../repositories/deal";
 
-const createDeal = async (data: DealCreateDTO) => {
-  return DealRepository.createDeal(data);
-};
+const getMerchantDeal = async () => {
+  const activeDeal = await DealRepository.getMerchantActiveDeal("");
 
-const getDealByAccountId = async (accountId: string) => {
-  return DealRepository.getDealByAccountId(accountId);
-};
+  if (activeDeal !== null) {
+    return activeDeal;
+  }
 
-const setDealAccountId = async (dealId: string, accountId: string) => {
-  return DealRepository.setDealAccountId(dealId, accountId);
-};
+  const pendingDeal = await DealRepository.getMerchantPendingDeal("");
 
-const setDealAccountInformation = async (
-  dealId: string,
-  data: DealAccountInformation
-) => {
-  return await DealRepository.setDealAccountInformation(dealId, data);
+  if (pendingDeal !== null) {
+    return pendingDeal;
+  }
+
+  return null;
 };
 
 const DealService = {
-  createDeal,
-  getDealByAccountId,
-  setDealAccountId,
-  setDealAccountInformation,
+  getMerchantDeal,
 };
 
 export default DealService;

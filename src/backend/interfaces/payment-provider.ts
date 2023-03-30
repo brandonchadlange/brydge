@@ -1,7 +1,13 @@
-import { Business, Deal } from "@prisma/client";
+export interface IBeneficiary {
+    get: (id: string) => any;
+    create: (data: any) => any;
+}
+
+export interface IVirtualAccount {
+    create: (data: any) => any;
+}
 
 export interface IPaymentProvider {
-  onBusinessAccountApproved: (business: Business) => void;
-  onDealCreate: (deal: Deal) => void;
-  handleWebhook: (data: any) => void;
+    beneficiary: IBeneficiary
+    virtualAccount: IVirtualAccount;
 }

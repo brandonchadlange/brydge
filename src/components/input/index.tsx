@@ -5,6 +5,7 @@ import FormField from "./FormField";
 import PasswordInput from "./password";
 import SelectInput from "./select";
 import TextInput from "./text";
+import NumberInput from "./number";
 import TextAreaInput from "./TextArea";
 // import CheckboxInput from './checkbox';
 
@@ -13,6 +14,7 @@ const Input = {
   Email: EmailInput,
   Password: PasswordInput,
   Text: TextInput,
+  Number: NumberInput,
   FormField: FormField,
   TextArea: TextAreaInput,
   Select: SelectInput,

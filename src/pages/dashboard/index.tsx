@@ -1,121 +1,86 @@
-import { useContext, useEffect, useState } from "react";
+import Card from "@/components/card";
+import PayoutModal, { usePayoutModal } from "@/components/payout-modal";
+import { Inter } from "@next/font/google";
 
-import Slideout from "@/components/slide-out";
-import syndicateService from "@/frontend/services/syndicate";
-import { UserContext } from "@/context";
-import userService from "@/frontend/services/user";
-import DealForm from "../deals/deal-creation-form";
-import WelcomeCard from "@/components/WelcomeCard";
-import ViewDealsCard from "@/components/ViewDealsCard";
-import CreatedDealsCard from "@/Organisms/CreatedDealsTable";
-import WalletCard from "@/Organisms/WalletCard";
-import DashboardLayout from "@/components/withDashboardLayout";
+const inter = Inter({ subsets: ["latin"] });
 
-const Dashboard = () => {
-  const [showDealCreation, setShowDealCreation] = useState(false);
-
-  const { user, setUser } = useContext(UserContext);
-
-  useEffect(() => {
-    const getSyndicates = async () => {
-      const syndicates = await syndicateService.getSyndicates();
-    };
-
-    const getUserState = async () => {
-      const userState = await userService.getUserState();
-      setUser!({ ...user, ...userState });
-    };
-
-    getSyndicates();
-    getUserState();
-  }, []);
-
-  const toggleSlideOut = () => {
-    setShowDealCreation(!showDealCreation);
-  };
-
+const BalanceCard = () => {
   return (
-    <DashboardLayout>
-      <div className={`container p-8 pt-24`}>
-        <div className="flex justify-between gap-8">
-          <div className="w-10/12">
-            <div className="flex h-48 mb-6 justify-between gap-8">
-              <WelcomeCard className="!bg-dark-500 w-2/3" />
-              <ViewDealsCard className="w-1/3" />
-            </div>
-            <CreatedDealsCard onCreateDeal={toggleSlideOut} />
-          </div>
-          <WalletCard className="w-4/12" />
+    <div className="bg-wallet-card h-[180px] bg-contain bg-center bg-no-repeat p-5 text-white text-sm">
+      <div className="flex flex-col h-full justify-between">
+        <p>My Wallet</p>
+        <div>
+          <p className="text-lg font-semibold">₦ 1,250,000.00</p>
+          <p className="text-xs">Total Balance</p>
         </div>
-
-        <Slideout show={showDealCreation} setShow={toggleSlideOut}>
+        <div className="flex">
           <div>
-            <DealForm />
+            <p className="text-xs">Currency</p>
+            <p>NGN / Nigerian Naira</p>
           </div>
-        </Slideout>
+        </div>
       </div>
-    </DashboardLayout>
+    </div>
   );
 };
 
-// type Member = {
-//   id: string;
-//   lp: string;
-//   deal: string;
-//   carryPercent: string;
-//   status: string;
-// };
+const AccountDetail = ({
+  heading,
+  text,
+}: {
+  heading: string;
+  text: string;
+}) => {
+  return (
+    <>
+      <h3 className={"text-sm font-semibold mt-6 " + inter.className}>
+        {heading}
+      </h3>
+      <p className={"text-xs text-gray-400 font-medium" + inter.className}>
+        {text}
+      </p>
+    </>
+  );
+};
 
-// const TableTest = () => {
-//   const columns: AppTableColumn<Member>[] = [
-//     {
-//       name: "lp",
-//       heading: "LP",
-//       component(data) {
-//         return <p className="font-bold">{data.lp}</p>;
-//       },
-//     },
-//     {
-//       name: "deal",
-//       heading: "Deal",
-//       component(e) {
-//         return <>{e.deal}</>;
-//       },
-//     },
-//     {
-//       name: "carryPercent",
-//       heading: "Carry %",
-//       component(e) {
-//         return <>{e.carryPercent}</>;
-//       },
-//     },
-//     {
-//       name: "status",
-//       heading: "Status",
-//       component(e) {
-//         return <>{e.status}</>;
-//       },
-//     },
-//   ];
+const Dashboard = (props: any) => {
+  const payoutModal = usePayoutModal();
 
-//   const data: Member[] = [
-//     {
-//       id: "1",
-//       lp: "Peter Graham",
-//       deal: "Fibre Importation",
-//       carryPercent: "10%",
-//       status: "Pending",
-//     },
-//     {
-//       id: "1",
-//       lp: "Gracie Montez",
-//       deal: "Fibre Importation",
-//       carryPercent: "10%",
-//       status: "Pending",
-//     },
-//   ];
-
-//   return <AppTable columns={columns} data={data}></AppTable>;
-// };
+  return (
+    <>
+      <main className="container p-8">
+        <div className="flex gap-8">
+          <div className="w-[360px]">
+            <Card>
+              <BalanceCard />
+              <AccountDetail
+                heading="Account Details"
+                text="You can fund your NGN wallet using these details"
+              />
+              <AccountDetail heading="7645367890" text="Account Number" />
+              <AccountDetail
+                heading="Ronnie Peter Parker"
+                text="Account Name"
+              />
+              <AccountDetail heading="WEMA Bank" text="Bank Name" />
+              <button
+                className="bg-black text-white w-full py-3 font-medium rounded-lg mt-12"
+                onClick={payoutModal.show}
+              >
+                Make Payment
+              </button>
+            </Card>
+          </div>
+          <div className="flex-1">
+            <Card>
+              <h2>Transactions</h2>
+            </Card>
+          </div>
+        </div>
+      </main>
+      <PayoutModal controller={payoutModal} />
+    </>
+  );
+};
 
 export default Dashboard;

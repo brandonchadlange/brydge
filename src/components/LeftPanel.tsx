@@ -1,33 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-import * as React from "react";
+
+import Avatars from "@/assets/images/layout/auth/avatars.png";
 
 const LeftPanel = () => {
   return (
-    <div className="hidden md:block max-w-4xl">
-      <div className="relative flex flex-col justify-center h-screen text-white left-panel md:col-span-1 p-7 font-primary bg-dark-500">
+    <div className="hidden md:block max-w-4xl text-white">
+      <div className="relative flex flex-col justify-center h-screen bg-dark-auth bg-auth-panel-pattern md:col-span-1 p-7">
         <Link href="/" className="absolute text-2xl font-bold top-6">
           Brydge.
+          {/* <Image src={LogoWhite} alt="logo-white" /> */}
         </Link>
-        {/* <Link href='/' className='absolute text-2xl font-bold top-6'>
-          <Image
-            src='/logo-white.png'
-            alt='Brydge.com'
-            className=''
-            width={100}
-            height={100}
-          />
-        </Link> */}
-        <div>
-          <h2 className="mb-3 text-3xl font-bold">
-            We are facilitating deals from different industries, handling
-            diligence and sourcing.
+        <div className="flex flex-col">
+          <h2 className="mb-8 text-5xl font-semibold font-secondary">
+            Simplifying Global Execution and <br />
+            Financing of Trade.
           </h2>
-          <p className="mb-3 opacity-80">Over 1000+ investors and counting</p>
+          <p className="font-semibold text-lg">
+            Over 1000+ investors and counting
+          </p>
           <Image
-            src="/avatar-group.png"
+            src={Avatars}
             alt="avatar faces"
-            className="my-3"
+            className="my-8 rounded-full"
             width={150}
             height={50}
           />
@@ -36,17 +31,6 @@ const LeftPanel = () => {
           </Link>
         </div>
       </div>
-
-      {/* styles */}
-      <style jsx>{`
-        .left-panel {
-          background-image: linear-gradient(
-              rgba(0, 0, 0, 0.85),
-              rgba(0, 0, 0, 0.85)
-            ),
-            url("/wood-mask.jpg");
-        }
-      `}</style>
     </div>
   );
 };

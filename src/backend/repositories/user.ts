@@ -1,26 +1,54 @@
-import { User } from '@prisma/client';
-import prismaClient from '../prisma';
+import UserModel from "../models/user";
+import prismaClient from "../prisma";
 
-const getUserById = async (userId: string) => {
+const getUserById = async (id: string) => {
+  const user = await prismaClient.user.findFirst({
+    where: {
+      id: id,
+    },
+  });
+
+  if (user === null) {
+    return null;
+  }
+
+  return new UserModel(user);
+};
+
+const getUserByEmail = async (email: string) => {
   return prismaClient.user.findFirst({
     where: {
-      id: userId,
+      email: email,
     },
   });
 };
 
-const updateUserById = async (userId: string, data: Partial<User>) => {
+const updateUserEntity = async (id: string, entityId: string) => {
   return prismaClient.user.update({
     where: {
-      id: userId,
+      id: id,
     },
-    data
-  })
-}
+    data: {
+      entityId: entityId,
+    },
+  });
+};
+
+const createUser = async (data: CreateUserRequest) => {
+  return prismaClient.user.create({
+    data: {
+      email: data.email,
+      password: data.passwordHash,
+      name: data.name,
+    },
+  });
+};
 
 const UserRepository = {
   getUserById,
-  updateUserById,
+  getUserByEmail,
+  updateUserEntity,
+  createUser,
 };
 
 export default UserRepository;

@@ -1,38 +1,42 @@
-import React, { useContext } from 'react';
-import { Form, Formik } from 'formik';
-import { User } from '@prisma/client';
-import * as Yup from 'yup';
+import { User } from "@prisma/client";
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
 
-import Button from '../Button';
-import Input from '../input';
-import userService from '@/frontend/services/user';
-import { UserContext } from '@/context';
-import showToast from '@/frontend/utility/show-toast';
+import showToast from "@/frontend/utility/show-toast";
+import Button from "../Button";
+import Input from "../input";
 
 const getSyndicatesForm = () => ({
-  name: '',
-  email: '',
-})
-
-const getDealFormValidation = () => Yup.object().shape({
-  name: Yup.string().required('Name is required'),
-  email: Yup.string().email().required('Email is required'),
+  name: "",
+  email: "",
 });
 
-export function SyndicateForm({ toggleSlideOut }: { toggleSlideOut: () => void}) {
-  const { user, setUser } = useContext(UserContext);
+const getDealFormValidation = () =>
+  Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email().required("Email is required"),
+  });
 
+export function SyndicateForm({
+  toggleSlideOut,
+}: {
+  toggleSlideOut: () => void;
+}) {
   const onSubmit = async (values: Partial<User>) => {
-    const newState = await userService.updateUserState(values);
-    setUser!({...user, ...newState });
     toggleSlideOut();
 
-    showToast('Successfully updated details');
-  }
+    showToast("Successfully updated details");
+  };
   return (
     <div className="max-h-screen overflow-y-hidden p-4">
-       <h1 className="text-lg font-bold font-primary mb-4">Update user details</h1>
-      <Formik initialValues={getSyndicatesForm()} validationSchema={getDealFormValidation()} onSubmit={onSubmit}>
+      <h1 className="text-lg font-bold font-primary mb-4">
+        Update user details
+      </h1>
+      <Formik
+        initialValues={getSyndicatesForm()}
+        validationSchema={getDealFormValidation()}
+        onSubmit={onSubmit}
+      >
         {({}) => (
           <Form>
             <Input.FormField label="Name">
@@ -49,5 +53,5 @@ export function SyndicateForm({ toggleSlideOut }: { toggleSlideOut: () => void})
         )}
       </Formik>
     </div>
-  )
+  );
 }

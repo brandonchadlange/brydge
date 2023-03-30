@@ -1,5 +1,6 @@
+import CredentialsProvider from "./credentials";
 import GoogleProvider from "./google";
 
-const authenticationProviders = [GoogleProvider];
+const authenticationProviders = [CredentialsProvider, GoogleProvider];
 
 export default authenticationProviders;
