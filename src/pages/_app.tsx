@@ -8,6 +8,7 @@ import "../styles/globals.css";
 import DashboardLayout from "@/components/withDashboardLayout";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
+import HeaderNavMenu from "@/Molecules/NavMenu";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -36,9 +37,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <main className={`${syne.variable} ${montserrat.variable}`}>
+      <main className={`${syne.variable} ${montserrat.variable} bg-[#F9F9F9]`}>
         <Toaster />
-        {/* <HeaderNavMenu /> */}
+        <HeaderNavMenu />
         {/* <DashboardLayout>
         </DashboardLayout> */}
         <AppLayout>

@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 
-export type FormFieldProps = {
+export interface FormFieldProps {
+  className?: string;
   label?: ReactNode;
+  labelClasses?: string;
   description?: ReactNode;
   children?: ReactNode;
 };
@@ -9,9 +11,9 @@ export type FormFieldProps = {
 const FormField = (props: FormFieldProps) => {
   return (
     <>
-      <div className="mb-2 ">
+      <div className={`mb-2 ${props.className}`}>
         <label>
-          <span>{props.label}</span>
+          <div className={props.labelClasses}>{props.label}</div>
           {props.children}
         </label>
         <span className="text-xs text-dark-50 tracking-tight">{props.description}</span>

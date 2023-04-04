@@ -15,7 +15,7 @@ const Input = {
   Password: PasswordInput,
   Text: TextInput,
   Number: NumberInput,
-  FormField: FormField,
+  FormField,
   TextArea: TextAreaInput,
   Select: SelectInput,
   File: FileInput,

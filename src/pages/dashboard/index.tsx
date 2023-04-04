@@ -48,7 +48,7 @@ const Dashboard = (props: any) => {
 
   return (
     <>
-      <main className="container p-8">
+      <main className="container p-8 mt-16">
         <div className="flex gap-8">
           <div className="w-[360px]">
             <Card>
