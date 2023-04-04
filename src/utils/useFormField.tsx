@@ -43,6 +43,41 @@ const RegistrationNumber: FormFieldProperties = {
   placeholder: "Enter RC number",
 };
 
+const Street: FormFieldProperties = {
+  component: Input.Text,
+  name: "street",
+  label: "Street",
+  placeholder: "Enter street",
+};
+
+const HouseNumber: FormFieldProperties = {
+  component: Input.Text,
+  name: "houseNumber",
+  label: "House number",
+  placeholder: "Enter house number",
+};
+
+const City: FormFieldProperties = {
+  component: Input.Text,
+  name: "city",
+  label: "City",
+  placeholder: "Enter city",
+};
+
+const ZipCode: FormFieldProperties = {
+  component: Input.Text,
+  name: "zipCode",
+  label: "Zipcode",
+  placeholder: "Enter zipcode",
+};
+
+const State: FormFieldProperties = {
+  component: Input.Select ,
+  name: "state",
+  label: "State",
+  placeholder: "Enter state",
+};
+
 const BankVerificationNumber: FormFieldProperties = {
   component: Input.Number,
   name: "bankVerificationNumber",
@@ -66,6 +101,11 @@ const FormFieldMap: Record<FormField, FormFieldProperties> = {
   operationalAddress: OperationalAddress,
   firstName: FirstName,
   lastName: LastName,
+  street: Street,
+  houseNumber: HouseNumber,
+  city: City,
+  zipCode: ZipCode,
+  state: State,
 };
 
 const FormField = (field: FormField) => {

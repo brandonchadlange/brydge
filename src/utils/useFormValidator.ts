@@ -31,6 +31,21 @@ const FormFieldValidationMap: Record<FormField, FormFieldValidation> = {
   },
   lastName: {
     rule: Yup.string().required("Last name is required"),
+  },
+  street: {
+    rule: Yup.string().required("Street is required"),
+  },
+  houseNumber: {
+    rule: Yup.string().required("House number is required"),
+  },
+  zipCode: {
+    rule: Yup.string().required("Zipcode is required"),
+  },
+  city: {
+    rule: Yup.string().required("City is required"),
+  },
+  state: {
+    rule: "",
   }
 };
 

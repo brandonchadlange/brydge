@@ -34,20 +34,21 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String?        @unique
-  password      String         @default("")
-  emailVerified DateTime?
-  image         String?
-  entityId      String?
-  accounts      Account[]
-  Beneficiary   Beneficiary[]
-  memberInvites MemberInvite[]
-  Notification  Notification[]
-  sessions      Session[]
-  entity        Entity?        @relation(fields: [entityId], references: [id])
-  Wallet        Wallet?
+  id             String         @id @default(cuid())
+  name           String?
+  email          String?        @unique
+  password       String         @default("")
+  emailVerified  DateTime?
+  image          String?
+  entityId       String?
+  entityVerified Boolean        @default(false)
+  accounts       Account[]
+  Beneficiary    Beneficiary[]
+  memberInvites  MemberInvite[]
+  Notification   Notification[]
+  sessions       Session[]
+  entity         Entity?        @relation(fields: [entityId], references: [id])
+  Wallet         Wallet?
 }
 
 model VerificationToken {

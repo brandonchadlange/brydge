@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import Input from "@/components/input";
 import OverlayLoader, { useOverlayLoader } from "@/components/overlay-loader";
 import EntityRegistrationService from "@/frontend/services/entity-registration";
+import states from "@/frontend/utility/nigerian-states";
 import showToast from "@/frontend/utility/show-toast";
 import FormField from "@/utils/useFormField";
 import useFormValidation from "@/utils/useFormValidator";
@@ -20,6 +21,10 @@ type FormFieldsProps = {
 const RegisteredNameField = FormField("registeredName");
 const RegistrationNumberField = FormField("registeredCompanyNumber");
 const BVNField = FormField("bankVerificationNumber");
+const Street = FormField("street");
+const HouseNumber = FormField("houseNumber");
+const Zipcode = FormField("zipCode");
+const City = FormField("city");
 const OperationalAddressField = FormField("operationalAddress");
 
 const MerchantFormFields = (props: FormFieldsProps) => {
@@ -28,7 +33,18 @@ const MerchantFormFields = (props: FormFieldsProps) => {
       <RegisteredNameField />
       <RegistrationNumberField />
       <BVNField />
-      <OperationalAddressField />
+      <Street />
+      <HouseNumber />
+      <Zipcode />
+      <City />
+      <Input.Select name="state" >
+          {states.length &&
+            states.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+      </Input.Select>
 
       <Input.File name="utilityBill" id="utilityBill" />
 
@@ -77,6 +93,11 @@ const EntityTypeValidationRulesMap: Record<EntityType, FormField[]> = {
     "registeredName",
     "registeredCompanyNumber",
     "bankVerificationNumber",
+    "street",
+    "houseNumber",
+    "zipCode",
+    "city",
+    "state",
   ],
   institution: [
     "registeredName",
@@ -112,6 +133,7 @@ const EntityRegistrationForm = (props: EntityRegistrationFormProps) => {
     overlayLoader.hide();
     showToast("Success 🎉");
     router.push(pages.dashboard());
+    
   };
 
   return (

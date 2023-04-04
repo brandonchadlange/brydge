@@ -6,7 +6,12 @@ declare type FormField =
   | "registeredName"
   | "registeredCompanyNumber"
   | "bankVerificationNumber"
-  | "operationalAddress";
+  | "operationalAddress"
+  | "street"
+  | "houseNumber"
+  | "zipCode"
+  | "city"
+  | "state";
 
 declare type FormFieldValidation = {
   rule: any;
