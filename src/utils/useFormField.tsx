@@ -72,7 +72,7 @@ const ZipCode: FormFieldProperties = {
 };
 
 const State: FormFieldProperties = {
-  component: Input.Select ,
+  component: Input.Text ,
   name: "state",
   label: "State",
   placeholder: "Enter state",
