@@ -23,7 +23,7 @@ const BeneficiaryTable = () => {
         const imageSrc = data.country === "KE" ? KELogo : USLogo;
 
         return (
-          <div className="flex gap-2 font-secondary text-sm font-medium">
+          <div className="flex gap-2 font-primary text-sm font-medium">
             <div>
               <Image alt="country logo" src={KELogo} height={20} />
             </div>

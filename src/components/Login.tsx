@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { CgSpinner } from "react-icons/cg";
 
+
 enum PageState {
   Initial,
   LoggingInWithGoogle,
@@ -42,7 +43,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center h-full">
+    <div className="flex items-center text-primary justify-center h-full">
       <div className="flex flex-col w-10/12 p-4  md:justify-center h-5/6 md:w-[440px] md:h-3/4">
         <span className="text-2xl font-semibold text-center">Log in</span>
         <span className="mb-5 text-center opacity-80">
@@ -55,7 +56,7 @@ export default function LoginPage() {
               <div className="h-2"></div>
               <PasswordField />
               <div className="flex justify-between mt-3 mb-6">
-                <label className="text-dark-400">
+                <label className="text-primary opacity-60">
                   <input
                     type="checkbox"
                     className="mr-2 cursor-pointer accent-dark-400"
@@ -76,8 +77,11 @@ export default function LoginPage() {
             </Form>
           )}
         </Formik>
-
-        <p className="text-center my-4 text-sm text-gray-400 font-medium">OR</p>
+        <div className="w-full py-4 ml-auto mr-auto overflow-hidden text-center divider text-dark before:border-b before:border-dark-100 before:inline-block before:h-2 before:relative before:align-middle before:w-1/2 before:mb-2 after:border-b after:border-dark-100 after:inline-block after:h-2 after:relative after:align-middle after:w-1/2 after:mb-2 before:right-2 before:ml-[-50%] after:left-2 after:mr-[-50%]">
+        <span className="text-sm text-primary opacity-60">
+          OR
+        </span>
+      </div>
 
         <button
           onClick={signInWithGoogle}
@@ -100,7 +104,7 @@ export default function LoginPage() {
         </button>
 
         <div className="flex flex-col justify-center mt-8 md:flex-row font-semibold">
-          <p className="mr-2 text-dark-100">Don&apos;t have an account?</p>
+          <p className="mr-2 opacity-60">Don&apos;t have an account?</p>
           <Link href="/signup" className="text-secondary">
             Sign up
           </Link>

@@ -47,7 +47,7 @@ const Onboarding = () => {
                   className="w-full py-3 ml-5 text-sm font-medium text-gray-900"
                 >
                   <span className="block font-bold text-md">
-                    Institution or Individual
+                    Funder
                   </span>
                   <span className="text-gray-500">
                     An Individual or a group of persons that come together to

@@ -14,7 +14,7 @@ const FileInput = (props: FileInputProps) => {
 
   return (
     <>
-      <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-secondary bg-blue-50 border-blue">
+      <div className="flex px-5 py-3 mt-2 mb-4 border-2 border-dashed rounded-lg font-primary bg-blue-50 border-blue">
         <label htmlFor={props.name}>
           <HiOutlineDocumentArrowUp className="w-10 h-10 cursor-pointer text-blue" />
         </label>

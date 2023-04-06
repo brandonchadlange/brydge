@@ -4,19 +4,21 @@ import Link from "next/link";
 
 const Signup = () => {
   return (
-    <div className="flex items-center justify-center h-screen font-primary w-100">
+    <div className="flex items-center justify-center h-screen text-primary font-primary w-100">
       <div className="flex justify-center flex-col w-full p-6 text-center h-4/5 ">
         <span className="text-2xl font-bold">Welcome✋</span>
-        <span className="my-5 text-xl font-semibold opacity-70 md:my-3">
+        <span className="my-5 text-xl font-medium opacity-80 md:my-3">
           Choose your preferred mode of sign up below
         </span>
-        <span className="mb-5 text-sm md:text-sm">
-          By signing in, i agree to compound’s{" "}
-          <Link href="#" className="text-[#79B100]">
+        <span className="mb-5 text-sm md:text-xs">
+          <span className=" opacity-60">
+          By signing in, I agree to compound’s{" "}
+          </span>
+          <Link href="#" className="text-secondary">
             terms
           </Link>{" "}
           &{" "}
-          <Link href="#" className="text-[#79B100]">
+          <Link href="#" className="text-secondary">
             Privacy Policy
           </Link>
         </span>
@@ -34,10 +36,12 @@ const Signup = () => {
         >
           Sign up with Email & Phone number
         </Link>
-        <span>
+        <span className="font-semibold">
+          <span className="opacity-60">
           Already have an account?{" "}
-          <Link href="/login" className="text-[#79B100]">
-            Login
+          </span>
+          <Link href="/login" className="text-secondary">
+            Sign in
           </Link>
         </span>
       </div>
@@ -69,7 +73,9 @@ const Divider = () => {
   return (
     <>
       <div className="w-4/5 py-4 ml-auto mr-auto overflow-hidden text-center divider text-dark before:border-b before:border-dark-100 before:inline-block before:h-2 before:relative before:align-middle before:w-1/2 before:mb-2 after:border-b after:border-dark-100 after:inline-block after:h-2 after:relative after:align-middle after:w-1/2 after:mb-2 before:right-2 before:ml-[-50%] after:left-2 after:mr-[-50%]">
-        OR
+        <span className="text-sm text-primary opacity-60">
+          OR
+        </span>
       </div>
     </>
   );

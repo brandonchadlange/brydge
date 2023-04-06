@@ -25,7 +25,7 @@ const Street = FormField("street");
 const HouseNumber = FormField("houseNumber");
 const Zipcode = FormField("zipCode");
 const City = FormField("city");
-const OperationalAddressField = FormField("operationalAddress");
+const State = FormField("state");
 
 const MerchantFormFields = (props: FormFieldsProps) => {
   return (
@@ -37,14 +37,7 @@ const MerchantFormFields = (props: FormFieldsProps) => {
       <HouseNumber />
       <Zipcode />
       <City />
-      <Input.Select name="state" >
-          {states.length &&
-            states.map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-      </Input.Select>
+      <State />
 
       <Input.File name="utilityBill" id="utilityBill" />
 
@@ -61,7 +54,11 @@ const InstitutionFormFields = (props: FormFieldsProps) => {
       <RegisteredNameField />
       <RegistrationNumberField />
       <BVNField />
-      <OperationalAddressField />
+      <Street />
+      <HouseNumber />
+      <Zipcode />
+      <City />
+      <State />
 
       <Input.File name="utilityBill" id="utilityBill" />
 
@@ -77,7 +74,11 @@ const IndividualFormFields = (props: FormFieldsProps) => {
     <>
       <RegistrationNumberField />
       <BVNField />
-      <OperationalAddressField />
+      <Street />
+      <HouseNumber />
+      <Zipcode />
+      <City />
+      <State />
 
       <Input.File name="utilityBill" id="utilityBill" />
 
@@ -103,11 +104,21 @@ const EntityTypeValidationRulesMap: Record<EntityType, FormField[]> = {
     "registeredName",
     "registeredCompanyNumber",
     "bankVerificationNumber",
+    "street",
+    "houseNumber",
+    "zipCode",
+    "city",
+    "state",
   ],
   individual: [
     "registeredName",
     "registeredCompanyNumber",
     "bankVerificationNumber",
+    "street",
+    "houseNumber",
+    "zipCode",
+    "city",
+    "state",
   ],
 };
 

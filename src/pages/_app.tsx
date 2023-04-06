@@ -1,4 +1,4 @@
-import { Montserrat, Syne } from "@next/font/google";
+import { Inter } from "@next/font/google";
 import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -10,15 +10,11 @@ import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import HeaderNavMenu from "@/Molecules/NavMenu";
 
-const syne = Syne({
+const inter = Inter({ 
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-inter",
 });
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-});
 
 const EmptyLayout = ({ children }: { children: ReactNode }) => {
   return <>{children}</>;
@@ -37,7 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <main className={`${syne.variable} ${montserrat.variable} bg-[#F9F9F9]`}>
+      <main className={`${inter.variable} bg-[#F9F9F9]`}>
         <Toaster />
         <HeaderNavMenu />
         {/* <DashboardLayout>

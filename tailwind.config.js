@@ -17,18 +17,17 @@ module.exports = {
         },
       }),
       fontFamily: {
-        primary: ["var(--font-syne)"],
-        secondary: ["var(--font-montserrat)"],
+        primary: ["var(--font-inter)"],
       },
       colors: {
         primary: {
-          DEFAULT: "#3FE88C",
+          DEFAULT: "#09112F",
         },
         secondary: {
           DEFAULT: "#00BC9C",
         },
         dark: {
-          DEFAULT: "#1E1E1E",
+          DEFAULT: "#101730",
           50: "#7A7A7A",
           100: "#707070",
           200: "#5B5B5B",

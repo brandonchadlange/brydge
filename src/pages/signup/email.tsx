@@ -90,7 +90,9 @@ const EmailRegistrationForm = () => {
         <div className="flex flex-col justify-center mt-8 md:flex-row font-semibold">
          
           <span>
+            <span className="opacity-60">
                 Already have an account?{" "}
+            </span>
                 <Link href="/login" className="text-[#79B100]">
                   Sign in
                 </Link>
