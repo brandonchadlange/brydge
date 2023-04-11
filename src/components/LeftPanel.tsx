@@ -10,11 +10,12 @@ const LeftPanel = () => {
         </Link>
       <div className=" flex flex-col justify-center h-screen bg-dark-auth bg-auth-panel-pattern  p-20">
         
-        <div className="flex flex-col">
-          <h2 className="mb-8 text-5xl font-semibold font-primary">
-            Simplifying Global Execution and <br />
-            Financing of Trade.
+        <div className=" text-5xl font-semibold font-primary">
+          <h2 className="mb-8">
+            We are building an Operating System  <br />
+           for Merchants and Funders in Trade.
           </h2>
+          <h2>Join us</h2>
         </div>
       </div>
     </div>

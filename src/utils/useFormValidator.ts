@@ -24,19 +24,25 @@ const FormFieldValidationMap: Record<FormField, FormFieldValidation> = {
     rule: Yup.string().required("Email is required").email(),
   },
   password: {
-    rule: Yup.string().required("Password is required"),
+    rule: Yup.string().required("Password is required").matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#.\$%\^&\*])(?=.{8,})/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    ),
   },
   firstName: {
-    rule: Yup.string().required("First name is required"),
+    rule: Yup.string().required("First name is required").min(2, 'Must be at least 2 characters'),
   },
   lastName: {
-    rule: Yup.string().required("Last name is required"),
+    rule: Yup.string().required("Last name is required").min(2, 'Must be at least 2 characters'),
   },
   street: {
     rule: Yup.string().required("Street is required"),
   },
   houseNumber: {
     rule: Yup.string().required("House number is required"),
+  },
+  dateOfBirth:{
+    rule: Yup.date().required("Date of birth is required"),
   },
   zipCode: {
     rule: Yup.string(),
@@ -46,6 +52,9 @@ const FormFieldValidationMap: Record<FormField, FormFieldValidation> = {
   },
   state: {
     rule: Yup.string(),
+  },
+  companyRegistration: {
+    rule: Yup.string().required("Utility bill is required"),
   }
 };
 

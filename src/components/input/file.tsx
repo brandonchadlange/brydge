@@ -1,6 +1,7 @@
 // import { DetailedHTMLProps, InputHTMLAttributes } from "react";
 import { useField } from "formik";
 import { HiOutlineDocumentArrowUp } from "react-icons/hi2";
+import applyInput from "./apply-input";
 type CustomFileInputProps = {
   placeholder?: string;
   name: string;
@@ -45,4 +46,4 @@ const FileInput = (props: FileInputProps) => {
   );
 };
 
-export default FileInput;
+export default applyInput(FileInput);

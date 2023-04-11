@@ -15,6 +15,13 @@ const LastName: FormFieldProperties = {
   placeholder: "Last Name",
 };
 
+const DateOfBirth: FormFieldProperties = {
+  name: "dateOfBirth",
+  component: Input.Date,
+  label: "Date of Birth",
+  placeholder: "",
+};
+
 const Email: FormFieldProperties = {
   component: Input.Email,
   name: "email",
@@ -40,56 +47,61 @@ const RegistrationNumber: FormFieldProperties = {
   component: Input.Text,
   name: "registeredCompanyNumber",
   label: "RC Number",
-  placeholder: "Enter RC number",
+  placeholder: "RC number",
 };
 
 const Street: FormFieldProperties = {
   component: Input.Text,
   name: "street",
   label: "Street",
-  placeholder: "Enter street",
+  placeholder: "Street",
 };
 
 const HouseNumber: FormFieldProperties = {
   component: Input.Text,
   name: "houseNumber",
   label: "House number",
-  placeholder: "Enter house number",
+  placeholder: "House number",
 };
 
 const City: FormFieldProperties = {
   component: Input.Text,
   name: "city",
   label: "City",
-  placeholder: "Enter city",
+  placeholder: "City",
 };
+ const CompanyRegistration: FormFieldProperties = {
+  component: Input.File,
+  name: "companyRegistration",
+  label: "Company Registration",
+ };
 
 const ZipCode: FormFieldProperties = {
   component: Input.Text,
   name: "zipCode",
   label: "Zipcode",
-  placeholder: "Enter zipcode",
+  placeholder: "Zipcode",
 };
 
 const State: FormFieldProperties = {
   component: Input.Text ,
   name: "state",
   label: "State",
-  placeholder: "Enter state",
+  placeholder: "State",
 };
 
 const BankVerificationNumber: FormFieldProperties = {
   component: Input.Number,
   name: "bankVerificationNumber",
   label: "Bank Verification Number",
-  placeholder: "Enter BVN",
+  placeholder: "BVN",
 };
 
 const OperationalAddress: FormFieldProperties = {
   component: Input.TextArea,
   name: "operationalAddress",
   label: "Address",
-  placeholder: "Enter operational address",
+  placeholder: "",
 };
 
 const FormFieldMap: Record<FormField, FormFieldProperties> = {
@@ -99,8 +111,10 @@ const FormFieldMap: Record<FormField, FormFieldProperties> = {
   registeredCompanyNumber: RegistrationNumber,
   bankVerificationNumber: BankVerificationNumber,
   operationalAddress: OperationalAddress,
+  companyRegistration: CompanyRegistration,
   firstName: FirstName,
   lastName: LastName,
+  dateOfBirth: DateOfBirth,
   street: Street,
   houseNumber: HouseNumber,
   city: City,

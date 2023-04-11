@@ -3,7 +3,6 @@ import Button from "@/components/Button";
 import Input from "@/components/input";
 import OverlayLoader, { useOverlayLoader } from "@/components/overlay-loader";
 import EntityRegistrationService from "@/frontend/services/entity-registration";
-import states from "@/frontend/utility/nigerian-states";
 import showToast from "@/frontend/utility/show-toast";
 import FormField from "@/utils/useFormField";
 import useFormValidation from "@/utils/useFormValidator";
@@ -26,6 +25,7 @@ const HouseNumber = FormField("houseNumber");
 const Zipcode = FormField("zipCode");
 const City = FormField("city");
 const State = FormField("state");
+const DateOfBirth = FormField("dateOfBirth");
 
 const MerchantFormFields = (props: FormFieldsProps) => {
   return (
@@ -74,6 +74,7 @@ const IndividualFormFields = (props: FormFieldsProps) => {
     <>
       <RegistrationNumberField />
       <BVNField />
+      <DateOfBirth />
       <Street />
       <HouseNumber />
       <Zipcode />
@@ -117,6 +118,7 @@ const EntityTypeValidationRulesMap: Record<EntityType, FormField[]> = {
     "street",
     "houseNumber",
     "zipCode",
+    "dateOfBirth",
     "city",
     "state",
   ],
