@@ -1,8 +1,24 @@
 import { signIn, SignInResponse } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { CgSpinner } from "react-icons/cg";
+import GoogleIcon from "@/images/layout/auth/google.png";
+
+
+enum PageState {
+  Initial,
+  LoggingInWithGoogle,
+}
 
 const Signup = () => {
+  const [pageState, setPageState] = useState(PageState.Initial);
+
+  const signInWithGoogle = () => {
+    setPageState(PageState.LoggingInWithGoogle);
+    signIn("google", { redirect: true, callbackUrl: "/api/login" });
+  };
+
   return (
     <div className="flex items-center justify-center h-screen text-primary font-primary w-100">
       <div className="flex justify-center flex-col w-full p-6 text-center h-4/5 ">
@@ -23,11 +39,25 @@ const Signup = () => {
           </Link>
         </span>
         {
-          <AuthButton
-            text={`Sign in with google`}
-            image={`/google.svg`}
-            onClick={() => signIn("google")}
-          />
+          <button
+          onClick={signInWithGoogle}
+          className="flex  w-full sm:w-4/5 gap-4 justify-center px-6 py-3  mx-auto text-center text-gray-700 bg-white border border-gray-700 transition ease-in-out rounded-full font-medium"
+        >
+          {pageState === PageState.LoggingInWithGoogle && (
+            <CgSpinner className="w-6 h-6 animate-spin" />
+          )}
+          {pageState === PageState.Initial && (
+            <>
+              <Image
+                alt="google icon"
+                src={GoogleIcon}
+                height={24}
+                width={24}
+              />
+              Sign in with Google
+            </>
+          )}
+        </button>
         }
         <Divider />
         <Link
