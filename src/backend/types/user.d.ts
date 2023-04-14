@@ -1,5 +1,6 @@
 declare type CreateUserRequest = {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   passwordHash: string;
 };

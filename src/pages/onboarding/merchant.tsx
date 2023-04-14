@@ -9,7 +9,7 @@ const MerchantRegistration = () => {
     {
       entityType: "merchant",
       heading: "Existing Business",
-      text: "Commodity Business. It has been in operation for a minimum of 2 years.",
+      text: "Registered merchants that been in operation for a minimum of 2 years.",
     },
   ];
 

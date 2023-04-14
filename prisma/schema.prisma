@@ -34,20 +34,23 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String?        @unique
-  password      String         @default("")
-  emailVerified DateTime?
-  image         String?
-  entityId      String?
-  accounts      Account[]
-  Beneficiary   Beneficiary[]
-  memberInvites MemberInvite[]
-  Notification  Notification[]
-  sessions      Session[]
-  entity        Entity?        @relation(fields: [entityId], references: [id])
-  Wallet        Wallet?
+  id             String         @id @default(cuid())
+  name           String?
+  email          String?        @unique
+  password       String         @default("")
+  emailVerified  DateTime?
+  image          String?
+  entityId       String?
+  entityVerified Boolean        @default(false)
+  firstName      String?
+  lastName       String?
+  accounts       Account[]
+  Beneficiary    Beneficiary[]
+  memberInvites  MemberInvite[]
+  Notification   Notification[]
+  sessions       Session[]
+  entity         Entity?        @relation(fields: [entityId], references: [id])
+  Wallet         Wallet?
 }
 
 model VerificationToken {
@@ -93,44 +96,48 @@ model Entity {
 }
 
 model Merchant {
-  id                      String         @id @default(cuid())
-  entityId                String
-  registeredName          String
-  registeredCompanyNumber String
-  bankVerificationNumber  Int
-  operationalAddressId    String
-  utilityBillId           String
-  memberInvites           MemberInvite[]
-  entity                  Entity         @relation(fields: [entityId], references: [id])
-  operationAddress        Address        @relation(fields: [operationalAddressId], references: [id])
-  utilityBill             Document       @relation(fields: [utilityBillId], references: [id])
+  id                           String         @id @default(cuid())
+  entityId                     String
+  registeredName               String
+  registeredCompanyNumber      String
+  bankVerificationNumber       String
+  operationalAddressId         String
+  utilityBillId                String
+  companyRegistrationId        String
+  memorandumOfUnderstandingId  String
+  articleOfAssociationId       String
+  certificateOfIncorporationId String
+  memberInvites                MemberInvite[]
+  entity                       Entity         @relation(fields: [entityId], references: [id])
+  operationAddress             Address        @relation(fields: [operationalAddressId], references: [id])
 }
 
 model Institution {
-  id                      String   @id @default(cuid())
-  entityId                String
-  registeredName          String
-  registeredCompanyNumber String
-  headName                String
-  headEmail               String
-  bankVerificationNumber  Int
-  operationalAddressId    String
-  utilityBillId           String
-  entity                  Entity   @relation(fields: [entityId], references: [id])
-  operationAddress        Address  @relation(fields: [operationalAddressId], references: [id])
-  utilityBill             Document @relation(fields: [utilityBillId], references: [id])
+  id                           String  @id @default(cuid())
+  entityId                     String
+  registeredName               String
+  registeredCompanyNumber      String
+  headName                     String
+  headEmail                    String
+  bankVerificationNumber       String
+  operationalAddressId         String
+  utilityBillId                String
+  companyRegistrationId        String
+  memorandumOfUnderstandingId  String
+  articleOfAssociationId       String
+  certificateOfIncorporationId String
+  entity                       Entity  @relation(fields: [entityId], references: [id])
+  operationAddress             Address @relation(fields: [operationalAddressId], references: [id])
 }
 
 model Individual {
-  id                     String   @id @default(cuid())
+  id                     String  @id @default(cuid())
   entityId               String
   name                   String
-  bankVerificationNumber Int
+  bankVerificationNumber String
   operationalAddressId   String
-  utilityBillId          String
-  entity                 Entity   @relation(fields: [entityId], references: [id])
-  operationAddress       Address  @relation(fields: [operationalAddressId], references: [id])
-  utilityBill            Document @relation(fields: [utilityBillId], references: [id])
+  entity                 Entity  @relation(fields: [entityId], references: [id])
+  operationAddress       Address @relation(fields: [operationalAddressId], references: [id])
 }
 
 model Address {
@@ -146,14 +153,11 @@ model Address {
 }
 
 model Document {
-  id          String        @id @default(cuid())
-  name        String
-  contentType String
-  sizeInMb    Int
+  id          String @id @default(cuid())
+  name        String @default("")
+  contentType String @default("")
+  sizeInMb    Int    @default(0)
   publicUrl   String
-  Individual  Individual[]
-  Institution Institution[]
-  Merchant    Merchant[]
 }
 
 model Deal {

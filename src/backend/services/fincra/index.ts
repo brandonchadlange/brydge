@@ -1,5 +1,8 @@
 import axios from "axios";
-import prismaClient from "../prisma";
+import prismaClient from "@/backend/prisma";
+import handleFincraWebhookEvent from "./webhook";
+import FincraApi from "./api";
+import { User } from "@prisma/client";
 
 const BUSINESS_ID = process.env.FINCRA_BUSINESS_ID;
 
@@ -9,20 +12,6 @@ const fincraHttpInstance = axios.create({
     "api-key": process.env.FINCRA_API_KEY,
   },
 });
-
-type ServiceResponse<DATA = any, STATE = any> = {
-  data: DATA;
-  state: STATE;
-};
-
-type Bank = {
-  id: number;
-  code: string;
-  name: string;
-  swiftCode: string;
-  bic: string;
-  branches: null;
-};
 
 enum FincraVARState {
   SUCCESS,
@@ -37,44 +26,24 @@ export enum BeneficiaryState {
 type FincraVAR = ServiceResponse<any, FincraVARState>;
 export type FincraBeneficiary = ServiceResponse<any, BeneficiaryState>;
 
-const tryCreateVirtualAccount = async (): Promise<FincraVAR> => {
-  try {
-    const response = await fincraHttpInstance.request({
-      method: "POST",
-      url: "/profile/virtual-accounts/requests/",
-      data: {
-        currency: "NGN",
-        channel: "wema",
-        accountType: "individual",
-        KYCInformation: {
-          firstName: "Brandon",
-          lastName: "Lange",
-          bvn: "22161412900",
-        },
-      },
-    });
+const createNairaVirtualAccount = async (
+  user: User,
+  bvn: string,
+  accountType: string
+) => {
+  const virtualAccount = await FincraApi.virtualAccount.ngn.create(
+    user,
+    bvn,
+    accountType
+  );
 
-    return {
-      state: FincraVARState.SUCCESS,
-      data: response.data,
-    };
-  } catch (err) {
-    console.log(err);
-    return {
-      state: FincraVARState.ERROR,
-      data: null,
-    };
-  }
-};
+  console.log(virtualAccount);
 
-const createNairaVirtualAccount = async () => {
-  const fincraVa = await tryCreateVirtualAccount();
-
-  if (fincraVa.state === FincraVARState.ERROR) {
+  if (virtualAccount.state === "ERROR") {
     return;
   }
 
-  const response = fincraVa.data;
+  const response = virtualAccount.data;
 
   const account = response.data.accountInformation;
 
@@ -89,66 +58,12 @@ const createNairaVirtualAccount = async () => {
   });
 };
 
-const recievePayment = async (data: any) => {
-  const balance = await prismaClient.balance.findFirst({
-    where: {
-      virtualAccountId: data.data.virtualAccount,
-    },
-  });
-
-  await prismaClient.walletTransaction.create({
-    data: {
-      date: data.data.createdAt,
-      description: "Funds recieved",
-      initialValueInCents: balance!.valueInCents,
-      value: data.data.amountReceived * 100,
-      newValueInCents: balance!.valueInCents + data.data.amountReceived * 100,
-      reference: data.data.reference,
-      status: 1,
-      transactionType: 1,
-      balanceId: balance!.id,
-    },
-  });
-
-  await prismaClient.balance.update({
-    where: {
-      id: balance!.id,
-    },
-    data: {
-      valueInCents: balance!.valueInCents + data.data.amountReceived * 100,
-    },
-  });
-};
-
-const getBeneficiary = async (
-  beneficiaryId: string
-): Promise<FincraBeneficiary> => {
-  try {
-    const response = await fincraHttpInstance.request({
-      method: "GET",
-      url: `/profile/beneficiaries/business/${BUSINESS_ID}/${beneficiaryId}`,
-    });
-
-    return {
-      state: BeneficiaryState.SUCCESS,
-      data: response.data,
-    };
-  } catch (err) {
-    return {
-      state: BeneficiaryState.ERROR,
-      data: null,
-    };
-  }
-};
+const getBeneficiary = async (beneficiaryId: string) =>
+  FincraApi.beneficiary.get(beneficiaryId);
 
 const createUnitedStatesBeneficiary = async (
   data: UnitedStatesCorporateDetail
-): Promise<FincraBeneficiary> => {
-  return {
-    state: BeneficiaryState.ERROR,
-    data: null,
-  };
-};
+) => FincraApi.beneficiary.createUsBeneficaiary(data);
 
 const createKenyaCorporateBeneficiary = async (
   data: KenyaCorporateDetail
@@ -236,19 +151,8 @@ const createKenyaIndividualBeneficiary = async (
   }
 };
 
-const getBanksByCountryCode = async (countryCode: string) => {
-  try {
-    const response = await fincraHttpInstance.request<{ data: Bank[] }>({
-      method: "GET",
-      url: "/core/banks?country=" + countryCode,
-    });
-
-    return response.data.data;
-  } catch (err: any) {
-    // console.log(err.response);
-    return [];
-  }
-};
+const getBanksByCountryCode = (countryCode: string) =>
+  FincraApi.banks.getByCountryCode(countryCode);
 
 const generateConversionQuote = async (data: any) => {
   const request: any = {
@@ -268,29 +172,20 @@ const generateConversionQuote = async (data: any) => {
     delete request.paymentScheme;
   }
 
-  try {
-    const response = await fincraHttpInstance.request({
-      method: "POST",
-      url: "/quotes/generate",
-      data: request,
-    });
-
-    return response.data;
-  } catch (err: any) {
-    console.log(err.response);
-    return null;
-  }
+  return FincraApi.conversion.generateQuote(data);
 };
+
+const createNgnToUsdPayout = async (data: any) => {};
 
 const FincraService = {
   getBeneficiary,
   createNairaVirtualAccount,
-  recievePayment,
   getBanksByCountryCode,
   createKenyaIndividualBeneficiary,
   createKenyaCorporateBeneficiary,
   createUnitedStatesBeneficiary,
   generateConversionQuote,
+  handleFincraWebhookEvent,
 };
 
 export default FincraService;

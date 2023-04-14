@@ -1,20 +1,20 @@
 import OnboardingLayout, { EntityTab } from "@/components/onboarding/layout";
 
 const MerchantRegistration = () => {
-  const title = "Insitution or Individual";
+  const title = "Funder";
   const subtitle =
-    "A group of persons that come together to invest. It is usually on a deal-by-deal basis.";
+    "This can be an individual or institution funding merchants involved in export, import, supply, and aggregation.";
 
   const tabs: EntityTab[] = [
     {
       entityType: "institution",
       heading: "Institution",
-      text: "They are fund managers, High network individuals, and communities. Writing a maximum check size of $200,000. No minimum.",
+      text: "Companies funding merchants and providing trade finance.",
     },
     {
       entityType: "individual",
       heading: "Individual",
-      text: "",
+      text: "Individuals who fund merchants.",
     },
   ];
 

@@ -6,7 +6,7 @@ const withAuthenticationLayout = (WrappedComponent: React.ElementType) => {
     return (
       <section className="w-full inline-block md:flex md:flex-row md:justify-between">
         <LeftPanel />
-        <div className="bg-white w-full font-secondary">
+        <div className="bg-white w-full font-o">
           <WrappedComponent />
         </div>
       </section>

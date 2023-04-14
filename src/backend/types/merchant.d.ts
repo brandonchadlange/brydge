@@ -2,7 +2,11 @@ declare type CreateMerchantDetail = {
   entityId: string;
   registeredName: string;
   registeredCompanyNumber: string;
-  bankVerificationNumber: number;
+  bankVerificationNumber: string;
   operationalAddressId: string;
   utilityBillId: string;
+  companyRegistrationId: string;
+  memorandumOfUnderstandingId: string;
+  articleOfAssociationId: string;
+  certificateOfIncorporationId: string;
 };

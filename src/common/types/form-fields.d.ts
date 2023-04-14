@@ -3,10 +3,17 @@ declare type FormField =
   | "password"
   | "firstName"
   | "lastName"
+  | "dateOfBirth"
   | "registeredName"
   | "registeredCompanyNumber"
   | "bankVerificationNumber"
-  | "operationalAddress";
+  | "operationalAddress"
+  | "street"
+  | "houseNumber"
+  | "zipCode"
+  | "city"
+  | "state"
+  | "companyRegistration";
 
 declare type FormFieldValidation = {
   rule: any;

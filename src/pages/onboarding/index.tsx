@@ -46,12 +46,10 @@ const Onboarding = () => {
                   htmlFor="list-funder-radio"
                   className="w-full py-3 ml-5 text-sm font-medium text-gray-900"
                 >
-                  <span className="block font-bold text-md">
-                    Institution or Individual
-                  </span>
+                  <span className="block font-bold text-md">Funder</span>
                   <span className="text-gray-500">
-                    An Individual or a group of persons that come together to
-                    invest. It is usually on a deal-by-deal basis.
+                    This can be an individual or institution funding merchants
+                    involved in export, import, supply, and aggregation.
                   </span>
                 </label>
               </div>

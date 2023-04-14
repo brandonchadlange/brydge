@@ -6,6 +6,8 @@ import pages from "@/common/pages";
 export default RouteHandler({
   async GET(req, res) {
     const { uid } = await getSession(req, res);
+    console.log("HERE!!!");
+
     const user = await UserRepository.getUserById(uid);
 
     if (user?.requiresOnboarding) {

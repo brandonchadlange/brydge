@@ -1,11 +1,12 @@
-import InstitutionRepository from "../repositories/institution";
-
-// When creating a funder, the registration will always be against a particulare entity(merchant)
+import prismaClient from "../prisma";
 
 const handleInstitutionRegistration = (entityId: string, data: any) => {
-  InstitutionRepository.createInstitution();
-  // Link user to entity
-  // create member
+  return prismaClient.institution.create({
+    data: {
+      entityId,
+      ...data,
+    },
+  });
 };
 
 export default handleInstitutionRegistration;
