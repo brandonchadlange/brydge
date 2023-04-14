@@ -1,5 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import Menu from "./Menu";
+import { useSession, signOut } from "next-auth/react";
 
 const DashboardLayout = ({
   children,
@@ -8,6 +9,17 @@ const DashboardLayout = ({
   children: ReactNode;
   className?: string;
 }) => {
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status == "unauthenticated") {
+      signOut({
+        redirect: true,
+        callbackUrl: "/login",
+      });
+    }
+  }, [status]);
+
   return (
     <section className="flex">
       <Menu />

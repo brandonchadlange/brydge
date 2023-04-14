@@ -91,7 +91,7 @@ const State: FormFieldProperties = {
 };
 
 const BankVerificationNumber: FormFieldProperties = {
-  component: Input.Number,
+  component: Input.Text,
   name: "bankVerificationNumber",
   label: "Bank Verification Number",
   placeholder: "BVN",
