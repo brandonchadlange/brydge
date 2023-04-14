@@ -22,7 +22,5 @@ export default RouteHandler({
     )!;
 
     const payoutTransaction = await WalletService.createPayout();
-
-    await FincraApi.payout.createNgnToUsdPayout();
   },
 });

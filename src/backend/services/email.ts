@@ -1,5 +1,7 @@
 import * as sgMail from "@sendgrid/mail";
 
+const APP_URL = process.env.APP_URL;
+
 type MailMessage = {
   to: string;
   from: string;
@@ -23,15 +25,13 @@ const sendEmailConfirmation = (
   token: string,
   username: string
 ) => {
-  console.log("http://localhost:3000/api/email-confirmation?token=" + token);
-
   return sendMail({
     from: "inside@brydgehq.co",
     to: toEmail,
     subject: "Brydge Email Confirmation",
     templateId: "d-7cbe184462c445adaa5c660765e3f48b",
     dynamicTemplateData: {
-      linkUrl: "http://localhost:3000/api/email-confirmation?token=" + token,
+      linkUrl: `${APP_URL}/api/email-confirmation?token=${token}`,
       username: username,
     },
   });
