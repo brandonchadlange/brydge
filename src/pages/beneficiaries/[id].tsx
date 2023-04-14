@@ -45,20 +45,20 @@ const BeneficiaryDetailPage = () => {
       <Card className="mt-5">
         <div>
           <p className="text-sm text-gray-500">Name</p>
-          <p className="text-md font-secondary font-medium">
+          <p className="text-md font-primary font-medium">
             {beneficiary?.accountHolderName}
           </p>
         </div>
         <div className="grid grid-cols-5 gap-10 mt-5">
           <div>
             <p className="text-sm text-gray-500">Account Number</p>
-            <p className="text-sm font-secondary font-medium">
+            <p className="text-sm font-primary font-medium">
               {beneficiary?.destinationAddress}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Beneficiary Type</p>
-            <p className="text-sm font-secondary font-medium">
+            <p className="text-sm font-primary font-medium">
               {beneficiary?.type}
             </p>
           </div>
@@ -66,31 +66,31 @@ const BeneficiaryDetailPage = () => {
         <div className="grid grid-cols-5 gap-10 mt-5">
           <div>
             <p className="text-sm text-gray-500">Bank</p>
-            <p className="text-sm font-secondary font-medium">
+            <p className="text-sm font-primary font-medium">
               {beneficiary?.bank.name}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">SWIFT Code</p>
-            <p className="text-sm font-secondary font-medium">
+            <p className="text-sm font-primary font-medium">
               {beneficiary?.bank.swiftCode}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Sort Code</p>
-            <p className="text-sm font-secondary font-medium">
+            <p className="text-sm font-primary font-medium">
               {beneficiary?.bank.sortCode}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Country</p>
-            <p className="text-sm font-secondary font-medium">
+            <p className="text-sm font-primary font-medium">
               {beneficiary?.bank.address.country}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Currency</p>
-            <p className="text-sm font-secondary font-medium">
+            <p className="text-sm font-primary font-medium">
               {beneficiary?.currency}
             </p>
           </div>

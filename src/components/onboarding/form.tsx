@@ -4,10 +4,11 @@ import Input from "@/components/input";
 import OverlayLoader, { useOverlayLoader } from "@/components/overlay-loader";
 import EntityRegistrationService from "@/frontend/services/entity-registration";
 import showToast from "@/frontend/utility/show-toast";
-import FormField from "@/utils/useFormField";
+import formField from "@/utils/useFormField";
 import useFormValidation from "@/utils/useFormValidator";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
+import FormField from "../input/FormField";
 
 type EntityRegistrationFormProps = {
   entityType: EntityType;
@@ -17,10 +18,15 @@ type FormFieldsProps = {
   setFieldValue: (field: string, value: any) => void;
 };
 
-const RegisteredNameField = FormField("registeredName");
-const RegistrationNumberField = FormField("registeredCompanyNumber");
-const BVNField = FormField("bankVerificationNumber");
-const OperationalAddressField = FormField("operationalAddress");
+const RegisteredNameField = formField("registeredName");
+const RegistrationNumberField = formField("registeredCompanyNumber");
+const BVNField = formField("bankVerificationNumber");
+const Street = formField("street");
+const HouseNumber = formField("houseNumber");
+const Zipcode = formField("zipCode");
+const City = formField("city");
+const State = formField("state");
+const DateOfBirth = formField("dateOfBirth");
 
 const MerchantFormFields = (props: FormFieldsProps) => {
   return (
@@ -28,9 +34,51 @@ const MerchantFormFields = (props: FormFieldsProps) => {
       <RegisteredNameField />
       <RegistrationNumberField />
       <BVNField />
-      <OperationalAddressField />
+      <Street />
+      <HouseNumber />
+      <Zipcode />
+      <City />
+      <State />
 
-      <Input.File name="utilityBill" id="utilityBill" />
+      <FormField label="Utility Bill">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="utilityBillId"
+          id="utilityBillId"
+        />
+      </FormField>
+
+      <FormField label="Company registration">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="companyRegistrationId"
+          id="companyRegistrationId"
+        />
+      </FormField>
+
+      <FormField label="Memorandum of Understanding">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="memorandumOfUnderstandingId"
+          id="memorandumOfUnderstandingId"
+        />
+      </FormField>
+
+      <FormField label="Article of Association">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="articleOfAssociationId"
+          id="articleOfAssociationId"
+        />
+      </FormField>
+
+      <FormField label="Certificate of Incorporation">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="certificateOfIncorporationId"
+          id="certificateOfIncorporationId"
+        />
+      </FormField>
 
       <Button type="submit" full>
         Submit
@@ -45,9 +93,51 @@ const InstitutionFormFields = (props: FormFieldsProps) => {
       <RegisteredNameField />
       <RegistrationNumberField />
       <BVNField />
-      <OperationalAddressField />
+      <Street />
+      <HouseNumber />
+      <Zipcode />
+      <City />
+      <State />
 
-      <Input.File name="utilityBill" id="utilityBill" />
+      <FormField label="Utility Bill">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="utilityBillId"
+          id="utilityBillId"
+        />
+      </FormField>
+
+      <FormField label="Company registration">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="companyRegistrationId"
+          id="companyRegistrationId"
+        />
+      </FormField>
+
+      <FormField label="Memorandum of Understanding">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="memorandumOfUnderstandingId"
+          id="memorandumOfUnderstandingId"
+        />
+      </FormField>
+
+      <FormField label="Article of Association">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="articleOfAssociationId"
+          id="articleOfAssociationId"
+        />
+      </FormField>
+
+      <FormField label="Certificate of Incorporation">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="certificateOfIncorporationId"
+          id="certificateOfIncorporationId"
+        />
+      </FormField>
 
       <Button type="submit" full>
         Submit
@@ -59,11 +149,21 @@ const InstitutionFormFields = (props: FormFieldsProps) => {
 const IndividualFormFields = (props: FormFieldsProps) => {
   return (
     <>
-      <RegistrationNumberField />
       <BVNField />
-      <OperationalAddressField />
+      <DateOfBirth />
+      <Street />
+      <HouseNumber />
+      <Zipcode />
+      <City />
+      <State />
 
-      <Input.File name="utilityBill" id="utilityBill" />
+      <FormField label="Utility Bill">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="utilityBillId"
+          id="utilityBillId"
+        />
+      </FormField>
 
       <Button type="submit" full>
         Submit
@@ -77,16 +177,32 @@ const EntityTypeValidationRulesMap: Record<EntityType, FormField[]> = {
     "registeredName",
     "registeredCompanyNumber",
     "bankVerificationNumber",
+    "street",
+    "houseNumber",
+    "zipCode",
+    "city",
+    "state",
   ],
   institution: [
     "registeredName",
     "registeredCompanyNumber",
     "bankVerificationNumber",
+    "street",
+    "houseNumber",
+    "zipCode",
+    "city",
+    "state",
   ],
   individual: [
     "registeredName",
     "registeredCompanyNumber",
     "bankVerificationNumber",
+    "street",
+    "houseNumber",
+    "zipCode",
+    "dateOfBirth",
+    "city",
+    "state",
   ],
 };
 
@@ -100,7 +216,6 @@ const EntityTypeFieldsComponentMap: Record<
 };
 
 const EntityRegistrationForm = (props: EntityRegistrationFormProps) => {
-  console.log(props.entityType);
   const router = useRouter();
   const overlayLoader = useOverlayLoader();
   const FormComponent = EntityTypeFieldsComponentMap[props.entityType];
@@ -108,6 +223,7 @@ const EntityRegistrationForm = (props: EntityRegistrationFormProps) => {
   const validationSchema = useFormValidation(validatorRules);
 
   const onFormSubmit = async (data: any) => {
+    console.log(data);
     overlayLoader.show();
     await EntityRegistrationService.registerEntity(props.entityType, data);
     overlayLoader.hide();

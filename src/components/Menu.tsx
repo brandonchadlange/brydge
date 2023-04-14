@@ -45,7 +45,7 @@ const Logout = () => {
         alt="logo"
       />
       <span className="my-6 text-white text-center text-lg">
-        Simplifying Trade Finance in Africa
+        Operating system for merchants and funders.
       </span>
       <button
         className="bg-white px-5 py-3 mb-2 text-dark-500 rounded-full font-primary"
@@ -102,7 +102,7 @@ const Menu = () => {
   const router = useRouter();
 
   return (
-    <div className="relative h-screen p-6 md:col-span-1 w-72 shadow-sm flex flex-col justify-between">
+    <div className="bg-white relative h-screen p-6 md:col-span-1 w-72 shadow-sm flex flex-col justify-between">
       <Link href="/" className="text-2xl font-bold font-primary">
         Brydge
       </Link>

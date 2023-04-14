@@ -60,7 +60,7 @@ const MyWallet = () => {
             >
               <div>
                 <p className="font-semibold">{transaction.description}</p>
-                <p className="text-sm font-secondary text-slate-500">
+                <p className="text-sm font-primary text-slate-500">
                   {formatDate(transaction.date)}
                 </p>
               </div>

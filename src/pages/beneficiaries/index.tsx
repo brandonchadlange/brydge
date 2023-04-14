@@ -23,7 +23,7 @@ const BeneficiaryTable = () => {
         const imageSrc = data.country === "KE" ? KELogo : USLogo;
 
         return (
-          <div className="flex gap-2 font-secondary text-sm font-medium">
+          <div className="flex gap-2 font-primary text-sm font-medium">
             <div>
               <Image alt="country logo" src={KELogo} height={20} />
             </div>
@@ -60,7 +60,7 @@ const BeneficiaryTable = () => {
 
 const BeneficiaryPage = () => {
   return (
-    <main className="p-4 mt-20">
+    <main className="p-4 mt-16">
       <Card>
         <div className="flex justify-between mb-10 align-middle text-lg">
           <h1 className="font-semibold">Beneficiaries</h1>

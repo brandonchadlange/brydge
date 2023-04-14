@@ -1,4 +1,4 @@
-import { Montserrat, Syne } from "@next/font/google";
+import { Inter } from "@next/font/google";
 import type { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -8,15 +8,11 @@ import "../styles/globals.css";
 import DashboardLayout from "@/components/withDashboardLayout";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
+import HeaderNavMenu from "@/Molecules/NavMenu";
 
-const syne = Syne({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-syne",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-inter",
 });
 
 const EmptyLayout = ({ children }: { children: ReactNode }) => {
@@ -30,13 +26,14 @@ export default function App({ Component, pageProps }: AppProps) {
   const AppLayout =
     router.pathname.includes("/login") ||
     router.pathname.includes("/signup") ||
-    router.pathname.includes("/onboarding")
+    router.pathname.includes("/onboarding") ||
+    router.pathname.includes("/email-verified")
       ? EmptyLayout
       : DashboardLayout;
 
   return (
     <QueryClientProvider client={queryClient}>
-      <main className={`${syne.variable} ${montserrat.variable}`}>
+      <main className={`${inter.variable} bg-[#F9F9F9]`}>
         <Toaster />
         {/* <HeaderNavMenu /> */}
         {/* <DashboardLayout>

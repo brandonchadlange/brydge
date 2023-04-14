@@ -7,6 +7,6 @@ export default RouteHandler({
   async GET(req, res) {
     const countryCode = req.query.country as string;
     const banks = await FincraService.getBanksByCountryCode(countryCode);
-    res.send(banks);
+    res.send(banks.data.data);
   },
 });

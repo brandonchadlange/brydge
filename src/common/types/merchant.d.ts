@@ -3,7 +3,7 @@ import type { Deal } from "@prisma/client";
 declare type CreateMerchantRequest = {
   registeredName: string;
   registeredCompanyNumber: string;
-  bankVerificationNumber: number;
+  bankVerificationNumber: string;
   operationalAddressId: string;
   utilityBillId: string;
 };

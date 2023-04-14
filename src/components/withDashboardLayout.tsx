@@ -11,7 +11,7 @@ const DashboardLayout = ({
   return (
     <section className="flex">
       <Menu />
-      <div className="h-screen font-secondary bg-[#F9F9F9] flex-1">
+      <div className="h-full font-primary flex-1">
         {children}
         {/* <WrappedComponent /> */}
       </div>
@@ -24,7 +24,7 @@ const DashboardLayout = ({
 //     return (
 //       <section className='grid md:grid-cols-4'>
 //         <Menu />
-//         <div className='h-screen font-secondary bg-[#F9F9F9] md:col-span-3'>
+//         <div className='h-screen font-primary bg-[#F9F9F9] md:col-span-3'>
 //           <WrappedComponent />
 //         </div>
 //       </section>

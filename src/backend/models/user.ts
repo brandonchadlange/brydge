@@ -15,6 +15,10 @@ class UserModel {
   async assignEntity(entityId: string) {
     await UserRepository.updateUserEntity(this._user.id, entityId);
   }
+
+  async setEntityVerified(verified: boolean) {
+    await UserRepository.setEntityVerified(this._user.id, verified);
+  }
 }
 
 export default UserModel;
