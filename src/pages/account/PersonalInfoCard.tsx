@@ -29,7 +29,6 @@ interface PersonalInfoCardProps {
 
 const PersonalInfoCard = ({ className }: PersonalInfoCardProps) => {
   const onSubmit = async (values: Partial<User>) => {
-    console.log(values);
     showToast("Successfully updated details");
   };
 
@@ -37,7 +36,11 @@ const PersonalInfoCard = ({ className }: PersonalInfoCardProps) => {
     <Card className={`mb-8 p-4 ${className}`}>
       <div className="flex justify-between items-center">
         <span className="font-semibold text-lg">Personal Information</span>
-        <Button className="!px-12 !py-2 rounded-lg font-medium" type="submit" form="detailsForm">
+        <Button
+          className="!px-12 !py-2 rounded-lg font-medium"
+          type="submit"
+          form="detailsForm"
+        >
           Save
         </Button>
       </div>
@@ -47,18 +50,34 @@ const PersonalInfoCard = ({ className }: PersonalInfoCardProps) => {
           validationSchema={getPersonalInfoFormValidation()}
           onSubmit={onSubmit}
         >
-          {({ }) => (
+          {({}) => (
             <Form id="detailsForm" className="flex flex-wrap gap-4">
-              <Input.FormField className="w-2/5" labelClasses="mb-2 text-gray-600 font-medium text-sm" label="First name">
+              <Input.FormField
+                className="w-2/5"
+                labelClasses="mb-2 text-gray-600 font-medium text-sm"
+                label="First name"
+              >
                 <Input.Text placeholder="First name" name="firstName" />
               </Input.FormField>
-              <Input.FormField className="w-2/5" labelClasses="mb-2 text-gray-600 font-medium text-sm" label="Last name">
+              <Input.FormField
+                className="w-2/5"
+                labelClasses="mb-2 text-gray-600 font-medium text-sm"
+                label="Last name"
+              >
                 <Input.Text placeholder="Last name" name="lastName" />
               </Input.FormField>
-              <Input.FormField className="w-2/5" labelClasses="mb-2 text-gray-600 font-medium text-sm" label="Email">
+              <Input.FormField
+                className="w-2/5"
+                labelClasses="mb-2 text-gray-600 font-medium text-sm"
+                label="Email"
+              >
                 <Input.Text type="email" placeholder="Email" name="email" />
               </Input.FormField>
-              <Input.FormField className="w-2/5" labelClasses="mb-2 text-gray-600 font-medium text-sm" label="Phone Number">
+              <Input.FormField
+                className="w-2/5"
+                labelClasses="mb-2 text-gray-600 font-medium text-sm"
+                label="Phone Number"
+              >
                 <Input.Text placeholder="Phone Number" name="phone" />
               </Input.FormField>
             </Form>

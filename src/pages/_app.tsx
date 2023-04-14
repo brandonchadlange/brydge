@@ -10,11 +10,10 @@ import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import HeaderNavMenu from "@/Molecules/NavMenu";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
-
 
 const EmptyLayout = ({ children }: { children: ReactNode }) => {
   return <>{children}</>;
@@ -27,7 +26,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const AppLayout =
     router.pathname.includes("/login") ||
     router.pathname.includes("/signup") ||
-    router.pathname.includes("/onboarding")
+    router.pathname.includes("/onboarding") ||
+    router.pathname.includes("/email-verified")
       ? EmptyLayout
       : DashboardLayout;
 
@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <main className={`${inter.variable} bg-[#F9F9F9]`}>
         <Toaster />
-        <HeaderNavMenu />
+        {/* <HeaderNavMenu /> */}
         {/* <DashboardLayout>
         </DashboardLayout> */}
         <AppLayout>

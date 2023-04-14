@@ -9,7 +9,7 @@ export const Header = () => {
   return (
     <header className="font-primary flex w-full h-[80px] px-6 justify-between items-center border-b border-slate-200">
       <Image
-        src="/logo-black.jpg"
+        src="/logo-black.png"
         alt="Brydge Logo"
         className="borde"
         width={100}

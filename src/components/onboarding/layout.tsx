@@ -30,7 +30,9 @@ const OnboardingLayout = (props: OnboardingLayoutProps) => {
           </div>
           {props.tabs.map((tab) => (
             <div className="flex mb-4 lg:w-3/5" key={tab.entityType}>
-              { entityType=== tab.entityType && <div className="p-0 mr-2 border-l-4 rounded border-blue" />}
+              {entityType === tab.entityType && (
+                <div className="p-0 mr-2 border-l-4 rounded border-blue" />
+              )}
               <button
                 onClick={() => setEntityType(tab.entityType)}
                 className="text-left w-full px-6 py-3 bg-gray-200 border border-black rounded-lg cursor-pointer focus:outline-none focus:border-gray-600 focus:ring-1 focus:ring-gray-600"
@@ -40,15 +42,8 @@ const OnboardingLayout = (props: OnboardingLayoutProps) => {
               </button>
             </div>
           ))}
-          <p className="mt-2 text-sm text-gray-500">
-            This user is also a
-            <span className="text-blue">
-              {" "}
-              Merchant-Exporter, Importer, supplier, aggregator.
-            </span>
-          </p>
         </section>
-        <section className="col-span-1 px-2 overflow-x-hidden overflow-y-auto">
+        <section className="col-span-1 px-2 pb-5 overflow-x-hidden overflow-y-auto">
           <EntityRegistrationForm entityType={entityType} />
         </section>
       </main>

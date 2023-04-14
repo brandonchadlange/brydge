@@ -8,7 +8,7 @@ const createInstitution = () => {
       headName: "",
       headEmail: "",
       registeredCompanyNumber: "",
-      bankVerificationNumber: 0,
+      bankVerificationNumber: "",
       operationalAddressId: "",
       utilityBillId: "",
     },

@@ -42,6 +42,8 @@ model User {
   image          String?
   entityId       String?
   entityVerified Boolean        @default(false)
+  firstName      String?
+  lastName       String?
   accounts       Account[]
   Beneficiary    Beneficiary[]
   memberInvites  MemberInvite[]
@@ -98,7 +100,7 @@ model Merchant {
   entityId                String
   registeredName          String
   registeredCompanyNumber String
-  bankVerificationNumber  Int
+  bankVerificationNumber  String
   operationalAddressId    String
   utilityBillId           String
   memberInvites           MemberInvite[]
@@ -114,7 +116,7 @@ model Institution {
   registeredCompanyNumber String
   headName                String
   headEmail               String
-  bankVerificationNumber  Int
+  bankVerificationNumber  String
   operationalAddressId    String
   utilityBillId           String
   entity                  Entity   @relation(fields: [entityId], references: [id])
@@ -126,7 +128,7 @@ model Individual {
   id                     String   @id @default(cuid())
   entityId               String
   name                   String
-  bankVerificationNumber Int
+  bankVerificationNumber String
   operationalAddressId   String
   utilityBillId          String
   entity                 Entity   @relation(fields: [entityId], references: [id])
@@ -148,9 +150,9 @@ model Address {
 
 model Document {
   id          String        @id @default(cuid())
-  name        String
-  contentType String
-  sizeInMb    Int
+  name        String        @default("")
+  contentType String        @default("")
+  sizeInMb    Int           @default(0)
   publicUrl   String
   Individual  Individual[]
   Institution Institution[]

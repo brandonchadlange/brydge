@@ -10,6 +10,7 @@ export default CredentialsProvider({
   },
   async authorize(credentials, req) {
     const user = await UserRepository.getUserByEmail(credentials!.email);
+    console.log(user);
 
     if (!user) {
       return null;

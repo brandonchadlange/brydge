@@ -12,14 +12,17 @@ export default RouteHandler({
       file.size
     );
 
-    const { publicUrl } = await DocumentService.uploadDocument(
+    const uploadResponse = await DocumentService.uploadDocument(
       file,
       documentReference.id
     );
 
-    await DocumentRefRepository.setPublicUrl(documentReference.id, publicUrl);
+    await DocumentRefRepository.setPublicUrl(
+      documentReference.id,
+      uploadResponse.publicUrl
+    );
 
-    documentReference.publicUrl = publicUrl;
+    documentReference.publicUrl = uploadResponse.publicUrl;
 
     res.status(201).send(documentReference);
   },

@@ -1,9 +1,26 @@
-import { Balance, Beneficiary, WalletTransaction } from "@prisma/client";
+import {
+  Balance,
+  Beneficiary,
+  VirtualAccount,
+  WalletTransaction,
+} from "@prisma/client";
 import axios from "axios";
 
 const queries = {
+  async getEntityVerified() {
+    const response = await axios.request<boolean>({
+      method: "GET",
+      url: "/api/user/entity/verify",
+    });
+
+    return response.data;
+  },
   async getWalletBallances() {
-    const response = await axios.request<Balance[]>({
+    const response = await axios.request<
+      (Balance & {
+        virtualAccount: VirtualAccount;
+      })[]
+    >({
       method: "GET",
       url: "/api/wallet/balances",
     });

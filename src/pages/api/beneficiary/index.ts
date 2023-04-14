@@ -25,7 +25,7 @@ export default RouteHandler({
     const beneficiary = await prismaClient.beneficiary.create({
       data: {
         accountHolderName: data.detail.accountHolderName,
-        accountType: data.type,
+        accountType: data.country === "KE" ? data.type : "corporate",
         country: data.country,
         currency: data.country === "KE" ? "KES" : "USD",
         fincraId: "",
@@ -81,7 +81,7 @@ const AddKenyaBeneficiary = async (data: AddBeneficiaryRequest) => {
 
 const AddBeneficiaryHandlers: Record<
   BeneficiaryCountry,
-  (data: AddBeneficiaryRequest) => Promise<FincraBeneficiary>
+  (data: AddBeneficiaryRequest) => Promise<any>
 > = {
   US: AddUnitedStatesBeneficiary,
   KE: AddKenyaBeneficiary,

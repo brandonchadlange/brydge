@@ -42,7 +42,6 @@ const KenyaDetailsForm = ({
 
   useEffect(() => {
     if (banks.length > 0 && selectedBank === "") {
-      console.log(banks[0]);
       setSelectedBank(banks[0].id.toString());
     }
   }, [banks]);
@@ -158,6 +157,58 @@ const KenyaIndividualDetails = ({ show }: { show: boolean }) => {
 };
 
 const UnitedStatesDetails = ({ show }: { show: boolean }) => {
+  const [fAddress, mAddress] = useField({
+    name: "address",
+  });
+
+  const [fState, mState] = useField({
+    name: "state",
+  });
+
+  const [fCity, mCity] = useField({
+    name: "city",
+  });
+
+  const [fZip, mZip] = useField({
+    name: "zip",
+  });
+
+  const [fBankAddress, mBankAddress] = useField({
+    name: "bankAddress",
+  });
+
+  const [fBankState, mBankState] = useField({
+    name: "bankState",
+  });
+
+  const [fBankCity, mBankCity] = useField({
+    name: "bankCity",
+  });
+
+  const [fBankZip, mBankZip] = useField({
+    name: "bankZip",
+  });
+
+  const [fAccountNumber, mAccountNumber] = useField({
+    name: "accountNumber",
+  });
+
+  const [fAccountHolder, mAccountHolder] = useField({
+    name: "accountHolderName",
+  });
+
+  const [fSwiftCode, mSwiftCode] = useField({
+    name: "swiftCode",
+  });
+
+  const [fRoutingNumber, mRoutingNumber] = useField({
+    name: "routingNumber",
+  });
+
+  const [fEmail, mEmail] = useField({
+    name: "email",
+  });
+
   if (!show) return <></>;
 
   return (
@@ -167,6 +218,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Address"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fAddress}
+          {...mAddress}
         />
       </div>
       <div className="mt-4">
@@ -174,6 +227,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="State"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fState}
+          {...mState}
         />
       </div>
       <div className="mt-4">
@@ -181,6 +236,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="City"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fCity}
+          {...mCity}
         />
       </div>
       <div className="mt-4">
@@ -188,6 +245,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Zip Code"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fZip}
+          {...mZip}
         />
       </div>
       <div className="mt-4">
@@ -195,6 +254,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Bank Address"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fBankAddress}
+          {...mBankAddress}
         />
       </div>
       <div className="mt-4">
@@ -202,6 +263,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Bank State"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fBankState}
+          {...mBankState}
         />
       </div>
       <div className="mt-4">
@@ -209,6 +272,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Bank City"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fBankCity}
+          {...mBankCity}
         />
       </div>
       <div className="mt-4">
@@ -216,6 +281,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Bank Zip Code"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fBankZip}
+          {...mBankZip}
         />
       </div>
       <div className="mt-4">
@@ -223,13 +290,17 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Account Number / IBAN"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fAccountNumber}
+          {...mAccountNumber}
         />
       </div>
       <div className="mt-4">
         <input
-          placeholder="Beneficiary Name"
+          placeholder="Account Holder Name"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fAccountHolder}
+          {...mAccountHolder}
         />
       </div>
       <div className="mt-4">
@@ -237,6 +308,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Swift Code"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fSwiftCode}
+          {...mSwiftCode}
         />
       </div>
       <div className="mt-4">
@@ -244,6 +317,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Routing Number"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fRoutingNumber}
+          {...mRoutingNumber}
         />
       </div>
       <div className="mt-4">
@@ -251,6 +326,8 @@ const UnitedStatesDetails = ({ show }: { show: boolean }) => {
           placeholder="Email"
           className="border px-2 py-2 rounded-md w-80"
           type="text"
+          {...fEmail}
+          {...mEmail}
         />
       </div>
     </>

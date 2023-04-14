@@ -53,15 +53,15 @@ const RegistrationNumber: FormFieldProperties = {
 const Street: FormFieldProperties = {
   component: Input.Text,
   name: "street",
-  label: "Street",
+  label: "Street Name",
   placeholder: "Street",
 };
 
 const HouseNumber: FormFieldProperties = {
   component: Input.Text,
   name: "houseNumber",
-  label: "House number",
-  placeholder: "House number",
+  label: "Street number",
+  placeholder: "Street number",
 };
 
 const City: FormFieldProperties = {
@@ -70,11 +70,11 @@ const City: FormFieldProperties = {
   label: "City",
   placeholder: "City",
 };
- const CompanyRegistration: FormFieldProperties = {
+const CompanyRegistration: FormFieldProperties = {
   component: Input.File,
   name: "companyRegistration",
   label: "Company Registration",
- };
+};
 
 const ZipCode: FormFieldProperties = {
   component: Input.Text,
@@ -84,7 +84,7 @@ const ZipCode: FormFieldProperties = {
 };
 
 const State: FormFieldProperties = {
-  component: Input.Text ,
+  component: Input.Text,
   name: "state",
   label: "State",
   placeholder: "State",

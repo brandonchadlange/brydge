@@ -4,10 +4,11 @@ import Input from "@/components/input";
 import OverlayLoader, { useOverlayLoader } from "@/components/overlay-loader";
 import EntityRegistrationService from "@/frontend/services/entity-registration";
 import showToast from "@/frontend/utility/show-toast";
-import FormField from "@/utils/useFormField";
+import formField from "@/utils/useFormField";
 import useFormValidation from "@/utils/useFormValidator";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
+import FormField from "../input/FormField";
 
 type EntityRegistrationFormProps = {
   entityType: EntityType;
@@ -17,15 +18,15 @@ type FormFieldsProps = {
   setFieldValue: (field: string, value: any) => void;
 };
 
-const RegisteredNameField = FormField("registeredName");
-const RegistrationNumberField = FormField("registeredCompanyNumber");
-const BVNField = FormField("bankVerificationNumber");
-const Street = FormField("street");
-const HouseNumber = FormField("houseNumber");
-const Zipcode = FormField("zipCode");
-const City = FormField("city");
-const State = FormField("state");
-const DateOfBirth = FormField("dateOfBirth");
+const RegisteredNameField = formField("registeredName");
+const RegistrationNumberField = formField("registeredCompanyNumber");
+const BVNField = formField("bankVerificationNumber");
+const Street = formField("street");
+const HouseNumber = formField("houseNumber");
+const Zipcode = formField("zipCode");
+const City = formField("city");
+const State = formField("state");
+const DateOfBirth = formField("dateOfBirth");
 
 const MerchantFormFields = (props: FormFieldsProps) => {
   return (
@@ -39,7 +40,45 @@ const MerchantFormFields = (props: FormFieldsProps) => {
       <City />
       <State />
 
-      <Input.File name="utilityBill" id="utilityBill" />
+      <FormField label="Utility Bill">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="utilityBill"
+          id="utilityBill"
+        />
+      </FormField>
+
+      <FormField label="Company registration">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="companyRegistration"
+          id="companyRegistration"
+        />
+      </FormField>
+
+      <FormField label="Memorandum of Understanding">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="memorandumOfUnderstanding"
+          id="memorandumOfUnderstanding"
+        />
+      </FormField>
+
+      <FormField label="Article of Association">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="articleOfAssociation"
+          id="articleOfAssociation"
+        />
+      </FormField>
+
+      <FormField label="Certificate of Incorporation">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="certificateOfIncorporation"
+          id="certificateOfIncorporation"
+        />
+      </FormField>
 
       <Button type="submit" full>
         Submit
@@ -60,7 +99,45 @@ const InstitutionFormFields = (props: FormFieldsProps) => {
       <City />
       <State />
 
-      <Input.File name="utilityBill" id="utilityBill" />
+      <FormField label="Utility Bill">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="utilityBill"
+          id="utilityBill"
+        />
+      </FormField>
+
+      <FormField label="Company registration">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="companyRegistration"
+          id="companyRegistration"
+        />
+      </FormField>
+
+      <FormField label="Memorandum of Understanding">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="memorandumOfUnderstanding"
+          id="memorandumOfUnderstanding"
+        />
+      </FormField>
+
+      <FormField label="Article of Association">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="articleOfAssociation"
+          id="articleOfAssociation"
+        />
+      </FormField>
+
+      <FormField label="Certificate of Incorporation">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="certificateOfIncorporation"
+          id="certificateOfIncorporation"
+        />
+      </FormField>
 
       <Button type="submit" full>
         Submit
@@ -72,7 +149,6 @@ const InstitutionFormFields = (props: FormFieldsProps) => {
 const IndividualFormFields = (props: FormFieldsProps) => {
   return (
     <>
-      <RegistrationNumberField />
       <BVNField />
       <DateOfBirth />
       <Street />
@@ -81,7 +157,13 @@ const IndividualFormFields = (props: FormFieldsProps) => {
       <City />
       <State />
 
-      <Input.File name="utilityBill" id="utilityBill" />
+      <FormField label="Utility Bill">
+        <Input.File
+          setFieldValue={props.setFieldValue}
+          name="utilityBill"
+          id="utilityBill"
+        />
+      </FormField>
 
       <Button type="submit" full>
         Submit
@@ -141,18 +223,20 @@ const EntityRegistrationForm = (props: EntityRegistrationFormProps) => {
   const validationSchema = useFormValidation(validatorRules);
 
   const onFormSubmit = async (data: any) => {
+    console.log(data);
     overlayLoader.show();
     await EntityRegistrationService.registerEntity(props.entityType, data);
     overlayLoader.hide();
     showToast("Success 🎉");
     router.push(pages.dashboard());
-    
   };
 
   return (
     <>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          utilityBill: "",
+        }}
         onSubmit={onFormSubmit}
         validationSchema={validationSchema}
       >
