@@ -1,7 +1,12 @@
-import IndividualRepository from "../repositories/individual";
+import prismaClient from "../prisma";
 
 const handleIndividualRegistration = (entityId: string, data: any) => {
-  IndividualRepository.createIndividual();
+  return prismaClient.individual.create({
+    data: {
+      entityId,
+      ...data,
+    },
+  });
 };
 
 export default handleIndividualRegistration;

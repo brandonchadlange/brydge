@@ -5,4 +5,8 @@ declare type CreateMerchantDetail = {
   bankVerificationNumber: string;
   operationalAddressId: string;
   utilityBillId: string;
+  companyRegistrationId: string;
+  memorandumOfUnderstandingId: string;
+  articleOfAssociationId: string;
+  certificateOfIncorporationId: string;
 };

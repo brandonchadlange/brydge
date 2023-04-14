@@ -41,9 +41,6 @@ const registerEntity = async (
   const address = await AddressRepository.createAddress(addressData);
   handleRegistration(entity.id, { operationalAddressId: address.id, ...data });
   await user.assignEntity(entity.id);
-
-  console.log(user.map());
-
   return entity;
 };
 

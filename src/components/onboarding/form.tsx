@@ -43,40 +43,40 @@ const MerchantFormFields = (props: FormFieldsProps) => {
       <FormField label="Utility Bill">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="utilityBill"
-          id="utilityBill"
+          name="utilityBillId"
+          id="utilityBillId"
         />
       </FormField>
 
       <FormField label="Company registration">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="companyRegistration"
-          id="companyRegistration"
+          name="companyRegistrationId"
+          id="companyRegistrationId"
         />
       </FormField>
 
       <FormField label="Memorandum of Understanding">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="memorandumOfUnderstanding"
-          id="memorandumOfUnderstanding"
+          name="memorandumOfUnderstandingId"
+          id="memorandumOfUnderstandingId"
         />
       </FormField>
 
       <FormField label="Article of Association">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="articleOfAssociation"
-          id="articleOfAssociation"
+          name="articleOfAssociationId"
+          id="articleOfAssociationId"
         />
       </FormField>
 
       <FormField label="Certificate of Incorporation">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="certificateOfIncorporation"
-          id="certificateOfIncorporation"
+          name="certificateOfIncorporationId"
+          id="certificateOfIncorporationId"
         />
       </FormField>
 
@@ -102,40 +102,40 @@ const InstitutionFormFields = (props: FormFieldsProps) => {
       <FormField label="Utility Bill">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="utilityBill"
-          id="utilityBill"
+          name="utilityBillId"
+          id="utilityBillId"
         />
       </FormField>
 
       <FormField label="Company registration">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="companyRegistration"
-          id="companyRegistration"
+          name="companyRegistrationId"
+          id="companyRegistrationId"
         />
       </FormField>
 
       <FormField label="Memorandum of Understanding">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="memorandumOfUnderstanding"
-          id="memorandumOfUnderstanding"
+          name="memorandumOfUnderstandingId"
+          id="memorandumOfUnderstandingId"
         />
       </FormField>
 
       <FormField label="Article of Association">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="articleOfAssociation"
-          id="articleOfAssociation"
+          name="articleOfAssociationId"
+          id="articleOfAssociationId"
         />
       </FormField>
 
       <FormField label="Certificate of Incorporation">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="certificateOfIncorporation"
-          id="certificateOfIncorporation"
+          name="certificateOfIncorporationId"
+          id="certificateOfIncorporationId"
         />
       </FormField>
 
@@ -160,8 +160,8 @@ const IndividualFormFields = (props: FormFieldsProps) => {
       <FormField label="Utility Bill">
         <Input.File
           setFieldValue={props.setFieldValue}
-          name="utilityBill"
-          id="utilityBill"
+          name="utilityBillId"
+          id="utilityBillId"
         />
       </FormField>
 
@@ -234,9 +234,7 @@ const EntityRegistrationForm = (props: EntityRegistrationFormProps) => {
   return (
     <>
       <Formik
-        initialValues={{
-          utilityBill: "",
-        }}
+        initialValues={{}}
         onSubmit={onFormSubmit}
         validationSchema={validationSchema}
       >
