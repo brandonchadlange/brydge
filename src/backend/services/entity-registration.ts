@@ -28,18 +28,26 @@ const registerEntity = async (
   user: UserModel,
   data: any
 ) => {
+  const { street, houseNumber, zipCode, city, state, ...entityData } = data;
+
   const addressData: Address = {
-    street: data.street,
-    houseNumber: data.houseNumber,
-    zipCode: data.zipCode,
-    city: data.city,
-    state: data.state,
+    street: street,
+    houseNumber: houseNumber,
+    zipCode: zipCode,
+    city: city,
+    state: state,
   };
+
   const entityTypeEnum = EntityTypeEnumMap[entityType];
   const handleRegistration = EntityRegistrationHandlerMap[entityType];
   const entity = await EntityRepository.createEntity(entityTypeEnum);
   const address = await AddressRepository.createAddress(addressData);
-  handleRegistration(entity.id, { operationalAddressId: address.id, ...data });
+
+  handleRegistration(entity.id, {
+    operationalAddressId: address.id,
+    ...entityData,
+  });
+
   await user.assignEntity(entity.id);
   return entity;
 };
