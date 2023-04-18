@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import mutations from "@/frontend/utility/mutations";
 import queries from "@/frontend/utility/queries";
 import { Beneficiary } from "@prisma/client";
